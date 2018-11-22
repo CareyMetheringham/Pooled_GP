@@ -2,13 +2,16 @@
 % Please edit documentation in R/read_pools_rc.R
 \name{get_pool_colnames}
 \alias{get_pool_colnames}
-\title{Create Lists of Colnames}
+\title{Create Lists of Colnames for pools_rc}
 \usage{
 get_pool_colnames(pool_info)
 }
 \arguments{
-\item{pool_info}{}
+\item{pool_info}{file containing a table with ...}
+}
+\value{
+list of colnames for pools_rc file
 }
 \description{
-Create Lists of Colnames
+Create Lists of Colnames for pools_rc
 }

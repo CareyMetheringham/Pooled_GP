@@ -19,3 +19,6 @@ matrix containg loci states in a single population
 \description{
 Simulate SNPs for a Population
 }
+\examples{
+generate_population(10,100, generate_allelic_freqency(100))
+}

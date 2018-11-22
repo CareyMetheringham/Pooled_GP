@@ -18,5 +18,5 @@ estimate of varience
 Calculate Enviromental Variance of BV from h2
 }
 \examples{
-calculate_varience(bv=rnorm(100),h2=0.5)
+calculate_varience(bv=rnorm(100), h2=0.5)
 }

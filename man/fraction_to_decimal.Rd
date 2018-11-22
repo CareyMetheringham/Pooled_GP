@@ -4,13 +4,13 @@
 \alias{fraction_to_decimal}
 \title{Transform allele frequencies from fraction to decimal}
 \usage{
-fraction_to_decimal(fracData)
+fraction_to_decimal(frac_data)
 }
 \arguments{
-\item{fracData#}{a data frame containing only the fractions}
+\item{frac_data#}{a data frame containing only the fractions}
 }
 \value{
-proportion of the alleles
+frequency of allele
 }
 \description{
 Transform allele frequencies from fraction to decimal

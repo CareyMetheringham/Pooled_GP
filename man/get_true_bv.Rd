@@ -17,3 +17,6 @@ true breeding value of each individual in the population
 \description{
 Get True Breeding Value
 }
+\examples{
+get_true_bv(generate_population(10, 10, generate_allelic_freqency(10)), generate_effect_size(10))
+}

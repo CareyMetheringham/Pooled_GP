@@ -47,7 +47,7 @@ create_loci <- function(snps, allelic_freq){
 #' @return matrix containg loci states in a single population
 #' @export
 #'
-#' @examples
+#' @examples generate_population(10,100, generate_allelic_freqency(100))
 generate_population <- function(ind, snps, allelic_freq){
   loci_of_pop <- matrix(nrow = ind, ncol = snps)
     for (i in 1:ind){
@@ -62,7 +62,7 @@ generate_population <- function(ind, snps, allelic_freq){
 #' @return estimate of varience
 #' @export
 #' @examples
-#' calculate_varience(bv=rnorm(100),h2=0.5)
+#' calculate_varience(bv=rnorm(100), h2=0.5)
 calculate_varience <- function(bv, h2){
   est_var <- sd(bv) * sqrt( (1 - h2) / h2)
   return(est_var)
@@ -76,10 +76,11 @@ calculate_varience <- function(bv, h2){
 #' @return true breeding value of each individual in the population
 #' @export
 #'
-#' @examples
+#' @examples get_true_bv(generate_population(10, 10, generate_allelic_freqency(10)), generate_effect_size(10))
 get_true_bv <- function(loci_of_pop, true_es){
   true_bv <- loci_of_pop %*% true_es
-  return(true_bv)
+  scale_bv <- scale(true_bv)
+  return(scale_bv)
 }
 
 #' Get Phenotypic Value
@@ -90,9 +91,13 @@ get_true_bv <- function(loci_of_pop, true_es){
 #' @return vector containing phenotypes
 #' @export
 #'
-#' @examples
+#' @examples get_phenotype(bv = rnorm(100), calculate_varience(bv = rnorm(100), h2=0.5))
 get_phenotype <- function(bv, est_var){
   env_var <- rnorm(length(bv), 0, est_var)
   pheno <- bv + env_var
   return(pheno)
+}
+
+simulate_training_pools <- function(){
+
 }

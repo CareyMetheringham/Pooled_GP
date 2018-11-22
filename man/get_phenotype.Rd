@@ -17,3 +17,6 @@ vector containing phenotypes
 \description{
 Get Phenotypic Value
 }
+\examples{
+get_phenotype(bv = rnorm(100), calculate_varience(bv = rnorm(100), h2=0.5))
+}

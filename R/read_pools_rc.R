@@ -42,11 +42,9 @@ find_top_snps <- function(pool_files, hits, pool_col_names) {
   topsnp_list <- list()
   for ( i in 1:length(pool_files)) {
     pools_rc <- fread(file = pool_files[i], sep = "\t")
-    print(paste( "Read in ", pool_files[i], sep = "" ))
     colnames(pools_rc) <- pool_col_names
     my_top_snps <- merge(hits, pools_rc, by = c("contig", "pos"))
     topsnp_list[[i]] <- my_top_snps
-    print(paste(nrow(my_top_snps), "matches", sep = " "))
   }
   #join the top tables
   top_snp <- rbindlist(topsnp_list)
