@@ -1,21 +1,77 @@
-#' Transform allele frequencies from fraction to decimal
-#' @param fracData# a data frame containing only the fractions
+#' Create Lists of Colnames for pools_rc
+#' @param pool_info file containing a table with ...
 #'
-#' @return
+#' @return list of colnames for pools_rc file
 #' @export
 #'
 #' @examples
-fraction_to_decimal <- function(fracData) {
-  decData <- data.frame()
-  for (i in 1:length(fracData)) {
-    temp <-
-      sapply(strsplit(as.character(fracData[, i]), "/"), function(fracData) {
-        fracData <- as.numeric(fracData)
-        fracData[1] / fracData[2]
-      })
-    decData <- rbind(temp, decData)
+get_pool_colnames <- function(pool_info){
+  mia_names <- paste("mia", pool_info$Syspop, sep = "_")
+  maa_names <- paste("maa", pool_info$Syspop, sep = "_")
+  pool_col_names <-
+    c(
+      "contig",
+      "pos",
+      "rc",
+      "allele_count",
+      "allele_states",
+      "deletion_sum",
+      "snp_type",
+      "major_alleles.maa.",
+      "minor_alleles.mia.",
+      maa_names,
+      mia_names)
+  return(list(
+    all = pool_col_names,
+    maa = maa_names,
+    mia = mia_names
+  ))
+}
+
+#' Pull Top GWAS Hits from pools.rc files
+#' @param pool_files
+#' @param hits
+#' @param pool_col_names
+#'
+#' @return table with the top snps as listed in hits file
+#' @export
+#'
+#' @examples
+find_top_snps <- function(pool_files, hits, pool_col_names) {
+  #create list of top_snp tables - intensive step
+  topsnp_list <- list()
+  for ( i in 1:length(pool_files)) {
+    pools_rc <- fread(file = pool_files[i], sep = "\t")
+    print(paste( "Read in ", pool_files[i], sep = "" ))
+    colnames(pools_rc) <- pool_col_names
+    my_top_snps <- merge(hits, pools_rc, by = c("contig", "pos"))
+    topsnp_list[[i]] <- my_top_snps
+    print(paste(nrow(my_top_snps), "matches", sep = " "))
   }
-  decData <- t(decData)
-  colnames(decData) <- colnames(fracData)
-  return(decData)
+  #join the top tables
+  top_snp <- rbindlist(topsnp_list)
+  return(top_snp)
+}
+
+
+#' Transform allele frequencies from fraction to decimal
+#' @param frac_data# a data frame containing only the fractions
+#'
+#' @return frequency of allele
+#' @export
+#'
+#' @examples
+fraction_to_decimal <- function(frac_data) {
+  dec_data <- data.frame()
+  for (i in 1:length(frac_data)) {
+    temp <-
+      sapply(strsplit(as.character(frac_data[, i]), "/"), function(frac_data) {
+        frac_data <- as.numeric(frac_data)
+        frac_data[1] / frac_data[2]
+      })
+    dec_data <- rbind(temp, dec_data)
+  }
+  dec_data <- t(dec_data)
+  colnames(dec_data) <- colnames(frac_data)
+  return(dec_data)
 }
