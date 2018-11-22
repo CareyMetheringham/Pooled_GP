@@ -1,0 +1,6 @@
+context("Pool-seq Simulation")
+libary(gppool)
+
+test_that("Length allelicF is equal to nLoci",{
+   expect_equal(length(allelicF), nLoci)
+})

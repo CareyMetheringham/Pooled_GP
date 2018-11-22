@@ -2,14 +2,17 @@ Package: gppool
 Type: Package
 Title: Genomic Prediction from Pool-seq Data
 Version: 0.1.0
-Imports: 
+Imports:
     data.table,
     plyr,
     rrBLUP,
+    stats
 Authors@R: person("Carey", "Metheringham", email ="c.l.metheringham@qmul.ac.uk", role = c("aut", "cre"))
-Description: Tools to implement use of rrBLUP on pool-seq data
-    utilising output from Popoolation2
+Description: Tools to implement use of rrBLUP on pool-seq data.
+    Utilises output from Popoolation2.
+    Creates simulations.
+    Need to add more here when done.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-
+Suggests: testthat
