@@ -1,11 +1,15 @@
 Package: gppool
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Genomic Prediction from Pool-seq Data
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Imports: 
+    data.table,
+    plyr,
+    rrBLUP,
+Authors@R: person("Carey", "Metheringham", email ="c.l.metheringham@qmul.ac.uk", role = c("aut", "cre"))
+Description: Tools to implement use of rrBLUP on pool-seq data
+    utilising output from Popoolation2
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+
