@@ -1,11 +1,13 @@
 #' Create Lists of Colnames for pools_rc
-#' @param pool_info file containing a table with ...
+#' @param pool_info_file file containing a table with ...
 #'
 #' @return list of colnames for pools_rc file
 #' @export
 #'
 #' @examples
-get_pool_colnames <- function(pool_info){
+#' get_pool_colnames("./extdata/example_pop_data.csv")
+get_pool_colnames <- function(pool_info_file){
+  pool_info <- fread(pool_info_file)
   mia_names <- paste("mia", pool_info$Syspop, sep = "_")
   maa_names <- paste("maa", pool_info$Syspop, sep = "_")
   pool_col_names <-
@@ -72,4 +74,15 @@ fraction_to_decimal <- function(frac_data) {
   dec_data <- t(dec_data)
   colnames(dec_data) <- colnames(frac_data)
   return(dec_data)
+}
+
+#' Load an Example Pools-RC File
+#'
+#' @return
+#' @export
+#'
+#' @examples
+load_example_data <- function(){
+  example_data <- fread("./extdata/example.pools_rc")
+  return(example_data)
 }
