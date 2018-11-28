@@ -11,6 +11,9 @@ get_pool_colnames <- function(pool_info_file){
   colnames(pool_info) <- c("Sample", "Group1", "Group2")
   mia_names <- paste("mia", pool_info$Sample, sep = "_")
   maa_names <- paste("maa", pool_info$Sample, sep = "_")
+  pool_info <- fread(pool_info_file)
+  mia_names <- paste("mia", pool_info$Syspop, sep = "_")
+  maa_names <- paste("maa", pool_info$Syspop, sep = "_")
   pool_col_names <-
     c(
       "contig",
@@ -91,4 +94,15 @@ fraction_to_decimal <- function(frac_data) {
   dec_data <- t(dec_data)
   colnames(dec_data) <- colnames(frac_data)
   return(dec_data)
+}
+
+#' Load an Example Pools-RC File
+#'
+#' @return
+#' @export
+#'
+#' @examples
+load_example_data <- function(){
+  example_data <- fread("./extdata/example.pools_rc")
+  return(example_data)
 }
