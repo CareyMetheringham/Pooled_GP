@@ -15,3 +15,6 @@ frequency of allele
 \description{
 Transform allele frequencies from fraction to decimal
 }
+\examples{
+fraction_to_decimal(get_allele_freq(fread("./extdata/example_pool_rc"), "./extdata/example_pop_data.csv", "minor"))
+}

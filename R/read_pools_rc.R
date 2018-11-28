@@ -115,6 +115,27 @@ get_allele <- function(alleles, which){
   return(allele)
 }
 
+#' Get the Major/Minor Allele Frequency
+#' @param pool_rc table of pools_rc data
+#' @param pool_info_file
+#' @param which which allele to get
+#'
+#' @return table with freqency of either major or minor alleles in each pool
+#' @export
+#'
+#' @examples
+#'get_allele_freq(fread("./extdata/example_pool_rc"), "./extdata/example_pop_data.csv", "minor"
+get_allele_freq <- function(pool_rc, pool_info_file, which){
+  pool_col_names <- get_pool_colnames(pool_info_file)
+  if (which == "major") {
+    freq_data <- pool_rc[, pool_col_names$maa, with = FALSE]
+  }
+  if (which == "minor") {
+    freq_data <- pool_rc[, pool_col_names$mia, with = FALSE]
+  }
+  return(as.data.frame(freq_data))
+}
+
 #' Transform allele frequencies from fraction to decimal
 #' @param frac_data# a data frame containing only the fractions
 #'
@@ -122,6 +143,7 @@ get_allele <- function(alleles, which){
 #' @export
 #'
 #' @examples
+#' fraction_to_decimal(get_allele_freq(fread("./extdata/example_pool_rc"), "./extdata/example_pop_data.csv", "minor"))
 fraction_to_decimal <- function(frac_data) {
   dec_data <- data.frame()
   for (i in 1:length(frac_data)) {
