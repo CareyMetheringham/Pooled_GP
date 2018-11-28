@@ -158,3 +158,17 @@ fraction_to_decimal <- function(frac_data) {
   colnames(dec_data) <- colnames(frac_data)
   return(dec_data)
 }
+
+#' Get Joined SNP ID from pools_rc format
+#'
+#' @param pool_rc file
+#'
+#' @return list of snps
+#' @export
+#'
+#' @examples
+#' get_snp_id(fread("./extdata/example_pool_rc"))
+get_snp_id <- function(pool_rc){
+  snp_names <- paste(pool_rc$contig, pool_rc$pos, sep = "_")
+  return(snp_names)
+}
