@@ -41,7 +41,8 @@ get_pool_colnames <- function(pool_info_file){
 #' @return list of pools_rc files
 #' @export
 #'
-#' @examples find_pools_rc("./extdata/Pools_RC")
+#' @examples
+#' find_pools_rc("./extdata/Pools_RC")
 find_pools_rc <- function(pool_loc){
   pool_files <- list.files(path = pool_loc,
                            pattern = "pools_rc.*", full.names = TRUE)
@@ -57,14 +58,15 @@ find_pools_rc <- function(pool_loc){
 #' @export
 #'
 #' @examples
+#' find_top_snps(find_pools_rc("./extdata/Pools_RC"), "./extdata/example_100_hits.gwas", "./extdata/example_pop_data.csv")
 find_top_snps <- function(pool_files, hits_file, pool_info_file) {
   #get the column names
   pool_col_names <- get_pool_colnames(pool_info_file)$all
-  hits <- read.table(file = hits_file, sep = "\t")
+  hits <- fread(file = hits_file)
   colnames(hits) <- c("contig", "pos", "snp", "P")
   topsnp_list <- list()
   for ( i in 1:length(pool_files)) {
-    pools_rc <- read.table(file = pool_files[i], sep = "\t")
+    pools_rc <- fread(file = pool_files[[i]])
     colnames(pools_rc) <- pool_col_names
     my_top_snps <- merge(hits, pools_rc, by = c("contig", "pos"))
     topsnp_list[[i]] <- my_top_snps
@@ -72,6 +74,10 @@ find_top_snps <- function(pool_files, hits_file, pool_info_file) {
   #join the top tables
   top_snp <- rbindlist(topsnp_list)
   return(top_snp)
+}
+
+get_hit_snps_from_file <- function(p_val_file, num_hits){
+  hits <- fread(file = hits_file)
 }
 
 #' Transform allele frequencies from fraction to decimal
@@ -94,15 +100,4 @@ fraction_to_decimal <- function(frac_data) {
   dec_data <- t(dec_data)
   colnames(dec_data) <- colnames(frac_data)
   return(dec_data)
-}
-
-#' Load an Example Pools-RC File
-#'
-#' @return
-#' @export
-#'
-#' @examples
-load_example_data <- function(){
-  example_data <- fread("./extdata/example.pools_rc")
-  return(example_data)
 }
