@@ -92,6 +92,29 @@ get_hits_from_file <- function(p_val_file, num_hits){
   return(top_hits)
 }
 
+#' Get the Major/Minor Allele
+#' @param alleles column containing major minor e.g A/T
+#' @param which which allele to get
+#'
+#' @return either major or minor allele
+#' @export
+#'
+#' @examples
+#' get_allele("A/T", "major")
+get_allele <- function(alleles, which){
+  if (which == "major") {
+    pick <- 1
+  }
+  if (which == "minor") {
+    pick <- 2
+  }
+  allele <-
+    sapply(strsplit(as.character(alleles), "/"), function(alleles) {
+      alleles <- alleles[pick]
+    })
+  return(allele)
+}
+
 #' Transform allele frequencies from fraction to decimal
 #' @param frac_data# a data frame containing only the fractions
 #'
