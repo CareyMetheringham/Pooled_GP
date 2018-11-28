@@ -7,7 +7,7 @@
 get_pool_colnames(pool_info_file)
 }
 \arguments{
-\item{pool_info_file}{file containing a table with ...}
+\item{pool_info_file}{file containing a table - need to make more flexible}
 }
 \value{
 list of colnames for pools_rc file

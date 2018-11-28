@@ -1,5 +1,5 @@
 #' Create Lists of Colnames for pools_rc
-#' @param pool_info_file file containing a table with ...
+#' @param pool_info_file file containing a table - need to make more flexible
 #'
 #' @return list of colnames for pools_rc file
 #' @export
@@ -50,20 +50,18 @@ find_pools_rc <- function(pool_loc){
 }
 
 #' Pull Top GWAS Hits from pools.rc files
-#' @param pool_files
-#' @param hits_file
-#' @param pool_col_names
+#' @param pool_files list of pools_rc files - can be 1
+#' @param top_hits table of snps to use
+#' @param pool_info_file info on pools inc groupings and phenotype
 #'
 #' @return table with the top snps as listed in hits file
 #' @export
 #'
 #' @examples
-#' find_top_snps(find_pools_rc("./extdata/Pools_RC"), "./extdata/example_100_hits.gwas", "./extdata/example_pop_data.csv")
-find_top_snps <- function(pool_files, hits_file, pool_info_file) {
+#' find_top_snps(find_pools_rc("./extdata/Pools_RC"), get_hits_from_file("./extdata/example_100_hits.gwas", 10), "./extdata/example_pop_data.csv")
+find_top_snps <- function(pool_files, hits, pool_info_file) {
   #get the column names
   pool_col_names <- get_pool_colnames(pool_info_file)$all
-  hits <- fread(file = hits_file)
-  colnames(hits) <- c("contig", "pos", "snp", "P")
   topsnp_list <- list()
   for ( i in 1:length(pool_files)) {
     pools_rc <- fread(file = pool_files[[i]])
@@ -76,8 +74,22 @@ find_top_snps <- function(pool_files, hits_file, pool_info_file) {
   return(top_snp)
 }
 
-get_hit_snps_from_file <- function(p_val_file, num_hits){
+#' Get SNPs of Interest from GWAS Results
+#'
+#' @param p_val_file file containing data: contig pos snp_id p-value
+#' @param num_hits number of snps needed
+#'
+#' @return subset of input with lowest p-value
+#' @export
+#'
+#' @examples
+#' get_hits_from_file("./extdata/example_100_hits.gwas", 10)
+get_hits_from_file <- function(p_val_file, num_hits){
   hits <- fread(file = hits_file)
+  colnames(hits) <- c("contig", "pos", "snp", "P")
+  hits <- hits[order(hits$P), ]
+  top_hits <- head(hits, num_hits)
+  return(top_hits)
 }
 
 #' Transform allele frequencies from fraction to decimal
