@@ -2,14 +2,14 @@
 % Please edit documentation in R/simulation_functions.R
 \name{generate_population}
 \alias{generate_population}
-\title{Simulate SNPs for a Population}
+\title{Simulate num_sites for a Population}
 \usage{
-generate_population(ind, snps, allelic_freq)
+generate_population(ind, num_sites, allelic_freq)
 }
 \arguments{
 \item{ind}{number of individuals in the population}
 
-\item{snps}{number od snps being simulated}
+\item{num_sites}{number od num_sites being simulated}
 
 \item{allelic_freq}{frequency of minor allele at each locus}
 }
@@ -17,7 +17,7 @@ generate_population(ind, snps, allelic_freq)
 matrix containg loci states in a single population
 }
 \description{
-Simulate SNPs for a Population
+Simulate num_sites for a Population
 }
 \examples{
 generate_population(10,100, generate_allelic_freqency(100))

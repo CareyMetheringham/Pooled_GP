@@ -4,7 +4,7 @@
 \alias{find_top_snps}
 \title{Pull Top GWAS Hits from pools.rc files}
 \usage{
-find_top_snps(pool_files, hits, pool_col_names)
+find_top_snps(pool_files, hits_file, pool_info_file)
 }
 \arguments{
 \item{pool_col_names}{}

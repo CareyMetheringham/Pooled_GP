@@ -4,14 +4,17 @@
 \alias{generate_allelic_freqency}
 \title{Generate Distribution of Allelic Frequencies for Minor Allele}
 \usage{
-generate_allelic_freqency(snps)
+generate_allelic_freqency(num_sites)
 }
 \arguments{
-\item{snps}{total number of sites in simulation}
+\item{num_sites}{total number of num_sites in simulation}
 }
 \value{
 frequency of minor allele at each locus
 }
 \description{
 Generate Distribution of Allelic Frequencies for Minor Allele
+}
+\examples{
+generate_allelic_freqency(1000)
 }

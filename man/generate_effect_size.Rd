@@ -5,10 +5,10 @@
 \title{Generate Distribution of Effect Sizes
 To be used for training pools and test population}
 \usage{
-generate_effect_size(snps)
+generate_effect_size(num_sites)
 }
 \arguments{
-\item{snps}{total number of sites in simulation}
+\item{num_sites}{total number of num_sites in simulation}
 }
 \value{
 effect size of each locus
@@ -16,4 +16,7 @@ effect size of each locus
 \description{
 Generate Distribution of Effect Sizes
 To be used for training pools and test population
+}
+\examples{
+generate_effect_size(1000)
 }

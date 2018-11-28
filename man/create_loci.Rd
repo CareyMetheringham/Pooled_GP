@@ -4,10 +4,10 @@
 \alias{create_loci}
 \title{Create Loci from Binomial Distribution}
 \usage{
-create_loci(snps, allelic_freq)
+create_loci(num_sites, allelic_freq)
 }
 \arguments{
-\item{snps}{number od snps being simulated}
+\item{num_sites}{number od num_sites being simulated}
 
 \item{allelic_freq}{frequency of minor allele at each locus}
 }
