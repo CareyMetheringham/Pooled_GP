@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' find_varient_sites(pool_sim(10, 100, 100, 0.5)$gt_matrix, 0.01)
+#' find_varient_sites(sim_training_pops(10, 100, 100, 0.5)$gt_matrix, 0.01)
 find_varient_sites <- function(gt, MAF) {
   sums <- colSums(gt)
   total_ind <- nrow(gt)
@@ -18,11 +18,14 @@ find_varient_sites <- function(gt, MAF) {
   return(variant)
 }
 
-get_high_pools <- function(){
-
+get_pools <- function(sim_pops, MAF = 0.01){
+  num_var_sites <- sum(find_varient_sites(sim_pops$gt_matrix, MAF))
+ # high_pool_matrix <- matrix(nrow = , ncol= num_var_sites)
+  #low_pool_matrix <-
 }
 
 #end product - data structure for rrBLUP - ydiff, prov, gt_freq_matrix
+#count varient sites = sum(v, na.rm = TRUE)
 
 create_hilo_matrix <-
   function(nPop,

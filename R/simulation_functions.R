@@ -134,8 +134,8 @@ get_breeding_values <- function(snp_list, effect_sizes){
 #' @export
 #'
 #' @examples
-#'  pool_sim(10, 100, 100, 0.5)
-pool_sim <- function(num_pop, num_ind, num_sites, h2){
+#'  sim_training_pops(10, 100, 100, 0.5)
+sim_training_pops <- function(num_pop, num_ind, num_sites, h2){
   effect_sizes <- generate_effect_size(num_sites)
   allelic_freq <- generate_allelic_freqency(num_sites)
   genotypes <- generate_genotypes(num_pop, num_ind, num_sites, allelic_freq)
@@ -161,7 +161,7 @@ pool_sim <- function(num_pop, num_ind, num_sites, h2){
 #' @export
 #'
 #' @examples
-#' make_gt_matrix(pool_sim(5, 10, 10, 0.5)$gt_list)
+#' make_gt_matrix(sim_training_pops(5, 10, 10, 0.5)$gt_list)
 make_gt_matrix <- function(geno_list){
   pop <- length(geno_list)
   ind <- nrow(geno_list[[1]])

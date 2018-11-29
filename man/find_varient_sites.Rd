@@ -18,5 +18,5 @@ find_varient_sites(gt, MAF)
 Indentify Variant and Invaraiant Sites
 }
 \examples{
-find_varient_sites(pool_sim(10, 100, 100, 0.5)$gt_matrix, 0.01)
+find_varient_sites(sim_training_pops(10, 100, 100, 0.5)$gt_matrix, 0.01)
 }

@@ -18,5 +18,5 @@ Create a gentype matrix from the geno_list - NOT WORKING!!!
 Could potentially be simplified - needs test function
 }
 \examples{
-make_gt_matrix(pool_sim(5, 10, 10, 0.5)$gt_list)
+make_gt_matrix(sim_training_pops(5, 10, 10, 0.5)$gt_list)
 }
