@@ -37,67 +37,37 @@ get_samples <- function(pheno, threshold = 0.5){
               lo = lo_pheno))
 }
 
+#' Get Pooled Allele Frequency
+#'
+#' @param gt matrix
+#' @param sample boolean list
+#' @param variant_sites boolean vector
+#'
+#' @return mean frequency of the minor allele at each varient site
+#' @export
+#'
+#' @examples
 pool_freq <- function(gt, sample, variant_sites){
   freq <- colMeans(gt)[unlist(sample)]
   v_freq <- freq[variant_sites == TRUE]
+  return(v_freq)
 }
 
 get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
   variant_sites <- find_varient_sites(sim$gt_matrix, MAF)
   num_var_sites <- sum(variant_sites)
+  print(num_var_sites)
   num_pop <- length(sim$bv)
   high_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)
+  low_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)
   for (i in 1:num_pop){
     sample <- get_samples(sim$pt[[i]])
-    high_pool_matrix <- pool_freq(sim$gt_list[[i]], sample$hi, variant_sites)
+    high_pool_matrix[i, ] <- pool_freq(sim$gt_list[[i]], sample$hi, variant_sites)
+    low_pool_matrix[i, ] <- pool_freq(sim$gt_list[[i]], sample$lo, variant_sites)
   }
-  #low_pool_matrix <-
-  return(high_pool_matrix)
+  return(list(hi = high_pool_matrix,
+              lo = low_pool_matrix))
 }
-
-#get the high and low individuals
-# samp <- get_extreme_pheno(pheno_list, i, cutoff)
-
-#find the pooled frequency of the variant sites
-# hi[i, ] <- pool_freq(geno_list, i, samp$topInd, variant$fixed)
-# lo[i, ] <- pool_freq(geno_list, i, samp$lowInd, variant$fixed)
-
-#get_pools(sim_training_pops(10, 100, 100, 0.5))
-
-
-
-#end product - data structure for rrBLUP - ydiff, prov, gt_freq_matrix
-#count varient sites = sum(v, na.rm = TRUE)
-
-# create_hilo_matrix <-
-#   function(nPop,
-#            variant,
-#            pheno_list,
-#            geno_list,
-#            cutoff) {
-#
-#     #find the difference in allelicF between the extremes
-#     hi <- (matrix(nrow = nPop, ncol = variant$vLoci))
-#     lo <- (matrix(nrow = nPop, ncol = variant$vLoci))
-#
-#     for (i in 1:nPop) {
-#       #get the high and low individuals
-#       samp <- get_extreme_pheno(pheno_list, i, cutoff)
-#
-#       #find the pooled frequency of the variant sites
-#       hi[i, ] <- pool_freq(geno_list, i, samp$topInd, variant$fixed)
-#       lo[i, ] <- pool_freq(geno_list, i, samp$lowInd, variant$fixed)
-#     }
-#     return(list(hi=hi,
-#                 lo=lo))
-#   }
-#
-
-#geno_matrix <- matrix(nrow = pop * ind, ncol = sites)
-
-
-
-# find varient sites
 
 # create a hilo matrix type = ind, type=pool
 
@@ -106,51 +76,6 @@ get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
 #get means of high and low?
 
 
-
-
-
-# function(simParams,
-#          nLoci = 1000,
-#          nPop = 10,
-#          nInd = 1000,
-#          h2 = 0.5,
-#          cutoff = 0.5,
-#          MAF = 0.05) {
-#
-#   #set up lists to fill with values
-#   geno_list <- list()
-#   bv_list <- list()
-#   pheno_list <- list()
-#   varience_list <- list()
-#
-#   for (i in 1:nPop) {
-#     population <- create_pop(es=simParams$effectSizes, nInd, nLoci, allelicF=simParams$allelicF, h2)
-#calculate breeding values
-# bv <- (lociP %*% es)
-# #normalise breeding values
-# bv <- scale(bv)
-# #heritability factor used to calculate varience
-# var <- calculate_varience( bv = bv, h2 = h2 )
-# envVar <- rnorm( length(bv), 0, var)
-# #Store values in lists
-# return(list(
-#   geno = lociP,
-#   bv = bv,
-#   pheno = (bv + envVar),
-#   var = var
-# ))
-#     geno_list[[i]] <- population$geno
-#     bv_list[[i]] <-population$bv
-#     pheno_list[[i]] <- population$pheno
-#     varience_list[[i]] <- population$var
-#   }
-#
-#   #create matrix for genotypes
-#   genotypes <- create_geno_matrix(geno_list, nPop, nInd, nLoci)
-#
-#   #look only at varient num_sites
-#   variant <- find_varient_num_sites(genotypes, nPop, nInd, nLoci,MAF)
-#
 #   #find the difference in allele frequency between the extremes
 #   HiLo <- create_hilo_matrix(nPop, variant,pheno_list, geno_list, cutoff)
 #   HiLoInd <- create_hilo_ind_matrix(nPop, nInd, variant, pheno_list, geno_list,cutoff)

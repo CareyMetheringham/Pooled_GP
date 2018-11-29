@@ -2,10 +2,20 @@
 % Please edit documentation in R/pooling_functions.R
 \name{pool_freq}
 \alias{pool_freq}
-\title{Get Frequency of Alleles in the Pools}
+\title{Get Pooled Allele Frequency}
 \usage{
-pool_freq(geno_list, i, sample, fixed)
+pool_freq(gt, sample, variant_sites)
+}
+\arguments{
+\item{gt}{matrix}
+
+\item{sample}{boolean list}
+
+\item{variant_sites}{boolean vector}
+}
+\value{
+mean frequency of the minor allele at each varient site
 }
 \description{
-Get Frequency of Alleles in the Pools
+Get Pooled Allele Frequency
 }

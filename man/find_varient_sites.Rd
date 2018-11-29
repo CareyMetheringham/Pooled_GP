@@ -4,7 +4,7 @@
 \alias{find_varient_sites}
 \title{Indentify Variant and Invaraiant Sites}
 \usage{
-find_varient_sites(gt, MAF)
+find_varient_sites(gt, MAF = 0.01)
 }
 \arguments{
 \item{gt}{matrix of genotypes for all populations}
