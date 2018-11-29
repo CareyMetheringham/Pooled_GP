@@ -183,15 +183,22 @@ get_snp_id <- function(pool_rc){
 #'
 #' @examples
 #'read_in_pools_rc(find_pools_rc("./extdata/Pools_RC"), "./extdata/example_pop_data.csv", "./extdata/example_100_hits.gwas", 10)
-read_in_pools_rc <- function(pools_rc_files, info, gwas, hit_num){
+read_in_pools_rc <- function(pools_rc_files, info_file, gwas, hit_num){
+  info <- fread(info_file)
   top_gwas_hits <- get_hits_from_file(gwas, hit_num)
-  snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, info)
+  snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, info_file)
   snp_names <- get_snp_id(snps_to_use)
   maa_freq <- get_allele_freq(snps_to_use, pop_info_file, "major")
   mia_freq <- get_allele_freq(snps_to_use, pop_info_file, "minor")
   maa_freq_d <- fraction_to_decimal(maa_freq)
   mia_freq_d <- fraction_to_decimal(mia_freq)
- # y <- pool_info$Health
-  #prov <- rank(pool_info$Prov)
-  return(maa_freq)
+  y <- info[, 2]
+  prov <- info[, 3]
+  return(list(
+    y = y,
+    prov = prov,
+    maa = maa_freq_d,
+    mia = mia_freq_d,
+    snp_id = snp_names
+  ))
 }
