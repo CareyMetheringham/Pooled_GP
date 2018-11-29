@@ -10,7 +10,8 @@ gppool_demo <- function(){
   threshold <- 0.2
   training_data <-
     produce_sim_data(num_populations, ind_in_each, sites_to_simulate, heritability, MAF, threshold)
-  #issue - mia contains NaN!!
+  fit_rrblup <- mixed_solve_both(training_data)
+  return(fit_rrblup$maa$LL)
 }
 
 gppool_data_demo <- function(){
@@ -18,5 +19,6 @@ gppool_data_demo <- function(){
   pools_rc_files <- find_pools_rc("./extdata/Pools_RC")
   pop_info_file <- "./extdata/example_pop_data.csv"
   pool_data <- read_in_pools_rc(pools_rc_files, pop_info_file, gwas_hits, 50)
-  return(pool_data)
+  fit_rrblup <- mixed_solve_both(pool_data)
+  return(fit_rrblup$maa$LL)
 }
