@@ -117,7 +117,7 @@ get_allele <- function(alleles, which){
 
 #' Get the Major/Minor Allele Frequency
 #' @param pool_rc table of pools_rc data
-#' @param pool_info_file
+#' @param pool_info_file file with info on training population
 #' @param which which allele to get
 #'
 #' @return table with freqency of either major or minor alleles in each pool

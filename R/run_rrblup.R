@@ -1,4 +1,4 @@
-#test scripts need to chck lengths
+#test scripts need to check lengths
 
 #remove prov effects
 

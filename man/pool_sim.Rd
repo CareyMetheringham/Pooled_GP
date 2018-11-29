@@ -14,8 +14,8 @@ pool_sim(num_pop, num_ind, num_sites, h2)
 \item{num_sites}{number of sites under examination}
 }
 \value{
-a list containing effect size of each site, its allelic frequency and a list with
-the genotype matrices, breeding values and phenotypes(continuous)
+a list containing effect size of each site, its allelic frequency, the genotype matrix and a list with
+vectors of breeding values and phenotypes(continuous)
 }
 \description{
 Simulate the Training Populations

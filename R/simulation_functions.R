@@ -139,7 +139,7 @@ pool_sim <- function(num_pop, num_ind, num_sites, h2){
   effect_sizes <- generate_effect_size(num_sites)
   allelic_freq <- generate_allelic_freqency(num_sites)
   genotypes <- generate_genotypes(num_pop, num_ind, num_sites, allelic_freq)
-  genotype_matrix <- convert_geno_to_matrix(genotypes)
+  genotype_matrix <- make_gt_matrix(genotypes)
   bv <- get_breeding_values(genotypes, effect_sizes)
   phenotypes <- list()
   for ( i in num_pop){
@@ -147,7 +147,8 @@ pool_sim <- function(num_pop, num_ind, num_sites, h2){
   }
   return(list(es = effect_sizes,
               af = allelic_freq,
-              gt = genotype_matrix,
+              gt_list = genotypes,
+              gt_matrix = genotype_matrix,
               bv = bv,
               pt = phenotypes))
 }
@@ -160,8 +161,8 @@ pool_sim <- function(num_pop, num_ind, num_sites, h2){
 #' @export
 #'
 #' @examples
-#' convert_geno_to_matrix(pool_sim(10, 100, 100, 0.5)$gt)
-convert_geno_to_matrix <- function(geno_list){
+#' make_gt_matrix(pool_sim(5, 10, 10, 0.5)$gt_list)
+make_gt_matrix <- function(geno_list){
   pop <- length(geno_list)
   ind <- nrow(geno_list[[1]])
   sites <- ncol(geno_list[[1]])

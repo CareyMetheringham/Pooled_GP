@@ -9,6 +9,8 @@ get_allele_freq(pool_rc, pool_info_file, which)
 \arguments{
 \item{pool_rc}{table of pools_rc data}
 
+\item{pool_info_file}{file with info on training population}
+
 \item{which}{which allele to get}
 }
 \value{
