@@ -18,10 +18,33 @@ find_varient_sites <- function(gt, MAF) {
   return(variant)
 }
 
-get_pools <- function(sim_pops, MAF = 0.01){
-  num_var_sites <- sum(find_varient_sites(sim_pops$gt_matrix, MAF))
- # high_pool_matrix <- matrix(nrow = , ncol= num_var_sites)
+get_pools <- function(sim, MAF = 0.01){
+  num_var_sites <- sum(find_varient_sites(sim$gt_matrix, MAF))
+  num_pop <- length(sim$bv)
+  high_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)
+  for (i in 1:num_pop){
+    sample <- get_samples()
+  }
   #low_pool_matrix <-
+  return(high_pool_matrix)
+}
+
+get_samples <- function(phenotypes, threshold = 0.5){
+
+}
+
+#' Select the Individuals of Extreme Phenotype from each Population
+#' @param pheno_list
+#' @param i
+#' @param cutoff
+#' @return
+#' @export
+#' @examples
+get_extreme_pheno <- function(pheno_list,i,cutoff){
+  topInd <-
+    pheno_list[[i]] > quantile(pheno_list[[i]], (1 - cutoff))
+  lowInd <- pheno_list[[i]] < quantile(pheno_list[[i]], cutoff)
+  return(list(topInd=topInd, lowInd=lowInd))
 }
 
 #end product - data structure for rrBLUP - ydiff, prov, gt_freq_matrix
@@ -53,19 +76,7 @@ create_hilo_matrix <-
 
 
 
-#' Select the Individuals of Extreme Phenotype from each Population
-#' @param pheno_list
-#' @param i
-#' @param cutoff
-#' @return
-#' @export
-#' @examples
-get_extreme_pheno <- function(pheno_list,i,cutoff){
-  topInd <-
-    pheno_list[[i]] > quantile(pheno_list[[i]], (1 - cutoff))
-  lowInd <- pheno_list[[i]] < quantile(pheno_list[[i]], cutoff)
-  return(list(topInd=topInd, lowInd=lowInd))
-}
+
 
 #' Get Frequency of Alleles in the Pools
 #' @param geno_list

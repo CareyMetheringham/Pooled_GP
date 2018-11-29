@@ -142,7 +142,7 @@ sim_training_pops <- function(num_pop, num_ind, num_sites, h2){
   genotype_matrix <- make_gt_matrix(genotypes)
   bv <- get_breeding_values(genotypes, effect_sizes)
   phenotypes <- list()
-  for ( i in num_pop){
+  for ( i in 1:num_pop){
     phenotypes[[i]] <- get_phenotype(bv[[i]], calculate_varience(bv[[i]], h2))
   }
   return(list(es = effect_sizes,
