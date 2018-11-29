@@ -23,14 +23,31 @@ get_pools <- function(sim, MAF = 0.01){
   num_pop <- length(sim$bv)
   high_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)
   for (i in 1:num_pop){
-    sample <- get_samples()
+    sample <- get_samples(sim$pt[[i]])
   }
   #low_pool_matrix <-
   return(high_pool_matrix)
 }
 
-get_samples <- function(phenotypes, threshold = 0.5){
+#get_pools(sim_training_pops(10, 100, 100, 0.5))
 
+#' Samples from Population
+#'
+#' @param pheno matrix of dim 1*n where n is the number of individuals
+#' in a population
+#' @param threshold the proportion of the population taken from each extreme
+#' default set to 0.5 (50:50) split
+#'
+#' @return two boolean vectors identifying which individuals
+#' to use in high and low pools
+#' @export
+#'
+#' @examples
+get_samples <- function(pheno, threshold = 0.5){
+  hi_pheno <- pheno > quantile(pheno, (1 - threshold))
+  lo_pheno <- pheno < quantile(pheno, threshold)
+  return(list(hi = hi_pheno,
+              lo = lo_pheno))
 }
 
 #' Select the Individuals of Extreme Phenotype from each Population
