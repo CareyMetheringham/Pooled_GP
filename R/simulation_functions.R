@@ -129,8 +129,8 @@ get_breeding_values <- function(snp_list, effect_sizes){
 #' @param num_ind number of individuals in each population
 #' @param num_sites number of sites under examination
 #'
-#' @return a list containing effect size of each site, its allelic frequency and a list with
-#' the genotype matrices, breeding values and phenotypes(continuous)
+#' @return a list containing effect size of each site, its allelic frequency, the genotype matrix and a list with
+#' vectors of breeding values and phenotypes(continuous)
 #' @export
 #'
 #' @examples
@@ -139,6 +139,7 @@ pool_sim <- function(num_pop, num_ind, num_sites, h2){
   effect_sizes <- generate_effect_size(num_sites)
   allelic_freq <- generate_allelic_freqency(num_sites)
   genotypes <- generate_genotypes(num_pop, num_ind, num_sites, allelic_freq)
+  genotype_matrix <- convert_geno_to_matrix(genotypes)
   bv <- get_breeding_values(genotypes, effect_sizes)
   phenotypes <- list()
   for ( i in num_pop){
@@ -146,12 +147,12 @@ pool_sim <- function(num_pop, num_ind, num_sites, h2){
   }
   return(list(es = effect_sizes,
               af = allelic_freq,
-              gt = genotypes,
+              gt = genotype_matrix,
               bv = bv,
               pt = phenotypes))
 }
 
-#' Create a gentype matrix from the geno_list - NOT WORKING
+#' Create a gentype matrix from the geno_list - NOT WORKING!!!
 #' Could potentially be simplified - needs test function
 #' @param geno_list a list of genotype matrices
 #'
@@ -159,12 +160,12 @@ pool_sim <- function(num_pop, num_ind, num_sites, h2){
 #' @export
 #'
 #' @examples
-#' convert_geno_to_matrix(geno_list=list(rep(1,10)))
+#' convert_geno_to_matrix(pool_sim(10, 100, 100, 0.5)$gt)
 convert_geno_to_matrix <- function(geno_list){
   pop <- length(geno_list)
   ind <- nrow(geno_list[[1]])
   sites <- ncol(geno_list[[1]])
-  geno_matrix <- matrix(nrow = num_pop * num_ind, ncol = num_sites)
+  geno_matrix <- matrix(nrow = pop * ind, ncol = sites)
   k <- 1
   for (i in 1:pop) {
     geno_matrix[ k:(ind + k - 1), ] <- geno_list[[i]]
