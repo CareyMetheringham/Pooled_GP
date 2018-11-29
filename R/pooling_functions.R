@@ -50,20 +50,6 @@ get_samples <- function(pheno, threshold = 0.5){
               lo = lo_pheno))
 }
 
-#' Select the Individuals of Extreme Phenotype from each Population
-#' @param pheno_list
-#' @param i
-#' @param cutoff
-#' @return
-#' @export
-#' @examples
-get_extreme_pheno <- function(pheno_list,i,cutoff){
-  topInd <-
-    pheno_list[[i]] > quantile(pheno_list[[i]], (1 - cutoff))
-  lowInd <- pheno_list[[i]] < quantile(pheno_list[[i]], cutoff)
-  return(list(topInd=topInd, lowInd=lowInd))
-}
-
 #end product - data structure for rrBLUP - ydiff, prov, gt_freq_matrix
 #count varient sites = sum(v, na.rm = TRUE)
 
