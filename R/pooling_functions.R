@@ -82,10 +82,23 @@ get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
               lo = low_pool_matrix))
 }
 
+#' Produce a Simulation data object
+#'
+#' @param num_pop
+#' @param num_ind
+#' @param num_sites
+#' @param h2
+#' @param MAF
+#' @param threshold
+#'
+#' @return
+#' @export
+#'
+#' @examples
 produce_sim_data <- function(num_pop, num_ind, num_sites, h2 = 0.5, MAF = 0.01, threshold = 0.5){
   sim <-
     sim_training_pops(num_pop, num_ind, num_sites, h2)
-  pools <- get_pools(sim, MAF, threshold) #<--------------error - is only reporting one per pop
+  pools <- get_pools(sim, MAF, threshold)
   y <- c(rep(1, num_pop), rep(2, num_pop))
   hilo <- rbind(pools$hi, pools$lo)
   maa_hilo <- 2 - hilo
@@ -95,8 +108,8 @@ produce_sim_data <- function(num_pop, num_ind, num_sites, h2 = 0.5, MAF = 0.01, 
   variant <- find_varient_sites(sim$gt_matrix, MAF)
   return(list(
     y = y,
-    mia = hilo,
-    maa = maa_hilo,
+    mia = t(hilo),
+    maa = t(maa_hilo),
     prov = prov_vector,
     snp_id = sim_snp_id[variant == TRUE]
   ))

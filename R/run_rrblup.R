@@ -35,6 +35,7 @@ get_af_diff <- function(gt_matrix, prov_list){
 #' @export
 #'
 #' @examples
+#' mixed_solve_both(produce_sim_data(10, 100, 1000))
 mixed_solve_both <- function(data){
   freq_diff_mia <- data$mia
   freq_diff_maa <- data$maa
@@ -46,7 +47,7 @@ mixed_solve_both <- function(data){
 }
 
 #test scripts need to check lengths
-
+# produce_sim_data(10, 100, 1000)
 #remove prov effects
 
 #run rrblup with or without repeats
