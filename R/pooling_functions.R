@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' find_varient_sites(sim_training_pops(10, 100, 100, 0.5)$gt_matrix, 0.01)
-find_varient_sites <- function(gt, MAF) {
+find_varient_sites <- function(gt, MAF = 0.01) {
   sums <- colSums(gt)
   total_ind <- nrow(gt)
   #minumum nInd of times allele can occur
@@ -17,19 +17,6 @@ find_varient_sites <- function(gt, MAF) {
   variant <- (sums >= min_count & sums <= max_count)
   return(variant)
 }
-
-get_pools <- function(sim, MAF = 0.01){
-  num_var_sites <- sum(find_varient_sites(sim$gt_matrix, MAF))
-  num_pop <- length(sim$bv)
-  high_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)
-  for (i in 1:num_pop){
-    sample <- get_samples(sim$pt[[i]])
-  }
-  #low_pool_matrix <-
-  return(high_pool_matrix)
-}
-
-#get_pools(sim_training_pops(10, 100, 100, 0.5))
 
 #' Samples from Population
 #'
@@ -50,62 +37,61 @@ get_samples <- function(pheno, threshold = 0.5){
               lo = lo_pheno))
 }
 
+pool_freq <- function(gt, sample, variant_sites){
+  freq <- colMeans(gt)[unlist(sample)]
+  v_freq <- freq[variant_sites == TRUE]
+}
+
+get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
+  variant_sites <- find_varient_sites(sim$gt_matrix, MAF)
+  num_var_sites <- sum(variant_sites)
+  num_pop <- length(sim$bv)
+  high_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)
+  for (i in 1:num_pop){
+    sample <- get_samples(sim$pt[[i]])
+    high_pool_matrix <- pool_freq(sim$gt_list[[i]], sample$hi, variant_sites)
+  }
+  #low_pool_matrix <-
+  return(high_pool_matrix)
+}
+
+#get the high and low individuals
+# samp <- get_extreme_pheno(pheno_list, i, cutoff)
+
+#find the pooled frequency of the variant sites
+# hi[i, ] <- pool_freq(geno_list, i, samp$topInd, variant$fixed)
+# lo[i, ] <- pool_freq(geno_list, i, samp$lowInd, variant$fixed)
+
+#get_pools(sim_training_pops(10, 100, 100, 0.5))
+
+
+
 #end product - data structure for rrBLUP - ydiff, prov, gt_freq_matrix
 #count varient sites = sum(v, na.rm = TRUE)
 
-create_hilo_matrix <-
-  function(nPop,
-           variant,
-           pheno_list,
-           geno_list,
-           cutoff) {
-
-    #find the difference in allelicF between the extremes
-    hi <- (matrix(nrow = nPop, ncol = variant$vLoci))
-    lo <- (matrix(nrow = nPop, ncol = variant$vLoci))
-
-    for (i in 1:nPop) {
-      #get the high and low individuals
-      samp <- get_extreme_pheno(pheno_list, i, cutoff)
-
-      #find the pooled frequency of the variant sites
-      hi[i, ] <- pool_freq(geno_list, i, samp$topInd, variant$fixed)
-      lo[i, ] <- pool_freq(geno_list, i, samp$lowInd, variant$fixed)
-    }
-    return(list(hi=hi,
-                lo=lo))
-  }
-
-
-
-
-
-
-#' Get Frequency of Alleles in the Pools
-#' @param geno_list
-#' @param i
-#' @param sample
-#' @param fixed
-#' @return
-#' @export
-#' @examples
-pool_freq <- function(geno_list, i, sample, fixed){
-  freq <- colMeans((geno_list[[i]]) [sample, ])
-  var_freq <- freq[fixed == FALSE]
-  return(var_freq)
-}
-
-#' Create a Matrix containing High and Low Individuals
-#' @param nPop
-#' @param nInd
-#' @param variant
-#' @param pheno_list
-#' @param geno_list
-#' @return
-#' @export
-#' @examples
-#'
-
+# create_hilo_matrix <-
+#   function(nPop,
+#            variant,
+#            pheno_list,
+#            geno_list,
+#            cutoff) {
+#
+#     #find the difference in allelicF between the extremes
+#     hi <- (matrix(nrow = nPop, ncol = variant$vLoci))
+#     lo <- (matrix(nrow = nPop, ncol = variant$vLoci))
+#
+#     for (i in 1:nPop) {
+#       #get the high and low individuals
+#       samp <- get_extreme_pheno(pheno_list, i, cutoff)
+#
+#       #find the pooled frequency of the variant sites
+#       hi[i, ] <- pool_freq(geno_list, i, samp$topInd, variant$fixed)
+#       lo[i, ] <- pool_freq(geno_list, i, samp$lowInd, variant$fixed)
+#     }
+#     return(list(hi=hi,
+#                 lo=lo))
+#   }
+#
 
 #geno_matrix <- matrix(nrow = pop * ind, ncol = sites)
 
