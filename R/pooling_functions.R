@@ -69,7 +69,6 @@ pool_freq <- function(gt, sample, variant_sites){
 get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
   variant_sites <- find_varient_sites(sim$gt_matrix, MAF)
   num_var_sites <- sum(variant_sites)
-  print(num_var_sites)
   num_pop <- length(sim$bv)
   high_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)
   low_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)

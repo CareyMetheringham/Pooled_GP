@@ -2,16 +2,18 @@
 #print out results at intervals
 
 gppool_demo <- function(){
-  num_populations <- 10
-  ind_in_each <- 1000
-  sites_to_simulate <- 1000
+  n_pop <- 10
+  n_ind <- 1000
+  n_site <- 1000
   heritability <- 0.3
   MAF <- 0.01
   threshold <- 0.2
   training_data <-
-    produce_sim_data(num_populations, ind_in_each, sites_to_simulate, heritability, MAF, threshold)
+    produce_sim_data(n_pop, n_ind, n_site, heritability, MAF, threshold)
+  print(paste("Simulate ", n_pop, " populations each containing ", n_ind, " individuals", sep =""))
+  print(paste("Use ", n_site, " sites with MAF of ", MAF, sep =""))
+  print(paste("Produces ", length(training_data$snp_id), " varient sites", sep = ""))
   fit_rrblup <- mixed_solve_both(training_data)
-  return(fit_rrblup$maa$LL)
 }
 
 gppool_data_demo <- function(){
