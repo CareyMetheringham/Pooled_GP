@@ -172,3 +172,24 @@ get_snp_id <- function(pool_rc){
   snp_names <- paste(pool_rc$contig, pool_rc$pos, sep = "_")
   return(snp_names)
 }
+
+
+#' Get Data Structure from pools_rc
+#'
+#' @param dir
+#' @param info
+#' @param gwas
+#' @param hit_num
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'read_in_pools_rc(find_pools_rc("./extdata/Pools_RC"), "./extdata/example_pop_data.csv", "./extdata/example_100_hits.gwas", 10)
+read_in_pools_rc <- function(pools_rc_files, info, gwas, hit_num){
+  top_gwas_hits <- get_hits_from_file(gwas, hit_num)
+  snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, info)
+  major_allele_freq <- get_allele_freq(snps_to_use, pop_info_file, "major")
+  minor_allele_freq <- get_allele_freq(snps_to_use, pop_info_file, "minor")
+  return(major_allele_freq)
+}

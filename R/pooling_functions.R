@@ -53,6 +53,19 @@ pool_freq <- function(gt, sample, variant_sites){
   return(v_freq)
 }
 
+#' Get High and Low Pools
+#'
+#' @param sim object containing simulated population
+#' @param MAF minor allele frequency
+#' @param threshold proportion of population to draw from each extreme
+#' default set to 0.5
+#'
+#' @return list containing two matrices, hi and lo
+#' @export
+#'
+#' @examples
+#' get_pools(sim_training_pops(1, 100, 100, 0.5), 0.01, 0.5)
+#' get_pools(sim_training_pops(20, 1000, 1000, 0.2), 0.01, 0.2)
 get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
   variant_sites <- find_varient_sites(sim$gt_matrix, MAF)
   num_var_sites <- sum(variant_sites)
