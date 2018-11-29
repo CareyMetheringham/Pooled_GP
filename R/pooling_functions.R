@@ -81,3 +81,17 @@ get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
   return(list(hi = high_pool_matrix,
               lo = low_pool_matrix))
 }
+
+produce_sim_data <- function(num_pop, num_ind, num_sites, h2 = 0.5, MAF = 0.01, threshold = 0.5){
+  sim <-
+    pool_sim(num_pop, num_ind, num_sites, h2)
+  pools <- get_pools(sim, MAF, threshold)
+  y <- c(rep(1, num_pop), rep(2, num_pop))
+  hilo <- rbind(pools$hi, pools$lo)
+  return(list(
+    y = y,
+    mia = hilo,
+    prov = 0,
+    snp_id = 0
+  ))
+}

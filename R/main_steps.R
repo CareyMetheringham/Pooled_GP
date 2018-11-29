@@ -6,11 +6,11 @@ gppool_demo <- function(){
   ind_in_each <- 1000
   sites_to_simulate <- 1000
   heritability <- 0.3
-  training_populations <-
-    pool_sim(num_populations, ind_in_each, sites_to_simulate, heritability)
   MAF <- 0.01
   threshold <- 0.2
-  pools <- get_pools(training_populations, MAF, threshold)
+  training_data <-
+    produce_sim_data(num_populations, ind_in_each, sites_to_simulate, heritability, MAF, threshold)
+  #issue - mia contains NaN!!
 }
 
 gppool_data_demo <- function(){
