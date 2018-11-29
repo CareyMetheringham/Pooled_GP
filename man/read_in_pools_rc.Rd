@@ -4,7 +4,7 @@
 \alias{read_in_pools_rc}
 \title{Get Data Structure from pools_rc}
 \usage{
-read_in_pools_rc(pools_rc_files, info, gwas, hit_num)
+read_in_pools_rc(pools_rc_files, info_file, gwas, hit_num)
 }
 \arguments{
 \item{hit_num}{}

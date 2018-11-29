@@ -1,30 +1,29 @@
-get_af_diff <- function(){
-
+#' Find Difference in Allele Frequency from Provinence Mean
+#'
+#' @param gt_matrix matrix of allele frequences
+#' @param prov_list list of provinances
+#'
+#' @return matrix of deviation from prov means
+#' @export
+#'
+#' @examples
+get_af_diff <- function(gt_matrix, prov_list){
+  prov <- rank(prov_list)
+  unique_prov <- unique(prov)
+  number_of_prov <- length(unique_prov)
+  diff_matrix <- gt_matrix
+  for (i in 1:number_of_prov){
+    current_prov <- unique_prov[i]
+    pick <- gt_matrix[, prov == current_prov]
+    prov_mean_freq <- rowSums(pick) / ncol(pick)
+    freq_diff <- pick - prov_mean_freq
+    # store results in correct columns of diff_matrix
+    for (j in colnames(pick)){
+      diff_matrix[, j] <- freq_diff[, j]
+    }
+  }
+  return(diff_matrix)
 }
-
-#' #' Find Difference from Provenance Mean Frequency
-#' #' @param maa_dec
-#' #' @param prov
-#' #'
-#' #' @return
-#' #' @export
-#' #'
-#' #' @examples
-#' remove_prov_effects <- function(dec, prov){
-#'   uni_prov <- unique(prov)
-#'   prov_diff <- dec
-#'   for (i in 1:length(uni_prov)){
-#'     current_prov <- uni_prov[i]
-#'     correct_prov <- prov == current_prov
-#'     pick <- dec[, correct_prov == TRUE]
-#'     av <- rowSums(pick) / ncol(pick)
-#'     diff <- (pick - av)
-#'     for (j in colnames(diff)){
-#'       prov_diff[, j] <- diff[, j]
-#'     }
-#'   }
-#'   return(prov_diff)
-#' }
 
 #test scripts need to check lengths
 
