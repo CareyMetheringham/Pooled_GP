@@ -1,3 +1,99 @@
+#' Indentify Variant and Invaraiant Sites
+#'
+#' @param gt matrix of genotypes for all populations
+#' @param MAF minor allele frequency cutoff
+#'
+#' @return #boolean vector where TRUE is a varient site
+#' @export
+#'
+#' @examples
+#' find_varient_sites(pool_sim(10, 100, 100, 0.5)$gt_matrix, 0.01)
+find_varient_sites <- function(gt, MAF) {
+  sums <- colSums(gt)
+  total_ind <- nrow(gt)
+  #minumum nInd of times allele can occur
+  min_count <- (total_ind * MAF)
+  max_count <- (total_ind * (2 - (MAF)))
+  variant <- (sums >= min_count & sums <= max_count)
+  return(variant)
+}
+
+get_high_pools <- function(){
+
+}
+
+#end product - data structure for rrBLUP - ydiff, prov, gt_freq_matrix
+
+create_hilo_matrix <-
+  function(nPop,
+           variant,
+           pheno_list,
+           geno_list,
+           cutoff) {
+
+    #find the difference in allelicF between the extremes
+    hi <- (matrix(nrow = nPop, ncol = variant$vLoci))
+    lo <- (matrix(nrow = nPop, ncol = variant$vLoci))
+
+    for (i in 1:nPop) {
+      #get the high and low individuals
+      samp <- get_extreme_pheno(pheno_list, i, cutoff)
+
+      #find the pooled frequency of the variant sites
+      hi[i, ] <- pool_freq(geno_list, i, samp$topInd, variant$fixed)
+      lo[i, ] <- pool_freq(geno_list, i, samp$lowInd, variant$fixed)
+    }
+    return(list(hi=hi,
+                lo=lo))
+  }
+
+
+
+
+#' Select the Individuals of Extreme Phenotype from each Population
+#' @param pheno_list
+#' @param i
+#' @param cutoff
+#' @return
+#' @export
+#' @examples
+get_extreme_pheno <- function(pheno_list,i,cutoff){
+  topInd <-
+    pheno_list[[i]] > quantile(pheno_list[[i]], (1 - cutoff))
+  lowInd <- pheno_list[[i]] < quantile(pheno_list[[i]], cutoff)
+  return(list(topInd=topInd, lowInd=lowInd))
+}
+
+#' Get Frequency of Alleles in the Pools
+#' @param geno_list
+#' @param i
+#' @param sample
+#' @param fixed
+#' @return
+#' @export
+#' @examples
+pool_freq <- function(geno_list, i, sample, fixed){
+  freq <- colMeans((geno_list[[i]]) [sample, ])
+  var_freq <- freq[fixed == FALSE]
+  return(var_freq)
+}
+
+#' Create a Matrix containing High and Low Individuals
+#' @param nPop
+#' @param nInd
+#' @param variant
+#' @param pheno_list
+#' @param geno_list
+#' @return
+#' @export
+#' @examples
+#'
+
+
+#geno_matrix <- matrix(nrow = pop * ind, ncol = sites)
+
+
+
 # find varient sites
 
 # create a hilo matrix type = ind, type=pool
