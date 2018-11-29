@@ -48,7 +48,7 @@ get_samples <- function(pheno, threshold = 0.5){
 #'
 #' @examples
 pool_freq <- function(gt, sample, variant_sites){
-  freq <- colMeans(gt)[unlist(sample)]
+  freq <- colMeans(gt[unlist(sample) == TRUE, ])
   v_freq <- freq[variant_sites == TRUE]
   return(v_freq)
 }
@@ -68,19 +68,3 @@ get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
   return(list(hi = high_pool_matrix,
               lo = low_pool_matrix))
 }
-
-# create a hilo matrix type = ind, type=pool
-
-# get observed frequencies
-
-#get means of high and low?
-
-
-#   #find the difference in allele frequency between the extremes
-#   HiLo <- create_hilo_matrix(nPop, variant,pheno_list, geno_list, cutoff)
-#   HiLoInd <- create_hilo_ind_matrix(nPop, nInd, variant, pheno_list, geno_list,cutoff)
-#
-#   mean_high <- colMeans(HiLo$hi)
-#   mean_low <- colMeans(HiLo$lo)
-#
-#   obsFreq <- colSums(genotypes) / (nInd * nPop) / 2
