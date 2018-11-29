@@ -14,12 +14,12 @@ gppool_demo <- function(){
 }
 
 gppool_data_demo <- function(){
-  top_gwas_hits <- get_hits_from_file("./extdata/example_100_hits.gwas", 50)
+  gwas_hits <- "./extdata/example_100_hits.gwas"
   pools_rc_files <- find_pools_rc("./extdata/Pools_RC")
   pop_info_file <- "./extdata/example_pop_data.csv"
-  pool_data <- read_in_pools_rc()
-  snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, pop_info_file)
-  major_allele_freq <- get_allele_freq(snps_to_use, pop_info_file, "major")
-  minor_allele_freq <- get_allele_freq(snps_to_use, pop_info_file, "minor")
-  return(major_allele_freq)
+  pool_data <- read_in_pools_rc(pools_rc_files, pop_info_file, gwas_hits, 50)
+  # snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, pop_info_file)
+  # major_allele_freq <- get_allele_freq(snps_to_use, pop_info_file, "major")
+  # minor_allele_freq <- get_allele_freq(snps_to_use, pop_info_file, "minor")
+  # return(major_allele_freq)
 }
