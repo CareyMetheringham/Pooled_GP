@@ -27,6 +27,24 @@ get_af_diff <- function(gt_matrix, prov_list){
   return(diff_matrix)
 }
 
+#' Mixed Solve For Major and Minor Alleles
+#'
+#' @param data
+#'
+#' @return
+#' @export
+#'
+#' @examples
+mixed_solve_both <- function(data){
+  freq_diff_mia <- data$mia
+  freq_diff_maa <- data$maa
+  mia_fit <- mixed.solve(data$y, t(freq_diff_mia), SE = TRUE)
+  maa_fit <- mixed.solve(data$y, t(freq_diff_maa), SE = TRUE)
+  return(list(mia = mia_fit,
+              maa = maa_fit,
+              snps = data$snp_id))
+}
+
 #test scripts need to check lengths
 
 #remove prov effects

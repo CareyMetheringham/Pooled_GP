@@ -85,13 +85,17 @@ get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
 produce_sim_data <- function(num_pop, num_ind, num_sites, h2 = 0.5, MAF = 0.01, threshold = 0.5){
   sim <-
     pool_sim(num_pop, num_ind, num_sites, h2)
-  pools <- get_pools(sim, MAF, threshold)
+  pools <- get_pools(sim, MAF, threshold) #<--------------error - is only reporting one per pop
   y <- c(rep(1, num_pop), rep(2, num_pop))
   hilo <- rbind(pools$hi, pools$lo)
+  prov_id <- 1:num_pop
+  prov_vector <- rep(prov_id, 2)
+  sim_snp_id <- paste("snp", 1:num_sites, sep = "_")
+  variant <- find_varient_sites(sim$gt_matrix, MAF)
   return(list(
     y = y,
     mia = hilo,
-    prov = 0,
-    snp_id = 0
+    prov = prov_vector,
+    snp_id = sim_snp_id[variant == TRUE]
   ))
 }
