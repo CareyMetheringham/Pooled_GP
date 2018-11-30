@@ -17,7 +17,7 @@ read_fix_table <- function(wd){
   return(fix_table2)
 }
 
-#' Read in the genotype table - need to fix warnings
+#' Read in the genotype table
 #' @param wd working directory containing genotype.table
 #'
 #' @return a data frame with named rows
@@ -35,29 +35,6 @@ read_gt_table <- function(wd){
   return(gt)
 }
 
-read_test_info("./extdata/example_ind_info.csv")
-read_test_info <- function(test_info_file){
-  info <- fread(test_info_file)
-  colnames(info) <- c("Individual", "Group1")
-
-}
-
+#read in ind _info
 
 #read in vcf data
-
-
-
-#read in
-
-
-# # 12. Read in Individual Data
-# ind <- fread(ind_info)
-# colnames(ind) <- c("Individual", "Health")
-# ind$Individual <- paste("Individual", ind$Individual, sep = "")
-# head(ind)
-#
-# # 13. Read in fix and genotype tables
-# fix_table <- get_fix_table(wd)
-# gt_table <- get_gt_table(wd)
-# ind_sample_names <- gsub(".sorted.bam", "", colnames(gt_table))
-# colnames(gt_table) <- ind_sample_names
