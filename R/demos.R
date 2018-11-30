@@ -14,6 +14,7 @@ gppool_demo <- function(){
   print(paste("Use ", n_site, " sites with MAF of ", MAF, sep =""))
   print(paste("Produces ", length(training_data$snp_id), " varient sites", sep = ""))
   fit_rrblup <- mixed_solve_both(training_data)
+  plot(fit_rrblup$mia$u)
 
 }
 
