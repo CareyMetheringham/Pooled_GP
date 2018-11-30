@@ -189,8 +189,8 @@ read_in_pools_rc <- function(pools_rc_files, info_file, gwas, hit_num){
   top_gwas_hits <- get_hits_from_file(gwas, hit_num)
   snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, info_file)
   snp_names <- get_snp_id(snps_to_use)
-  maa_freq <- get_allele_freq(snps_to_use, pop_info_file, "major")
-  mia_freq <- get_allele_freq(snps_to_use, pop_info_file, "minor")
+  maa_freq <- get_allele_freq(snps_to_use, info_file, "major")
+  mia_freq <- get_allele_freq(snps_to_use, info_file, "minor")
   maa_freq_d <- fraction_to_decimal(maa_freq)
   mia_freq_d <- fraction_to_decimal(mia_freq)
   y <- info$Group1

@@ -2,18 +2,18 @@ context("Test Parameters used in Population Simulation")
 library(gppool)
 
 test_that("Length allelicF is equal to snps",{
-  expect_equal(length(generate_allelic_freqency(1)), 1)
-  expect_equal(length(generate_allelic_freqency(1000)), 1000)
+  expect_length(generate_allelic_freqency(1), 1)
+  expect_length(generate_allelic_freqency(1000), 1000)
 })
 
 test_that("Length es is equal to snps",{
-  expect_equal(length(generate_effect_size(1)), 1)
-  expect_equal(length(generate_effect_size(1000)), 1000)
+  expect_length(generate_effect_size(1), 1)
+  expect_length(generate_effect_size(1000), 1000)
 })
 
 test_that("Length loci is equal to snps",{
-  expect_equal(length(create_loci(1, generate_allelic_freqency(1))), 1)
-  expect_equal(length(create_loci(10000, generate_allelic_freqency(10000))), 10000)
+  expect_length(create_loci(1, generate_allelic_freqency(1)), 1)
+  expect_length(create_loci(10000, generate_allelic_freqency(10000)), 10000)
 })
 
 test_that("Simulated effect size has expected mean of 0",{
