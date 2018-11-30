@@ -45,6 +45,7 @@ read_gt_table <- function(wd){
 #' @export
 #'
 #' @examples
+#' read_ind_info("./extdata/example_ind_info.csv")
 read_ind_info <- function(ind_info_file){
   info <- fread(ind_info_file)
   colnames(info) <- c("ID", "Group")
@@ -52,5 +53,4 @@ read_ind_info <- function(ind_info_file){
   return(info)
 }
 
-#read_ind_info("./extdata/example_ind_info.csv")
 #read in vcf data

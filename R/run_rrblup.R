@@ -45,3 +45,28 @@ mixed_solve_both <- function(data){
               maa = maa_fit,
               snps = data$snp_id))
 }
+
+#' Write EES Results to File
+#'
+#' @param wd working directory
+#' @param fit model fit output to use
+#'
+#' @return a table printed to file ees.table in named working dir
+#' # SNP	MAA.EES	MAA.EES.SE	MIA.EES	MIA.EES.SE
+#' @export
+#'
+#' @examples
+#' write_ees_table("./extdata", mixed_solve_both(produce_sim_data(10, 100, 100)))
+write_ees_table <- function(wd, fit){
+  ees_table <- data.frame(fit$snps, fit$mia$u, fit$mia$u.SE, fit$maa$u, fit$maa$u.SE)
+  colnames(ees_table) <- c("SNP", "EES.MIA", "EES.MIA.SE", "EES.MAA", "EES.MAA.SE")
+  ees_table_file <- paste(wd, "ees.table", sep = "/")
+  write.table(
+    ees_table,
+    file = ees_table_file,
+    quote = FALSE,
+    row.names = FALSE,
+    sep = "\t"
+  )
+
+}

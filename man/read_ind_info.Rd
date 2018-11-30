@@ -15,3 +15,6 @@ dataframe with two columns ID Group
 \description{
 Read in Individual Infomation
 }
+\examples{
+read_ind_info("./extdata/example_ind_info.csv")
+}
