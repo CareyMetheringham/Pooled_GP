@@ -9,7 +9,7 @@ gwas <- "../../extdata/example_100_hits.gwas"
 
 test_that("Pools rc data object as expected",{
   expect_named(read_in_pools_rc(find_pools_rc(pool_dir), pool_info, gwas, 10),
-               c("y", "prov", "maa", "mia", "snp_id"))
+               c("y", "prov", "maa", "mia", "snp_id", "major", "minor"))
 })
 
 test_that("gt is a matrix",{

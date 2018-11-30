@@ -24,6 +24,9 @@ gppool_data_demo <- function(){
   pop_info_file <- "./extdata/example_pop_data.csv"
   pool_data <- read_in_pools_rc(pools_rc_files, pop_info_file, gwas_hits, 50)
   fit_rrblup <- mixed_solve_both(pool_data)
-  plot(fit_rrblup$mia$u)
-  return(fit_rrblup$maa$LL)
+  ees_table <- create_ees_table(fit_rrblup)
+  ind_gt <- read_gt_table("./extdata")
+  ind_fix <- read_fix_table("./extdata")
+  matched <- match_snps_in_ind(ees_table, ind_gt)
+  return(matched)
 }

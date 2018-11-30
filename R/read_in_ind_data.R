@@ -26,12 +26,12 @@ read_fix_table <- function(wd){
 #' @examples
 #' read_gt_table("./extdata")
 read_gt_table <- function(wd){
-  genotype <- paste(wd, "genotype.table", sep = "/")
-  genotype_table <- read.table(genotype, sep = "\t")
-  snps_in_ind <- genotype_table$V1
-  gt <- as.data.frame(genotype_table[, -1])
+  gt_file <- paste(wd, "genotype.table", sep = "/")
+  gt <- read.table(gt_file, sep = "\t")
+  # snps_in_ind <- genotype_table[, 1]
+  # gt <- as.data.frame(genotype_table[, -1])
   colnames(gt) <- gsub(".sorted.bam", "", colnames(gt))
-  rownames(gt) <- snps_in_ind
+  # rownames(gt) <- snps_in_ind
   return(gt)
 }
 

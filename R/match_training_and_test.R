@@ -1,6 +1,8 @@
+match_snps_in_ind <- function(ees_table, gt_ind){
+  use_snps <- subset(ees_table, ees_table$SNP %in% row.names(gt_ind))
+}
 
-
-
+#need to get and store major and minor alleles
 
 
 # # 14. Find the matching SNPs
