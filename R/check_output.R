@@ -28,3 +28,7 @@ create_ebv_table <- function(ind_info, ebv){
   colnames(ebv_table) <- c("ID", "Group", "EBV")
   return(ebv_table)
 }
+
+calculate_correlation <- function(){
+
+}

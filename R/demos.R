@@ -52,3 +52,21 @@ gppool_data_demo <- function(){
   plot(ebv)
   return(accuracy)
 }
+
+gppool_rerun_demo <- function(subset_size = 10){
+  pop_info_file <- "./extdata/example_pop_data.csv"
+  ind_info_file <- "./extdata/example_ind_info.csv"
+  prior_ess <- fread("./extdata/example_ees.table")
+  snps_to_use <- "./extdata/example_snps_for_rerun"
+  rerun_data <- make_rerun_object(snps_to_use, pop_info_file, prior_ess, subset_size)
+  fit_rrblup <- mixed_solve_both(rerun_data)
+  ees_table <- create_ees_table(fit_rrblup)
+  ind_gt <- read_gt_table("./extdata")
+  ind_fix <- read_fix_table("./extdata")
+  matched <- match_and_subset(ees_table, ind_gt, ind_fix, rerun_data, 20)
+  ebv <- get_ebv(matched$ees, matched$gt)
+  ind_info <- read_ind_info(ind_info_file)
+  accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv))
+  plot(ebv)
+  return(accuracy)
+}
