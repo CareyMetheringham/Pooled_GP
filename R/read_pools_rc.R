@@ -82,7 +82,7 @@ find_top_snps <- function(pool_files, hits, pool_info_file) {
 #' @examples
 #' get_hits_from_file("./extdata/example_100_hits.gwas", 10)
 get_hits_from_file <- function(p_val_file, num_hits){
-  hits <- fread(file = hits_file)
+  hits <- fread(file = p_val_file)
   colnames(hits) <- c("contig", "pos", "snp", "P")
   hits <- hits[order(hits$P), ]
   top_hits <- head(hits, num_hits)

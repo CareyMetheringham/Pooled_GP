@@ -1,4 +1,4 @@
-context("Pool-seq Simulation")
+context("Test Parameters used in Population Simulation")
 library(gppool)
 
 test_that("Length allelicF is equal to snps",{

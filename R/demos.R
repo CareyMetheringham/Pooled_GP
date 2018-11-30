@@ -5,15 +5,16 @@ gppool_demo <- function(){
   n_pop <- 10
   n_ind <- 1000
   n_site <- 1000
-  heritability <- 0.3
+  h2 <- 0.3
   MAF <- 0.01
   threshold <- 0.2
   training_data <-
-    produce_sim_data(n_pop, n_ind, n_site, heritability, MAF, threshold)
+    produce_sim_data(n_pop, n_ind, n_site, h2, MAF, threshold)
   print(paste("Simulate ", n_pop, " populations each containing ", n_ind, " individuals", sep =""))
   print(paste("Use ", n_site, " sites with MAF of ", MAF, sep =""))
   print(paste("Produces ", length(training_data$snp_id), " varient sites", sep = ""))
   fit_rrblup <- mixed_solve_both(training_data)
+
 }
 
 gppool_data_demo <- function(){
@@ -22,5 +23,6 @@ gppool_data_demo <- function(){
   pop_info_file <- "./extdata/example_pop_data.csv"
   pool_data <- read_in_pools_rc(pools_rc_files, pop_info_file, gwas_hits, 50)
   fit_rrblup <- mixed_solve_both(pool_data)
+  plot(fit_rrblup$mia$u)
   return(fit_rrblup$maa$LL)
 }
