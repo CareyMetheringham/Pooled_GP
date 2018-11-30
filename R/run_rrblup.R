@@ -56,17 +56,9 @@ mixed_solve_both <- function(data){
 #' @export
 #'
 #' @examples
-#' write_ees_table("./extdata", mixed_solve_both(produce_sim_data(10, 100, 100)))
-write_ees_table <- function(wd, fit){
+#' create_ees_table(mixed_solve_both(produce_sim_data(10, 100, 100)))
+create_ees_table <- function(fit){
   ees_table <- data.frame(fit$snps, fit$mia$u, fit$mia$u.SE, fit$maa$u, fit$maa$u.SE)
   colnames(ees_table) <- c("SNP", "EES.MIA", "EES.MIA.SE", "EES.MAA", "EES.MAA.SE")
-  ees_table_file <- paste(wd, "ees.table", sep = "/")
-  write.table(
-    ees_table,
-    file = ees_table_file,
-    quote = FALSE,
-    row.names = FALSE,
-    sep = "\t"
-  )
-
+  return(ees_table)
 }
