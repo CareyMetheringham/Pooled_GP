@@ -28,10 +28,7 @@ read_fix_table <- function(wd){
 read_gt_table <- function(wd){
   gt_file <- paste(wd, "genotype.table", sep = "/")
   gt <- read.table(gt_file, sep = "\t")
-  # snps_in_ind <- genotype_table[, 1]
-  # gt <- as.data.frame(genotype_table[, -1])
   colnames(gt) <- gsub(".sorted.bam", "", colnames(gt))
-  # rownames(gt) <- snps_in_ind
   return(gt)
 }
 

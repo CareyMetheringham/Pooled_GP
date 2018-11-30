@@ -70,12 +70,14 @@ get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
   variant_sites <- find_varient_sites(sim$gt_matrix, MAF)
   num_var_sites <- sum(variant_sites)
   num_pop <- length(sim$bv)
-  high_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)
-  low_pool_matrix <- matrix(nrow = num_pop, ncol= num_var_sites)
+  high_pool_matrix <- matrix(nrow = num_pop, ncol = num_var_sites)
+  low_pool_matrix <- matrix(nrow = num_pop, ncol = num_var_sites)
   for (i in 1:num_pop){
     sample <- get_samples(sim$pt[[i]])
-    high_pool_matrix[i, ] <- pool_freq(sim$gt_list[[i]], sample$hi, variant_sites)
-    low_pool_matrix[i, ] <- pool_freq(sim$gt_list[[i]], sample$lo, variant_sites)
+    high_pool_matrix[i, ] <-
+      pool_freq(sim$gt_list[[i]], sample$hi, variant_sites)
+    low_pool_matrix[i, ] <-
+      pool_freq(sim$gt_list[[i]], sample$lo, variant_sites)
   }
   return(list(hi = high_pool_matrix,
               lo = low_pool_matrix))
@@ -94,7 +96,14 @@ get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
 #' @export
 #'
 #' @examples
-produce_sim_data <- function(num_pop, num_ind, num_sites, h2 = 0.5, MAF = 0.01, threshold = 0.5){
+produce_sim_data <-
+  function(num_pop,
+           num_ind,
+           num_sites,
+           h2 = 0.5,
+           MAF = 0.01,
+           threshold = 0.5
+  ){
   sim <-
     sim_training_pops(num_pop, num_ind, num_sites, h2)
   pools <- get_pools(sim, MAF, threshold)

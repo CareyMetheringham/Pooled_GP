@@ -21,7 +21,9 @@ match_snps_in_ind <- function(ees_table, gt_ind){
 #'
 #' @examples
 order_by_ees <- function(ees_table){
-  ordered_matches <- ees_table[order((ees_table$EES.MIA) ^ 2, decreasing = TRUE),]
+  ordered_matches <-
+    ees_table[order( (ees_table$EES.MIA) ^ 2, decreasing = TRUE), ]
+  return(ordered_matches)
 }
 
 #' Find and Fix Major Allele Mismatches
@@ -94,6 +96,7 @@ get_ees_subset <- function(ees_table, subset_size){
 #' @examples
 get_gt_subset <- function(snp_list, gt){
   gt_subset <- subset(gt, row.names(gt) %in% snp_list)
+  return(gt_subset)
 }
 
 #' Match Test & Training, Correct & Subset
@@ -109,7 +112,8 @@ get_gt_subset <- function(snp_list, gt){
 #'
 #' @examples
 match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
-  corrected_mismatch <- fix_allele_mismatch(ees_table, ind_gt, ind_fix, pool_data)
+  corrected_mismatch <-
+    fix_allele_mismatch(ees_table, ind_gt, ind_fix, pool_data)
   match_snps <- match_snps_in_ind(ees_table, corrected_mismatch)
   subset_snps <- get_ees_subset(match_snps, subset_size)
   gt_subset <- get_gt_subset(subset_snps$SNP, corrected_mismatch)

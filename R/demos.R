@@ -10,11 +10,24 @@ gppool_demo <- function(){
   threshold <- 0.2
   training_data <-
     produce_sim_data(n_pop, n_ind, n_site, h2, MAF, threshold)
-  print(paste("Simulate ", n_pop, " populations each containing ", n_ind, " individuals", sep =""))
-  print(paste("Use ", n_site, " sites with MAF of ", MAF, sep =""))
-  print(paste("Produces ", length(training_data$snp_id), " varient sites", sep = ""))
+  print(paste(
+    "Simulate ",
+    n_pop,
+    " populations each containing ",
+    n_ind,
+    " individuals",
+    sep = ""
+  ))
+  print(paste("Use ", n_site, " sites with MAF of ", MAF, sep = ""))
+  print(paste(
+    "Produces ",
+    length(training_data$snp_id),
+    " varient sites",
+    sep = ""
+  ))
   fit_rrblup <- mixed_solve_both(training_data)
   ees_table <- create_ees_table(fit_rrblup)
+  return(ees_table)
 }
 
 gppool_data_demo <- function(){

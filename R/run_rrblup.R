@@ -58,7 +58,9 @@ mixed_solve_both <- function(data){
 #' @examples
 #' create_ees_table(mixed_solve_both(produce_sim_data(10, 100, 100)))
 create_ees_table <- function(fit){
-  ees_table <- data.frame(fit$snps, fit$mia$u, fit$mia$u.SE, fit$maa$u, fit$maa$u.SE)
-  colnames(ees_table) <- c("SNP", "EES.MIA", "EES.MIA.SE", "EES.MAA", "EES.MAA.SE")
+  ees_table <-
+    data.frame(fit$snps, fit$mia$u, fit$mia$u.SE, fit$maa$u, fit$maa$u.SE)
+  colnames(ees_table) <-
+    c("SNP", "EES.MIA", "EES.MIA.SE", "EES.MAA", "EES.MAA.SE")
   return(ees_table)
 }
