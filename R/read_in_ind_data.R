@@ -27,21 +27,25 @@ read_fix_table <- function(wd){
 #' read_gt_table("./extdata")
 read_gt_table <- function(wd){
   genotype <- paste(wd, "genotype.table", sep = "/")
-  genotype_table <- fread(genotype, sep = "\t")
+  genotype_table <- read.table(genotype, sep = "\t")
   snps_in_ind <- genotype_table$V1
   gt <- as.data.frame(genotype_table[, -1])
+  colnames(gt) <- gsub(".sorted.bam", "", colnames(gt))
   rownames(gt) <- snps_in_ind
   return(gt)
 }
 
+read_test_info("./extdata/example_ind_info.csv")
+read_test_info <- function(test_info_file){
+  info <- fread(test_info_file)
+  colnames(info) <- c("Individual", "Group1")
 
+}
 
 
 #read in vcf data
 
-#read in genotype table
 
-#read in fix.table
 
 #read in
 
