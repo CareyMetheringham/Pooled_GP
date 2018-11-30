@@ -27,8 +27,12 @@ gppool_demo <- function(){
   ))
   fit_rrblup <- mixed_solve_both(training_data)
   ees_table <- create_ees_table(fit_rrblup)
-  test_data <- sim_test_pop(training_data$)
-  return(ees_table)
+  test_data <- sim_test_pop(training_data$es, training_data$af, h2, 200)
+  matched_ees <- match_snps_in_ind(ees_table, test_data)
+  matched_gt <- get_gt_subset(matched_ees$SNP, test_data)
+  ebv <- get_ebv(matched_ees, matched_gt)
+  true_bv <-  t(test_data) %*% training_data$es
+  plot(ebv ~ true_bv)
 }
 
 gppool_data_demo <- function(){

@@ -107,7 +107,7 @@ produce_sim_data <-
   sim <-
     sim_training_pops(num_pop, num_ind, num_sites, h2)
   pools <- get_pools(sim, MAF, threshold)
-  y <- c(rep(1, num_pop), rep(2, num_pop))
+  y <- c(rep(1, num_pop), rep(0, num_pop))
   hilo <- rbind(pools$hi, pools$lo)
   maa_hilo <- 2 - hilo
   prov_id <- 1:num_pop
