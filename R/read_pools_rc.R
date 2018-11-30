@@ -8,7 +8,7 @@
 #' get_pool_colnames("./extdata/example_pop_data.csv")
 get_pool_colnames <- function(pool_info_file){
   pool_info <- fread(pool_info_file)
-  colnames(pool_info) <- c("Sample", "Group1", "Group2")
+  colnames(pool_info) <- c("Sample", "Group", "Group2")
   mia_names <- paste("mia", pool_info$Sample, sep = "_")
   maa_names <- paste("maa", pool_info$Sample, sep = "_")
   pool_col_names <-
@@ -185,7 +185,7 @@ get_snp_id <- function(pool_rc){
 #'read_in_pools_rc(find_pools_rc("./extdata/Pools_RC"), "./extdata/example_pop_data.csv", "./extdata/example_100_hits.gwas", 10)
 read_in_pools_rc <- function(pools_rc_files, info_file, gwas, hit_num){
   info <- fread(info_file)
-  colnames(info) <- c("Sample", "Group1", "Group2")
+  colnames(info) <- c("Sample", "Group", "Group2")
   top_gwas_hits <- get_hits_from_file(gwas, hit_num)
   snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, info_file)
   snp_names <- get_snp_id(snps_to_use)
@@ -193,7 +193,7 @@ read_in_pools_rc <- function(pools_rc_files, info_file, gwas, hit_num){
   mia_freq <- get_allele_freq(snps_to_use, info_file, "minor")
   maa_freq_d <- fraction_to_decimal(maa_freq)
   mia_freq_d <- fraction_to_decimal(mia_freq)
-  y <- info$Group1
+  y <- info$Group
   prov <- info$Group2
   return(list(
     y = y,

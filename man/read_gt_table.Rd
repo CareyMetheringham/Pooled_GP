@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_in_ind_data.R
 \name{read_gt_table}
 \alias{read_gt_table}
-\title{Read in the genotype table - need to fix warnings}
+\title{Read in the genotype table}
 \usage{
 read_gt_table(wd)
 }
@@ -13,7 +13,7 @@ read_gt_table(wd)
 a data frame with named rows
 }
 \description{
-Read in the genotype table - need to fix warnings
+Read in the genotype table
 }
 \examples{
 read_gt_table("./extdata")

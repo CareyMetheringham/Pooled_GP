@@ -37,4 +37,20 @@ read_gt_table <- function(wd){
 
 #read in ind _info
 
+#' Read in Individual Infomation
+#'
+#' @param ind_info_file path to file
+#'
+#' @return dataframe with two columns ID Group
+#' @export
+#'
+#' @examples
+read_ind_info <- function(ind_info_file){
+  info <- fread(ind_info_file)
+  colnames(info) <- c("ID", "Group")
+  info$ID <- paste("Individual", info$ID, sep = "")
+  return(info)
+}
+
+#read_ind_info("./extdata/example_ind_info.csv")
 #read in vcf data
