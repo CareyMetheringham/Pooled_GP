@@ -195,8 +195,8 @@ read_in_pools_rc <- function(pools_rc_files, info_file, gwas, hit_num){
   mia_freq_d <- fraction_to_decimal(mia_freq)
   y <- info$Group
   prov <- info$Group2
-  major <- get_allele(snps_to_use, "major")
-  minor <- get_allele(snps_to_use, "minor")
+  major <- get_allele(snps_to_use$allele_states, "major")
+  minor <- get_allele(snps_to_use$allele_states, "minor")
   return(list(
     y = y,
     prov = prov,

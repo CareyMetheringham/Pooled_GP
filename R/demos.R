@@ -28,5 +28,5 @@ gppool_data_demo <- function(){
   ind_gt <- read_gt_table("./extdata")
   ind_fix <- read_fix_table("./extdata")
   matched <- match_snps_in_ind(ees_table, ind_gt)
-  return(matched)
+  return(correct_allele_mismatch(ees_table, ind_fix, pool_data))
 }

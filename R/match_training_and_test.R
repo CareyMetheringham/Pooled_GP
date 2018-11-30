@@ -2,6 +2,11 @@ match_snps_in_ind <- function(ees_table, gt_ind){
   use_snps <- subset(ees_table, ees_table$SNP %in% row.names(gt_ind))
 }
 
+correct_allele_mismatch <- function(ees_table, fix_table, pop_data){
+  ees_and_maa <- data.frame(ees_table, pop_data$major)
+  return(ees_and_maa)
+}
+
 #need to get and store major and minor alleles
 
 
