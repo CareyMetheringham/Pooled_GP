@@ -1,13 +1,12 @@
 #demo pipeline
 #print out results at intervals
 
-gppool_demo <- function(){
-  n_pop <- 10
-  n_ind <- 1000
-  n_site <- 1000
-  h2 <- 0.3
-  MAF <- 0.01
-  threshold <- 0.2
+gppool_demo <- function(  n_pop = 10,
+                          n_ind = 1000,
+                          n_site = 1000,
+                          h2 = 0.3,
+                          MAF = 0.01,
+                          threshold = 0.2){
   training_data <-
     produce_sim_data(n_pop, n_ind, n_site, h2, MAF, threshold)
   print(paste(
@@ -32,6 +31,7 @@ gppool_demo <- function(){
   matched_gt <- get_gt_subset(matched_ees$SNP, test_data)
   ebv <- get_ebv(matched_ees, matched_gt)
   true_bv <-  t(test_data) %*% training_data$es
+  print(cor(ebv, true_bv))
   plot(ebv ~ true_bv)
 }
 
@@ -39,6 +39,7 @@ gppool_data_demo <- function(){
   gwas_hits <- "./extdata/example_100_hits.gwas"
   pools_rc_files <- find_pools_rc("./extdata/Pools_RC")
   pop_info_file <- "./extdata/example_pop_data.csv"
+  ind_info_file <- "./extdata/example_ind_info.csv"
   pool_data <- read_in_pools_rc(pools_rc_files, pop_info_file, gwas_hits, 50)
   fit_rrblup <- mixed_solve_both(pool_data)
   ees_table <- create_ees_table(fit_rrblup)
@@ -46,5 +47,8 @@ gppool_data_demo <- function(){
   ind_fix <- read_fix_table("./extdata")
   matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, 20)
   ebv <- get_ebv(matched$ees, matched$gt)
+  ind_info <- read_ind_info(ind_info_file)
+  accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv))
   plot(ebv)
+  return(accuracy)
 }
