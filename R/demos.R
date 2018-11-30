@@ -26,6 +26,7 @@ gppool_data_demo <- function(){
   ees_table <- create_ees_table(fit_rrblup)
   ind_gt <- read_gt_table("./extdata")
   ind_fix <- read_fix_table("./extdata")
-  matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, 5)
-  return(matched)
+  matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, 20)
+  ebv <- get_ebv(matched$ees, matched$gt)
+  plot(ebv)
 }
