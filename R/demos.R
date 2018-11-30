@@ -27,6 +27,7 @@ gppool_demo <- function(){
   ))
   fit_rrblup <- mixed_solve_both(training_data)
   ees_table <- create_ees_table(fit_rrblup)
+  test_data <- sim_test_pop(training_data$)
   return(ees_table)
 }
 

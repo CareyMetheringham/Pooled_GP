@@ -13,25 +13,3 @@ get_ebv <- function(ees_table, gt_matrix){
   }
   return(unlist(ebv))
 }
-
-#' est_bv <- testPop$genotype %*% (estEffect * 100) #why multiply by 100?
-#' #' Calculate Estimated Breeding Value
-#' #' @param gt_subset
-#' #' @param my_ees
-#' #' @param ind_sample_names
-#' #' @param snp_header
-#' #'
-#' #' @return
-#' #' @export
-#' #'
-#' #' @examples
-#' calculate_ebv <- function(gt, mia_ees, maa_ees, sample_names, snp_header){
-#'   gt_rev <- 2 - gt
-#'   ebv_mia <- apply(as.matrix(gt), 2, allele_by_ees)
-#'   ebv_maa <- apply(as.matrix(gt_rev), 2, allele_by_ees2)
-#'   combined_ebv <- ebv_mia + ebv_maa
-#'   ebv <- colSums(combined_ebv)
-#'   my_ebv <- data.frame(sample_names, ebv)
-#'   colnames(my_ebv) <- c("Individual", snp_header)
-#'   return(my_ebv)
-#' }
