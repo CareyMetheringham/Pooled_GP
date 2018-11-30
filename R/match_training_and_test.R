@@ -1,12 +1,40 @@
+#' Find SNPs Occuring in Training and Test
+#'
+#' @param ees_table
+#' @param gt_ind
+#'
+#' @return
+#' @export
+#'
+#' @examples
 match_snps_in_ind <- function(ees_table, gt_ind){
   use_snps <- subset(ees_table, ees_table$SNP %in% row.names(gt_ind))
-
+  return(use_snps)
 }
 
+#' Sort EES Table by MIA^2
+#'
+#' @param ees_table
+#'
+#' @return
+#' @export
+#'
+#' @examples
 order_by_ees <- function(ees_table){
   ordered_matches <- ees_table[order((ees_table$EES.MIA) ^ 2, decreasing = TRUE),]
 }
 
+#' Find and Fix Major Allele Mismatches
+#'
+#' @param ees_table
+#' @param gt_table
+#' @param fix_table
+#' @param pop_data
+#'
+#' @return
+#' @export
+#'
+#' @examples
 fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   ees_and_maa <- data.frame(ees_table, pop_data$major)
   colnames(ees_and_maa)[6] <- "MAJOR"
@@ -15,7 +43,7 @@ fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   return(corrected_gt)
 }
 
-#' Correct Non Matching alleles
+#' Correct Non Matching Alleles
 #' @param gt
 #' @param match_snps
 #'
@@ -40,16 +68,46 @@ correct_gt <- function(gt, match_snps){
   return(swapped_gt)
 }
 
+#' Get a Subset of SNPs with Largest EES
+#'
+#' @param ees_table
+#' @param subset_size
+#'
+#' @return
+#' @export
+#'
+#' @examples
 get_ees_subset <- function(ees_table, subset_size){
   ordered_by_ees <- order_by_ees(ees_table)
   ees_subset <- head(ordered_by_ees, subset_size)
   return(ees_subset)
 }
 
+#' Subset GT Matrix by SNP list
+#'
+#' @param snp_list
+#' @param gt
+#'
+#' @return
+#' @export
+#'
+#' @examples
 get_gt_subset <- function(snp_list, gt){
   gt_subset <- subset(gt, row.names(gt) %in% snp_list)
 }
 
+#' Match Test & Training, Correct & Subset
+#'
+#' @param ees_table
+#' @param gt
+#' @param fix
+#' @param pool_data
+#' @param subset_size
+#'
+#' @return
+#' @export
+#'
+#' @examples
 match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   corrected_mismatch <- fix_allele_mismatch(ees_table, ind_gt, ind_fix, pool_data)
   match_snps <- match_snps_in_ind(ees_table, corrected_mismatch)
@@ -58,41 +116,3 @@ match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   return(list(gt = gt_subset,
               ees = subset_snps))
 }
-
-#' Find the Subset of Genotypes
-#' #' @param gt
-#' #' @param snps
-#' #' @param match_table
-#' #'
-#' #' @return
-#' #' @export
-#' #'
-#' #' @examples
-#' get_gt_subset <- function(gt, snps, match_table){
-#'   top_snps <- head(match_table, as.numeric(snps))
-#'   order_top_snps <- top_snps[order(rownames(top_snps)), ]
-#'   rows_to_use <- top_snps$SNP
-#'   gt_subset <- subset(gt, row.names(gt) %in% rows_to_use)
-#'   order_gt_subset <- gt_subset[order(rownames(gt_subset)), ]
-#'   return(list(gt = order_gt_subset,
-#'               data = order_top_snps))
-#}
-
-
-#need to get and store major and minor alleles
-
-
-# # 14. Find the matching SNPs
-# use_ind <- subset(ees_table, row.names(ees_table) %in% row.names(gt_table))
-# match_snps <-
-#   merge(as.data.frame(fix_table), as.data.frame(use_ind), by = "SNP")
-#T
-# # 15. Sort the data table by EES
-# sorted_by_ees <-
-#   match_snps[order((match_snps$MIA.EES) ^ 2, decreasing = TRUE),]
-# print(head(sorted_by_ees, 10))
-# #count total number
-# total_snps_matched <- nrow(sorted_by_ees)
-#
-# # 16. Correct none matching SNPs
-# corrected_gt <- correct_non_matching(gt_table, sorted_by_ees)
