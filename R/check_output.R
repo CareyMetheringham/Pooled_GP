@@ -29,6 +29,8 @@ create_ebv_table <- function(ind_info, ebv){
   return(ebv_table)
 }
 
-calculate_correlation <- function(){
-
+calculate_correlation <- function(ebv_table){
+  correlation <-
+    cor(ebv_table$Group, ebv_table$EBV, method = "spearman")
+  return(correlation)
 }

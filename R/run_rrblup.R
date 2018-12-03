@@ -27,6 +27,26 @@ get_af_diff <- function(gt_matrix, prov_list){
   return(diff_matrix)
 }
 
+#' Mixed Solve Without Prov Effects Major and Minor Alleles
+#'
+#' @param data
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' mixed_solve_both(produce_sim_data(10, 100, 1000))
+mixed_solve_both_af_diff <- function(data){
+  freq_diff_mia <- get_af_diff(data$mia, data$prov)
+  freq_diff_maa <- get_af_diff(data$maa, data$prov)
+  mia_fit <- mixed.solve(data$y, t(freq_diff_mia), SE = TRUE)
+  maa_fit <- mixed.solve(data$y, t(freq_diff_maa), SE = TRUE)
+  return(list(mia = mia_fit,
+              maa = maa_fit,
+              snps = data$snp_id))
+}
+
+
 #' Mixed Solve For Major and Minor Alleles
 #'
 #' @param data

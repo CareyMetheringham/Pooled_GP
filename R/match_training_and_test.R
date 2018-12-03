@@ -113,7 +113,7 @@ get_gt_subset <- function(snp_list, gt){
 #' @examples
 match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   corrected_mismatch <-
-    fix_allele_mismatch(ees_table, ind_gt, ind_fix, pool_data)
+    fix_allele_mismatch(ees_table, gt, fix, pool_data)
   match_snps <- match_snps_in_ind(ees_table, corrected_mismatch)
   subset_snps <- get_ees_subset(match_snps, subset_size)
   gt_subset <- get_gt_subset(subset_snps$SNP, corrected_mismatch)

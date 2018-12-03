@@ -1,4 +1,4 @@
-#create data object using a subset - not quite working yet
+#create data object using a subset
 
 make_rerun_object <- function(pools_rc_file, info_file, ees_table, subset_size = 10){
   sorted_ees <- order_by_ees(ees_table)
