@@ -1,5 +1,5 @@
 #demo pipeline
-#print out results at intervals
+#print out results at intervals <- HAS ERROR!!!!!!
 
 gppool_demo <- function(  n_pop = 10,
                           n_ind = 1000,
@@ -40,8 +40,8 @@ gppool_data_demo <- function(){
   pools_rc_files <- find_pools_rc("./extdata/Pools_RC")
   pop_info_file <- "./extdata/example_pop_data.csv"
   ind_info_file <- "./extdata/example_ind_info.csv"
-  pool_data <- read_in_pools_rc(pools_rc_files, pop_info_file, gwas_hits, 50)
-  fit_rrblup <- mixed_solve_both(pool_data)
+  pool_data <- read_in_pools_rc(pools_rc_files, pop_info_file, gwas_hits, 90)
+  fit_rrblup <- mixed_solve_both_af_diff(pool_data)
   ees_table <- create_ees_table(fit_rrblup)
   ind_gt <- read_gt_table("./extdata")
   ind_fix <- read_fix_table("./extdata")
