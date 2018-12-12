@@ -151,10 +151,10 @@ fraction_to_decimal <- function(frac_data) {
         frac_data <- as.numeric(frac_data)
         frac_data[1] / frac_data[2]
       })
-    dec_data <- rbind(temp, dec_data)
+    dec_data <- rbind(dec_data, temp)
   }
   dec_data <- t(dec_data)
-  colnames(dec_data) <- colnames(frac_data)
+  colnames(dec_data) <- rev(colnames(frac_data))
   return(dec_data)
 }
 

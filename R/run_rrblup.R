@@ -104,3 +104,27 @@ create_ees_table <- function(fit){
     c("SNP", "EES.MIA", "EES.MIA.SE", "EES.MAA", "EES.MAA.SE")
   return(ees_table)
 }
+
+#' Find Difference from Provenance Mean Frequency
+#' @param maa_dec
+#' @param prov
+#'
+#' @return
+#' @export
+#'
+#' @examples
+remove_prov_effects <- function(dec, prov){
+  uni_prov <- unique(prov)
+  prov_diff <- dec
+  for (i in 1:length(uni_prov)){
+    current_prov <- uni_prov[i]
+    correct_prov <- prov == current_prov
+    pick <- dec[, correct_prov == TRUE]
+    av <- rowSums(pick) / ncol(pick)
+    diff <- (pick - av)
+    for (j in colnames(diff)){
+      prov_diff[, j] <- diff[, j]
+    }
+  }
+  return(prov_diff)
+}
