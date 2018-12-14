@@ -154,7 +154,7 @@ fraction_to_decimal <- function(frac_data) {
     dec_data <- rbind(dec_data, temp)
   }
   dec_data <- t(dec_data)
-  colnames(dec_data) <- rev(colnames(frac_data))
+  colnames(dec_data) <- colnames(frac_data)
   return(dec_data)
 }
 
