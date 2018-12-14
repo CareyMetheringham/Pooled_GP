@@ -13,8 +13,8 @@
 calculate_accuracy <- function(ebv_table, percentage = 1, G1val = 1, G2val = 2){
   ebv_sort <- ebv_table[order(ebv_table$EBV), ]
   group_size <- nrow(ebv_table) / 2 * percentage
-  G1 <- tail(ebv_sort, group_size)
-  G2 <- head(ebv_sort, group_size)
+  G1 <- head(ebv_sort, group_size)
+  G2 <- tail(ebv_sort, group_size)
   G1count <- count(G1$Group)
   G2count <- count(G2$Group)
   G1correct <- G1count$freq[G1val]
