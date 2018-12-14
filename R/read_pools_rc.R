@@ -172,7 +172,6 @@ get_snp_id <- function(pool_rc){
   return(snp_names)
 }
 
-
 #' Get Data Structure from pools_rc
 #'
 #' @param dir
