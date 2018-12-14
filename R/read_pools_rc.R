@@ -61,7 +61,7 @@ find_top_snps <- function(pool_files, hits, pool_info_file) {
   pool_col_names <- get_pool_colnames(pool_info_file)$all
   topsnp_list <- list()
   for ( i in 1:length(pool_files)) {
-    pools_rc <- fread(file = pool_files[[i]], fill = TRUE)
+    pools_rc <- fread(file = pool_files[[i]])
     colnames(pools_rc) <- pool_col_names
     pools_rc$pos <- as.character(pools_rc$pos)
     my_top_snps <- merge(hits, pools_rc, by = c("contig", "pos"))
