@@ -38,7 +38,7 @@ get_af_diff <- function(gt_matrix, prov_list){
 #' mixed_solve_both(produce_sim_data(10, 100, 1000))
 mixed_solve_both_af_diff_X <- function(data){
   freq_diff_mia <- get_af_diff(data$mia, data$prov)
-  freq_diff_maa <- get_af_diff(data$mia, data$prov)
+  freq_diff_maa <- get_af_diff(data$maa, data$prov)
   mia_fit <- mixed.solve(data$y, X = rank(data$prov), t(freq_diff_mia), SE = TRUE)
   maa_fit <- mixed.solve(data$y, X = rank(data$prov), t(freq_diff_maa), SE = TRUE)
   return(list(mia = mia_fit,
