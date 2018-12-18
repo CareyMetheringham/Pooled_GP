@@ -6,7 +6,8 @@ Imports:
     data.table,
     plyr,
     rrBLUP,
-    stats
+    stats,
+	testthat
 Authors@R: person("Carey", "Metheringham", email ="c.l.metheringham@qmul.ac.uk", role = c("aut", "cre"))
 Description: Tools to implement use of rrBLUP on pool-seq data.
     Utilises output from Popoolation2.
