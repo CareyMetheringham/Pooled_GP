@@ -35,21 +35,21 @@ gppool_demo <- function(  n_pop = 10,
   plot(ebv ~ true_bv)
 }
 
-gppool_data_demo <- function(){
+gppool_data_demo <- function(training_snps = 100, test_snps = 50){
   gwas_hits <- "./extdata/example_100_hits.gwas"
   pools_rc_files <- find_pools_rc("./extdata/Pools_RC")
-  pop_info_file <- "./extdata/example_pop_data.csv"
+  pop_info <- fread("./extdata/example_pop_data.csv")
   ind_info_file <- "./extdata/example_ind_info.csv"
-  pool_data <- read_in_pools_rc(pools_rc_files, pop_info_file, gwas_hits, 90)
+  pool_data <- read_in_pools_rc(pools_rc_files, pop_info, gwas_hits, training_snps)
   fit_rrblup <- mixed_solve_both_af_diff(pool_data)
   ees_table <- create_ees_table(fit_rrblup)
   ind_gt <- read_gt_table("./extdata")
   ind_fix <- read_fix_table("./extdata")
-  matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, 20)
+  matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, test_snps)
   ebv <- get_ebv(matched$ees, matched$gt)
   ind_info <- read_ind_info(ind_info_file)
   accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv))
-  plot(ebv)
+  boxplot(ebv ~ ind_info$Group)
   return(accuracy)
 }
 

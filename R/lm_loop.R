@@ -32,8 +32,8 @@ get_snp_pvals <- function(pools_rc, pop_info){
 #' @examples
 #' create_lm_table(cbind("SNP_N", fread("./extdata/example_pool_rc")), fread("./extdata/example_pop_data.csv"))
 create_lm_table <- function(pool_rc_line, info){
-  major <- unlist(get_allele_count(pool_rc_line[, 13:43]))
-  minor <- unlist(get_allele_count(pool_rc_line[, 44:74]))
+  major <- unlist(get_allele_count(get_allele_freq(pool_rc_line, info, "major")))
+  minor <- unlist(get_allele_count(get_allele_freq(pool_rc_line, info, "minor")))
   prov <- info$Prov
   health <- info$Health
   lm_table <- cbind(major, minor, prov, health)

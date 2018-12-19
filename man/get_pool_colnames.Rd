@@ -4,7 +4,7 @@
 \alias{get_pool_colnames}
 \title{Create Lists of Colnames for pools_rc}
 \usage{
-get_pool_colnames(pool_info_file)
+get_pool_colnames(pool_info)
 }
 \arguments{
 \item{pool_info_file}{file containing a table - need to make more flexible}
@@ -16,5 +16,5 @@ list of colnames for pools_rc file
 Create Lists of Colnames for pools_rc
 }
 \examples{
-get_pool_colnames("./extdata/example_pop_data.csv")
+get_pool_colnames(fread("./extdata/example_pop_data.csv"))
 }

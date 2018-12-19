@@ -5,9 +5,8 @@
 #' @export
 #'
 #' @examples
-#' get_pool_colnames("./extdata/example_pop_data.csv")
-get_pool_colnames <- function(pool_info_file){
-  pool_info <- fread(pool_info_file)
+#' get_pool_colnames(fread("./extdata/example_pop_data.csv"))
+get_pool_colnames <- function(pool_info){
   colnames(pool_info) <- c("Sample", "Group", "Group2")
   mia_names <- paste("mia", pool_info$Sample, sep = "_")
   maa_names <- paste("maa", pool_info$Sample, sep = "_")
@@ -55,10 +54,10 @@ find_pools_rc <- function(pool_loc){
 #' @export
 #'
 #' @examples
-#' find_top_snps(find_pools_rc("./extdata/Pools_RC"), get_hits_from_file("./extdata/example_100_hits.gwas", 10), "./extdata/example_pop_data.csv")
-find_top_snps <- function(pool_files, hits, pool_info_file) {
+#' find_top_snps(find_pools_rc("./extdata/Pools_RC"), get_hits_from_file("./extdata/example_100_hits.gwas", 10), fread("./extdata/example_pop_data.csv"))
+find_top_snps <- function(pool_files, hits, pool_info) {
   #get the column names
-  pool_col_names <- get_pool_colnames(pool_info_file)$all
+  pool_col_names <- get_pool_colnames(pool_info)$all
   topsnp_list <- list()
   for ( i in 1:length(pool_files)) {
     pools_rc <- fread(file = pool_files[[i]])
@@ -123,9 +122,9 @@ get_allele <- function(alleles, which){
 #' @export
 #'
 #' @examples
-#'get_allele_freq(fread("./extdata/example_pool_rc"), "./extdata/example_pop_data.csv", "minor"
-get_allele_freq <- function(pool_rc, pool_info_file, which){
-  pool_col_names <- get_pool_colnames(pool_info_file)
+#'get_allele_freq(fread("./extdata/example_pool_rc"), fread("./extdata/example_pop_data.csv"), "minor"
+get_allele_freq <- function(pool_rc, pool_info, which){
+  pool_col_names <- get_pool_colnames(pool_info)
   if (which == "major") {
     freq_data <- pool_rc[, pool_col_names$maa, with = FALSE]
   }
@@ -183,15 +182,14 @@ get_snp_id <- function(pool_rc){
 #' @export
 #'
 #' @examples
-#'read_in_pools_rc(find_pools_rc("./extdata/Pools_RC"), "./extdata/example_pop_data.csv", "./extdata/example_100_hits.gwas", 10)
-read_in_pools_rc <- function(pools_rc_files, info_file, gwas, hit_num){
-  info <- fread(info_file)
+#'read_in_pools_rc(find_pools_rc("./extdata/Pools_RC"), fread("./extdata/example_pop_data.csv"), "./extdata/example_100_hits.gwas", 10)
+read_in_pools_rc <- function(pools_rc_files, info, gwas, hit_num){
   colnames(info) <- c("Sample", "Group", "Group2")
   top_gwas_hits <- get_hits_from_file(gwas, hit_num)
-  snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, info_file)
+  snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, info)
   snp_names <- get_snp_id(snps_to_use)
-  maa_freq <- get_allele_freq(snps_to_use, info_file, "major")
-  mia_freq <- get_allele_freq(snps_to_use, info_file, "minor")
+  maa_freq <- get_allele_freq(snps_to_use, info, "major")
+  mia_freq <- get_allele_freq(snps_to_use, info, "minor")
   maa_freq_d <- fraction_to_decimal(maa_freq)
   mia_freq_d <- fraction_to_decimal(mia_freq)
   y <- info$Group

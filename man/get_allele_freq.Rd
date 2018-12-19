@@ -4,14 +4,14 @@
 \alias{get_allele_freq}
 \title{Get the Major/Minor Allele Frequency}
 \usage{
-get_allele_freq(pool_rc, pool_info_file, which)
+get_allele_freq(pool_rc, pool_info, which)
 }
 \arguments{
 \item{pool_rc}{table of pools_rc data}
 
-\item{pool_info_file}{file with info on training population}
-
 \item{which}{which allele to get}
+
+\item{pool_info_file}{file with info on training population}
 }
 \value{
 table with freqency of either major or minor alleles in each pool
@@ -20,5 +20,5 @@ table with freqency of either major or minor alleles in each pool
 Get the Major/Minor Allele Frequency
 }
 \examples{
-get_allele_freq(fread("./extdata/example_pool_rc"), "./extdata/example_pop_data.csv", "minor"
+get_allele_freq(fread("./extdata/example_pool_rc"), fread("./extdata/example_pop_data.csv"), "minor"
 }
