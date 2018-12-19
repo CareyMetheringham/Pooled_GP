@@ -35,6 +35,15 @@ gppool_demo <- function(  n_pop = 10,
   plot(ebv ~ true_bv)
 }
 
+#' Title
+#'
+#' @param training_snps
+#' @param test_snps
+#'
+#' @return print output to terminal and create boxplot
+#' @export
+#'
+#' @examples
 gppool_data_demo <- function(training_snps = 100, test_snps = 50){
   gwas_hits <- "./extdata/example_100_hits.gwas"
   pools_rc_files <- find_pools_rc("./extdata/Pools_RC")
@@ -49,11 +58,13 @@ gppool_data_demo <- function(training_snps = 100, test_snps = 50){
   ebv <- get_ebv(matched$ees, matched$gt)
   ind_info <- read_ind_info(ind_info_file)
   accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv))
+  print(paste("Accuracy:", accuracy))
+  correlation <- calculate_correlation(create_ebv_table(ind_info, ebv))
+  print(paste("Correlation:", correlation))
   boxplot(ebv ~ ind_info$Group)
-  return(accuracy)
 }
 
-gppool_rerun_demo <- function(subset_size = 10){
+gppool_rerun_demo <- function(subset_size = 10){ #BROKEN
   pop_info_file <- "./extdata/example_pop_data.csv"
   ind_info_file <- "./extdata/example_ind_info.csv"
   prior_ess <- fread("./extdata/example_ees.table")
