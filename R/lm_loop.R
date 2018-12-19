@@ -1,16 +1,14 @@
 #' Get P values for each SNP
 #'
-#' @param pools_rc
-#' @param pop_info_file
+#' @param pools_rc a table containing read counts in each pool for snps of interest
+#' @param pop_info_file the location of the file containing pool info
 #'
-#' @return
+#' @return a table containing p_values for each snp
 #' @export
 #'
 #' @examples
-#' pools_rc <- find_top_snps(find_pools_rc("./extdata/Pools_RC"), get_hits_from_file("./extdata/example_100_hits.gwas", 10), "./extdata/example_pop_data.csv")
-#' get_snp_pvals(pools_rc, "./extdata/example_pop_data.csv")
-get_snp_pvals <- function(pools_rc, pop_info_file){
-  info <- fread(pop_info_file)
+#' get_snp_pvals(fread("./extdata/example_pool_rc"), fread("./extdata/example_pop_data.csv"))
+get_snp_pvals <- function(pools_rc, pop_info){
   df <- cbind(paste(pools_rc$contig, pools_rc$pos, sep = "_"), pools_rc)
   colnames(df)[1] <- "SNP"
   p_values_from_glm <- data.frame(SNP = character(), P = numeric())
@@ -25,13 +23,14 @@ get_snp_pvals <- function(pools_rc, pop_info_file){
 
 #' Create a Data Table for GLM
 #'
-#' @param pool_rc_line
-#' @param info
+#' @param pool_rc_line a line from the pool-rc table + SNP  column!!
+#' @param info table contain pop info
 #'
-#' @return
+#' @return a table for use in glm
 #' @export
 #'
 #' @examples
+#' create_lm_table(cbind("SNP_N", fread("./extdata/example_pool_rc")), fread("./extdata/example_pop_data.csv"))
 create_lm_table <- function(pool_rc_line, info){
   major <- unlist(get_allele_count(pool_rc_line[, 13:43]))
   minor <- unlist(get_allele_count(pool_rc_line[, 44:74]))
@@ -43,12 +42,13 @@ create_lm_table <- function(pool_rc_line, info){
 
 #' Get Allele Count
 #'
-#' @param allele_cols
+#' @param allele_cols selected cols from pool_rc table
 #'
-#' @return
+#' @return the allele count from those cols
 #' @export
 #'
 #' @examples
+#' get_allele_count(c("1/5", "3/7", "2/13"))
 get_allele_count <- function(allele_cols){
   allele_split <- lapply(allele_cols, split_allele_count)
   return(allele_split)
@@ -56,12 +56,13 @@ get_allele_count <- function(allele_cols){
 
 #' Split Allele count Cell
 #'
-#' @param allele_count
+#' @param allele_count alele count in format "1/2
 #'
-#' @return
+#' @return allele count
 #' @export
 #'
 #' @examples
+#' split_allele_count("10/20")
 split_allele_count <- function(allele_count){
   split <- strsplit(as.character(allele_count), "/")[[1]]
   return(split[1])
