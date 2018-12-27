@@ -124,6 +124,25 @@ mixed_solve_both <- function(data){
               snps = data$snp_id))
 }
 
+#' Mixed Solve For Major and Minor Alleles
+#'
+#' @param data
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' mixed_solve_both(produce_sim_data(10, 100, 1000))
+mixed_solve_both_with_X <- function(data){
+  freq_diff_mia <- data$mia
+  freq_diff_maa <- data$maa
+  mia_fit <- mixed.solve(data$y, t(freq_diff_mia), X = rank(data$prov), SE = TRUE)
+  maa_fit <- mixed.solve(data$y, t(freq_diff_maa), X = rank(data$prov), SE = TRUE)
+  return(list(mia = mia_fit,
+              maa = maa_fit,
+              snps = data$snp_id))
+}
+
 #' Write EES Results to File
 #'
 #' @param wd working directory
