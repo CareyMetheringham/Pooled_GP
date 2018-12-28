@@ -55,4 +55,7 @@ read_ind_info <- function(ind_info_file){
 read_vcf_file <- function(vcf_file){
   ind_vcf <- read.vcfR(file=vcf_file, limit = 1e+07, cols = NULL,
                        convertNA = TRUE, checkFile = TRUE, check_keys = TRUE, verbose = TRUE)
+  ind_fix <- as.data.table(getFIX(ind_vcf))
+  rownames(ind_fix) <- paste(ind_fix$CHROM, ind_fix$POS, sep="_")
+  write.table(ind_fix,"fix.table",sep="\t",quote = FALSE, row.names = FALSE)
 }
