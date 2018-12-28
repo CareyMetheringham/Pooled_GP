@@ -58,4 +58,17 @@ read_vcf_file <- function(vcf_file){
   ind_fix <- as.data.table(getFIX(ind_vcf))
   rownames(ind_fix) <- paste(ind_fix$CHROM, ind_fix$POS, sep="_")
   write.table(ind_fix,"fix.table",sep="\t",quote = FALSE, row.names = FALSE)
+
+  ind_gt <- extract.gt(ind_vcf, element = "GT", mask = FALSE, as.numeric = TRUE,
+                       return.alleles = FALSE, IDtoRowNames = TRUE, extract = TRUE,
+                       convertNA = FALSE)
+
+  get_na <- extract.gt(ind_vcf, element = "GT", mask = FALSE, as.numeric = FALSE,
+                       return.alleles = FALSE, IDtoRowNames = TRUE, extract = TRUE,
+                       convertNA = FALSE)
+
+  #replace 0 with NA where relivant
+  ind_gt[get_na=="./."] <- NA
+
+  write.table(use_gt,"genotype.table",sep="\t",quote = FALSE)
 }
