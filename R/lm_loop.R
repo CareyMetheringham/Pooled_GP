@@ -13,7 +13,7 @@ get_snp_pvals <- function(pools_rc, pop_info){
   colnames(df)[1] <- "SNP"
   p_values_from_glm <- data.frame(SNP = character(), P = numeric())
   for (snp in 1:nrow(df)){
-    table <- as.data.frame(create_lm_table(df[snp, ], info))
+    table <- as.data.frame(create_lm_table(df[snp, ], pop_info))
     mod <- glm(cbind(major, minor) ~ prov + health, data = as.data.frame(table), family = "binomial")
     p_val <- (coefficients(summary(mod)))[14,4]
     p_values_from_glm <- rbind(p_values_from_glm, cbind(df$SNP[snp], p_val))
