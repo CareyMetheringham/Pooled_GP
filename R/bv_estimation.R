@@ -18,6 +18,6 @@ get_ebv <- function(ees_table, gt_matrix){
   alt_matrix <- 2 - gt_matrix
   effect_mia <-  t(gt_matrix) %*% ees_table$EES.MIA
   effect_maa <-  t(alt_matrix) %*% ees_table$EES.MAA
-  ebv <- sum(effect_mia, effect_maa)
+  ebv <- effect_mia + effect_maa
   return(ebv)
 }
