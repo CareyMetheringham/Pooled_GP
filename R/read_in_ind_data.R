@@ -71,4 +71,6 @@ read_vcf_file <- function(vcf_file){
   ind_gt[get_na=="./."] <- NA
 
   write.table(use_gt,"genotype.table",sep="\t",quote = FALSE)
+
+  return(list(gt = ind_gt, fix = ind_fix))
 }
