@@ -51,3 +51,8 @@ read_ind_info <- function(ind_info_file){
 }
 
 #read in vcf data
+
+read_vcf_file <- function(vcf_file){
+  ind_vcf <- read.vcfR(file=vcf_file, limit = 1e+07, cols = NULL,
+                       convertNA = TRUE, checkFile = TRUE, check_keys = TRUE, verbose = TRUE)
+}
