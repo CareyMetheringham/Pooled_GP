@@ -38,7 +38,7 @@ gppool_demo <- function(  n_pop = 10,
   plot(ebv ~ as.vector(test_data$ph))
 }
 
-#' Title
+#' Demo using example dataset
 #'
 #' @param training_snps
 #' @param test_snps
@@ -67,7 +67,7 @@ gppool_data_demo <- function(training_snps = 100, test_snps = 50){
   boxplot(ebv ~ ind_info$Group)
 }
 
-gppool_rerun_demo <- function(subset_size = 10){ #BROKEN
+gppool_rerun_demo <- function(subset_size = 10){ #BROKEN!
   pop_info_file <- "./extdata/example_pop_data.csv"
   ind_info_file <- "./extdata/example_ind_info.csv"
   prior_ess <- fread("./extdata/example_ees.table")
