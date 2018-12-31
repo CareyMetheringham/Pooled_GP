@@ -134,8 +134,8 @@ get_breeding_values <- function(snp_list, effect_sizes){
 #' @export
 #'
 #' @examples
-#'  sim_training_pops(10, 100, 100, 0.5)
-sim_training_pops <- function(num_pop, num_ind, num_sites, h2){
+#'  sim_training_pops(10, 100, 100, 0.3)
+sim_training_pops <- function(num_pop, num_ind, num_sites, h2 = 0.3){
   effect_sizes <- generate_effect_size(num_sites)
   allelic_freq <- generate_allelic_freqency(num_sites)
   genotypes <- generate_genotypes(num_pop, num_ind, num_sites, allelic_freq)
@@ -153,7 +153,7 @@ sim_training_pops <- function(num_pop, num_ind, num_sites, h2){
               pt = phenotypes))
 }
 
-#' Create a gentype matrix from the geno_list - NOT WORKING!!!
+#' Create a gentype matrix from the geno_list
 #' Could potentially be simplified - needs test function
 #' @param geno_list a list of genotype matrices
 #'
