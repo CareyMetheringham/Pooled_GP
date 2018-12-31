@@ -4,7 +4,7 @@
 \alias{sim_training_pops}
 \title{Simulate the Training Populations}
 \usage{
-sim_training_pops(num_pop, num_ind, num_sites, h2)
+sim_training_pops(num_pop, num_ind, num_sites, h2 = 0.3)
 }
 \arguments{
 \item{num_pop}{number of populations}
@@ -21,5 +21,5 @@ vectors of breeding values and phenotypes(continuous)
 Simulate the Training Populations
 }
 \examples{
- sim_training_pops(10, 100, 100, 0.5)
+ sim_training_pops(10, 100, 100, 0.3)
 }

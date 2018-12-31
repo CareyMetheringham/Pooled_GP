@@ -4,12 +4,27 @@
 \alias{produce_sim_data}
 \title{Produce a Simulation data object}
 \usage{
-produce_sim_data(num_pop, num_ind, num_sites, h2 = 0.5, MAF = 0.01,
+produce_sim_data(num_pop, num_ind, num_sites, h2 = 0.3, MAF = 0.01,
   threshold = 0.5)
 }
 \arguments{
+\item{MAF}{minor allele frequency cutoff}
+
 \item{threshold}{}
+}
+\value{
+a list containing:
+y:
+mia:
+maa:
+prov:
+snp_id:
+es:
+af:
 }
 \description{
 Produce a Simulation data object
+}
+\examples{
+produce_sim_data(10, 100, 1000)
 }

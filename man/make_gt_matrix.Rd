@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulate_training_pop.R
 \name{make_gt_matrix}
 \alias{make_gt_matrix}
-\title{Create a gentype matrix from the geno_list - NOT WORKING!!!
+\title{Create a gentype matrix from the geno_list
 Could potentially be simplified - needs test function}
 \usage{
 make_gt_matrix(geno_list)
@@ -14,7 +14,7 @@ make_gt_matrix(geno_list)
 one matrix containing all genotypes
 }
 \description{
-Create a gentype matrix from the geno_list - NOT WORKING!!!
+Create a gentype matrix from the geno_list
 Could potentially be simplified - needs test function
 }
 \examples{
