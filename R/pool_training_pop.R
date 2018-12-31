@@ -89,18 +89,26 @@ get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
 #' @param num_ind
 #' @param num_sites
 #' @param h2
-#' @param MAF
+#' @param MAF minor allele frequency cutoff
 #' @param threshold
 #'
-#' @return
+#' @return a list containing:
+#' y:
+#' mia:
+#' maa:
+#' prov:
+#' snp_id:
+#' es:
+#' af:
 #' @export
 #'
 #' @examples
+#' produce_sim_data(10, 100, 1000)
 produce_sim_data <-
   function(num_pop,
            num_ind,
            num_sites,
-           h2 = 0.5,
+           h2 = 0.3,
            MAF = 0.01,
            threshold = 0.5
   ){
