@@ -1,5 +1,34 @@
-sim_test_pop <- function(es, af, h2 = 0.5, test_ind = 100){
-  num_sites <- length(es)
+#' Simulate the test population
+#'
+#' @param es vector containing estimated effect sizes - eg from training pop
+#' @param af vector containing allelic frequency - eg from training pop
+#' @param h2 heritability
+#' @param test_ind number of individuals in test population
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' train <- sim_training_pops(10, 100, 100, 0.5)
+#' sim_test_pop(train$es, train$af)
+sim_test_pop <- function(es, af, h2 = 0.3, test_ind = 100){
+  gt <- sim_test_gt(test_ind, af)
+  bv <- es %*% gt
+  return(gt = gt)
+}
+
+#' Simulate gt matrix for test population
+#'
+#' @param num_ind number of individuals
+#' @param af vector of allelic frequency
+#'
+#' @return matrix of genotypes: 0, 1, 2
+#' @export
+#'
+#' @examples
+#' sim_test_gt(100, generate_allelic_freqency(100))
+sim_test_gt <- function(num_ind, af){
+  num_sites <- length(af)
   test_pop_gt <- t(generate_population(test_ind, num_sites, af))
   sim_snp_id <- paste("snp", 1:num_sites, sep = "_")
   sim_ind_id <- paste("ind", 1:test_ind, sep = "_")
@@ -7,50 +36,3 @@ sim_test_pop <- function(es, af, h2 = 0.5, test_ind = 100){
   colnames(test_pop_gt) <- sim_ind_id
   return(test_pop_gt)
 }
-
-
-#'
-#' #simulate a test population of individuals
-#' testPop <-
-#'   simulate_test_pop(simParams, paramList$nLoci, nInd = 150, paramList$h2, simData$fixedSites, paramList$cutoff)
-#'
-#' #' Simulate Test Population
-#' #' @param simParams
-#' #' @param nLoci
-#' #' @param nInd
-#' #' @param h2
-#' #' @param fixed
-#' #' @return a single test population of nInd individuals
-#' #' @export
-#' #' @examples
-#' simulate_test_pop <- function(simParams, nLoci, nInd, h2, fixed, cutoff) {
-#'   lociP <- matrix(nrow = nInd, ncol = nLoci)
-#'   for (j in 1:nInd) {
-#'     #each loci can take one of three values (0-2)
-#'     lociP[j, ] <- create_loci(nLoci, simParams$allelicF)
-#'   }
-#'   #calculate breeding values
-#'   popBV <- (lociP %*% simParams$effectSizes)
-#'   #heritability factor used to calculate enviormental varience
-#'   env <-
-#'     rnorm(length(popBV), 0, calculate_varience(popBV, h2))
-#'
-#'   phenotype <- popBV + env
-#'
-#'   topInd <- phenotype > quantile(phenotype, (1 - cutoff))
-#'   lowInd <- phenotype < quantile(phenotype, cutoff)
-#'
-#'   #calculate the difference in alleles between the two pools
-#'   High <- lociP[topInd, ]
-#'   Low <- lociP[lowInd, ]
-#'
-#'   return(
-#'     list(
-#'       genotype = lociP[, fixed == FALSE ],
-#'       phenotype = phenotype,
-#'       breedingValue = popBV,
-#'       highInd = High,
-#'       lowInd = Low
-#'     )
-#'   )
-#' }
