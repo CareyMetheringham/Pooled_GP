@@ -1,6 +1,4 @@
-#demo pipeline
-#print out results at intervals <- HAS ERROR!!!!!!
-
+#demo pipeline: simulation
 gppool_demo <- function(  n_pop = 10,
                           n_ind = 1000,
                           n_site = 1000,
@@ -24,15 +22,18 @@ gppool_demo <- function(  n_pop = 10,
     " varient sites",
     sep = ""
   ))
-  fit_rrblup <- mixed_solve_both(training_data)
+  fit_rrblup <- mixed_solve_both_af_diff(training_data) #need to use differences not raw?
   ees_table <- create_ees_table(fit_rrblup)
+  print("Simulate test population")
   test_data <- sim_test_pop(training_data$es, training_data$af, h2, 200)
   matched_ees <- match_snps_in_ind(ees_table, test_data)
   matched_gt <- get_gt_subset(matched_ees$SNP, test_data)
+  print("Estimate breeding values")
   ebv <- get_ebv(matched_ees, matched_gt)
   true_bv <-  t(test_data) %*% training_data$es
   print(cor(ebv, true_bv))
   plot(ebv ~ true_bv)
+  #test correlation and accuracy of assignment
 }
 
 #' Title
