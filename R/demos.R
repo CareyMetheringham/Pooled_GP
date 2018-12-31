@@ -26,14 +26,16 @@ gppool_demo <- function(  n_pop = 10,
   ees_table <- create_ees_table(fit_rrblup)
   print("Simulate test population")
   test_data <- sim_test_pop(training_data$es, training_data$af, h2, 200)
-  matched_ees <- match_snps_in_ind(ees_table, test_data)
-  matched_gt <- get_gt_subset(matched_ees$SNP, test_data)
+  matched_ees <- match_snps_in_ind(ees_table, test_data$gt)
+  matched_gt <- get_gt_subset(matched_ees$SNP, test_data$gt)
   print("Estimate breeding values")
   ebv <- get_ebv(matched_ees, matched_gt)
-  true_bv <-  t(test_data) %*% training_data$es
-  print(cor(ebv, true_bv))
-  plot(ebv ~ true_bv)
-  #test correlation and accuracy of assignment
+  print("Correlation of EBV and true BV in test population")
+  print(cor(ebv, as.vector(test_data$bv)))
+  plot(ebv ~ as.vector(test_data$bv))
+  print("Correlation of EBV and observed phenotype in test population")
+  print(cor(ebv, as.vector(test_data$ph)))
+  plot(ebv ~ as.vector(test_data$ph))
 }
 
 #' Title

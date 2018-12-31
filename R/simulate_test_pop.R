@@ -14,7 +14,12 @@
 sim_test_pop <- function(es, af, h2 = 0.3, test_ind = 100){
   gt <- sim_test_gt(test_ind, af)
   bv <- es %*% gt
-  return(gt = gt)
+  est_var <- calculate_varience(bv, h2)
+  ph <- get_phenotype(bv, est_var)
+  return(list(gt = gt,
+              bv = bv,
+              ph = ph
+         ))
 }
 
 #' Simulate gt matrix for test population
