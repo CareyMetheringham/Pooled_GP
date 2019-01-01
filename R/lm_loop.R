@@ -9,11 +9,12 @@
 #' @examples
 #' get_snp_pvals(fread("./extdata/example_pool_rc"), fread("./extdata/example_pop_data.csv"))
 get_snp_pvals <- function(pools_rc, pop_info){
+  colnames(pools_rc)[1] <- "contig"
   df <- cbind(paste(pools_rc$contig, pools_rc$pos, sep = "_"), pools_rc)
   colnames(df)[1] <- "SNP"
   p_values_from_glm <- data.frame(SNP = character(), P = numeric())
   for (snp in 1:nrow(df)){
-    table <- as.data.frame(create_lm_table(df[snp, ], pop_info))
+    table <- as.data.frame(create_lm_table(df[snp, ], info))
     mod <- glm(cbind(major, minor) ~ prov + health, data = as.data.frame(table), family = "binomial")
     p_val <- (coefficients(summary(mod)))[14,4]
     p_values_from_glm <- rbind(p_values_from_glm, cbind(df$SNP[snp], p_val))
