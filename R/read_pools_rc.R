@@ -54,21 +54,17 @@ find_pools_rc <- function(pool_loc){
 #' @export
 #'
 #' @examples
-#' find_top_snps(find_pools_rc("./extdata/Pools_RC"), get_hits_from_file("./extdata/example_100_hits.gwas", 10), fread("./extdata/example_pop_data.csv"))
-find_top_snps <- function(pool_files, hits, pool_info) {
+#' find_top_snps(
+#'fread("./extdata/Pools_RC/pools_rc.1"),
+#'get_hits_from_file("./extdata/example_100_hits.gwas", 10),
+#'fread("./extdata/example_pop_data.csv"))
+find_top_snps <- function(pools_rc, hits, pool_info) {
   #get the column names
   pool_col_names <- get_pool_colnames(pool_info)$all
-  topsnp_list <- list()
-  for ( i in 1:length(pool_files)) {
-    pools_rc <- fread(file = pool_files[[i]])
     colnames(pools_rc) <- pool_col_names
     pools_rc$pos <- as.character(pools_rc$pos)
-    my_top_snps <- merge(hits, pools_rc, by = c("contig", "pos"))
-    topsnp_list[[i]] <- my_top_snps
-  }
-  #join the top tables
-  top_snp <- rbindlist(topsnp_list)
-  return(top_snp)
+    top_snps <- merge(hits, pools_rc, by = c("contig", "pos"))
+  return(top_snps)
 }
 
 #' Get SNPs of Interest from GWAS Results
@@ -183,10 +179,10 @@ get_snp_id <- function(pool_rc){
 #'
 #' @examples
 #'read_in_pools_rc(find_pools_rc("./extdata/Pools_RC"), fread("./extdata/example_pop_data.csv"), "./extdata/example_100_hits.gwas", 10)
-read_in_pools_rc <- function(pools_rc_files, info, gwas, hit_num){
+read_in_pools_rc <- function(pools_rc_file, info, gwas, hit_num){
   colnames(info) <- c("Sample", "Group", "Group2")
   top_gwas_hits <- get_hits_from_file(gwas, hit_num)
-  snps_to_use <- find_top_snps(pools_rc_files, top_gwas_hits, info)
+  snps_to_use <- find_top_snps(fread(pools_rc_file), top_gwas_hits, info)
   snp_names <- get_snp_id(snps_to_use)
   maa_freq <- get_allele_freq(snps_to_use, info, "major")
   mia_freq <- get_allele_freq(snps_to_use, info, "minor")
