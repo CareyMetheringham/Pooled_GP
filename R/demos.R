@@ -49,13 +49,13 @@ gppool_demo <- function(  n_pop = 10,
 #' @examples
 gppool_data_demo <- function(training_snps = 100, test_snps = 50){
   gwas_hits <- "./extdata/example_100_hits.gwas"
-  pools_rc_files <- find_pools_rc("./extdata/Pools_RC")
+  pools_rc_file <- find_pools_rc("./extdata/Pools_RC")
   pop_info <- fread("./extdata/example_pop_data.csv")
   ind_info_file <- "./extdata/example_ind_info.csv"
-  pool_data <- read_in_pools_rc(pools_rc_files, pop_info, gwas_hits, training_snps)
+  pool_data <- read_in_pools_rc(pools_rc_file, pop_info, gwas_hits, training_snps)
   fit_rrblup <- mixed_solve_both_af_diff(pool_data)
   ees_table <- create_ees_table(fit_rrblup)
-  ind_gt <- read_gt_table("./extdata")
+  ind_gt <- read_gt_table("./extdata") #need to change this portion
   ind_fix <- read_fix_table("./extdata")
   matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, test_snps)
   ebv <- get_ebv(matched$ees, matched$gt)
