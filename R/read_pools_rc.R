@@ -178,7 +178,7 @@ get_snp_id <- function(pool_rc){
 #' @export
 #'
 #' @examples
-#'read_in_pools_rc(find_pools_rc("./extdata/Pools_RC"), fread("./extdata/example_pop_data.csv"), "./extdata/example_100_hits.gwas", 10)
+#'read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
 read_in_pools_rc <- function(pools_rc_file, info, gwas, hit_num){
   colnames(info) <- c("Sample", "Group", "Group2")
   top_gwas_hits <- get_hits_from_file(gwas, hit_num)
