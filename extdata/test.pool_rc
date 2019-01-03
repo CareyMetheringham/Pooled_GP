@@ -1,0 +1,11 @@
+contig,pos,rc,allele_count,allele_states,deletion_sum,snp_type,major_alleles.maa,minor_alleles.mia,maa_A1,maa_A2,maa_B1,maa_B2,mia_A1,mia_A2,mia_B1,mia_B2
+Contig1,1,N,2,G/C,0,pops,GGGG,CCCC,7/10,9/10,7/10,9/10,3/10,1/10,3/10,1/10
+Contig1,2,N,2,G/C,0,pops,GGGG,CCCC,7/10,9/10,6/10,8/10,3/10,1/10,4/10,2/10
+Contig1,3,N,2,G/C,0,pops,GGGG,CCCC,5/10,7/10,7/10,9/10,5/10,3/10,3/10,1/10
+Contig1,4,N,2,G/C,0,pops,GGGG,CCCC,9/10,7/10,9/10,7/10,1/10,3/10,1/10,3/10
+Contig1,5,N,2,G/C,0,pops,GGGG,CCCC,9/10,7/10,8/10,6/10,1/10,3/10,2/10,4/10
+Contig2,1,N,2,G/C,0,pops,GGGG,CCCC,7/10,5/10,9/10,7/10,3/10,5/10,1/10,3/10
+Contig2,2,N,2,G/C,0,pops,GGGG,CCCC,7/10,7/10,7/10,7/10,3/10,3/10,3/10,3/10
+Contig2,3,N,2,G/C,0,pops,GGGG,CCCC,7/10,7/10,5/10,5/10,3/10,3/10,5/10,5/10
+Contig2,4,N,2,G/C,0,pops,GGGG,CCCC,5/10,5/10,7/10,7/10,5/10,5/10,3/10,3/10
+Contig2,5,N,2,G/C,0,pops,GGGG,CCCC,5/10,5/10,5/10,5/10,5/10,5/10,5/10,5/10
