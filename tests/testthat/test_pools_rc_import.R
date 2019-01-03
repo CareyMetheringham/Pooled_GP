@@ -4,8 +4,8 @@ library(data.table)
 
 #Example files to use in tests
 pool_dir <- "../../extdata/Pools_RC"
-pool_info <- "../../extdata/example_pop_data.csv"
-gwas <- "../../extdata/example_100_hits.gwas"
+pool_info <- fread("../../extdata/example_pop_data.csv")
+gwas <- fread("../../extdata/example_100_hits.gwas")
 
 test_that("Pools rc data object as expected", {
   expect_named(read_in_pools_rc(fread(find_pools_rc(pool_dir)), fread(pool_info), gwas, 10),
@@ -42,4 +42,9 @@ test_that("Nrows in gt matrix = length y", {
   data <- read_in_pools_rc(find_pools_rc(pool_dir), pool_info, gwas, 10)
   expect_length(data$y, ncol(data$maa))
   expect_length(data$y, ncol(data$mia))
+})
+
+test_that("maa freq + mia freq = 1", {
+  data <- read_in_pools_rc(find_pools_rc(pool_dir), pool_info, gwas, 10)
+  expect_equal((data$maa + data$mia), 1)
 })
