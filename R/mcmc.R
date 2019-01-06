@@ -7,6 +7,10 @@
 #' @export
 #'
 #' @examples
+#' data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
+#' get_parameters(data, 0.1)
+#' sim_data <- produce_sim_data(10, 100, 100)
+#' get_parameters(sim_data, 0.1)
 get_parameters <- function(simData, effect) {
   p <- rowMeans(simData$mia)
 
