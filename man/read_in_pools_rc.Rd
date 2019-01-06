@@ -4,7 +4,7 @@
 \alias{read_in_pools_rc}
 \title{Get Data Structure from pools_rc}
 \usage{
-read_in_pools_rc(pools_rc_files, info, gwas, hit_num)
+read_in_pools_rc(pools_rc_file, info, gwas, hit_num)
 }
 \arguments{
 \item{hit_num}{}
@@ -13,5 +13,5 @@ read_in_pools_rc(pools_rc_files, info, gwas, hit_num)
 Get Data Structure from pools_rc
 }
 \examples{
-read_in_pools_rc(find_pools_rc("./extdata/Pools_RC"), fread("./extdata/example_pop_data.csv"), "./extdata/example_100_hits.gwas", 10)
+read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
 }

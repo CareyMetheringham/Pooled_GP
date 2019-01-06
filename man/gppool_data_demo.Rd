@@ -2,7 +2,7 @@
 % Please edit documentation in R/demos.R
 \name{gppool_data_demo}
 \alias{gppool_data_demo}
-\title{Title}
+\title{Demo using example dataset}
 \usage{
 gppool_data_demo(training_snps = 100, test_snps = 50)
 }
@@ -13,5 +13,5 @@ gppool_data_demo(training_snps = 100, test_snps = 50)
 print output to terminal and create boxplot
 }
 \description{
-Title
+Demo using example dataset
 }

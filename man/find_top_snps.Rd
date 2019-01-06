@@ -4,7 +4,7 @@
 \alias{find_top_snps}
 \title{Pull Top GWAS Hits from pools.rc files}
 \usage{
-find_top_snps(pool_files, hits, pool_info)
+find_top_snps(pools_rc, hits, pool_info)
 }
 \arguments{
 \item{pool_files}{list of pools_rc files - can be 1}
@@ -20,5 +20,8 @@ table with the top snps as listed in hits file
 Pull Top GWAS Hits from pools.rc files
 }
 \examples{
-find_top_snps(find_pools_rc("./extdata/Pools_RC"), get_hits_from_file("./extdata/example_100_hits.gwas", 10), fread("./extdata/example_pop_data.csv"))
+find_top_snps(
+fread("./extdata/Pools_RC/pools_rc.1"),
+get_hits_from_file("./extdata/example_100_hits.gwas", 10),
+fread("./extdata/example_pop_data.csv"))
 }
