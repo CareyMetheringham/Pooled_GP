@@ -8,15 +8,12 @@
 #'
 #' @examples
 get_parameters <- function(simData, effect) {
-  p <-
-    (simData$mHigh + simData$mLow) / 4 #this uses the mean observed frequency across the two pools
-  q <- 1 - p
+  p <- rowMeans(simData$mia)
 
-  exptMean	<- (2 * p ^ 2 + 2 * p * q) * effect
+  exptMean	<- get_exp_mean(p, effect)
 
-  exptVar	<- (p ^ 2  * (2 * effect - exptMean) ^ 2 +
-                2 * p * q * (effect - exptMean) ^ 2 +
-                q ^ 2 * exptMean ^ 2)
+  exptVar	<- get_exp_var(p, effect, exptMean)
+
   #calculate the combined effects over loci
   combMean <- sum(exptMean)
   combVar	<- sum(exptVar)
@@ -45,6 +42,7 @@ get_parameters <- function(simData, effect) {
 #' @export
 #'
 #' @examples
+#' get_exp_mean(0.2, 0.1)
 get_exp_mean <- function(p, effect){
   exp_mean <- (2 * p ^ 2 + 2 * p * (1 - p)) * effect
   return(exp_mean)
@@ -59,9 +57,10 @@ get_exp_mean <- function(p, effect){
 #' @export
 #'
 #' @examples
-get_exp_var <- function(p, exp_mean){
-  exp_var <- (p ^ 2  * (2 * effect - exptMean) ^ 2 +
-     2 * p * (1 - p) * (effect - exptMean) ^ 2 +
-     q ^ 2 * exptMean ^ 2)
+#' get_exp_var(0.2, 0.01, 0.1)
+get_exp_var <- function(p, effect, exp_mean){
+  exp_var <- (p ^ 2  * (2 * effect - exp_mean) ^ 2 +
+     2 * p * (1 - p) * (effect - exp_mean) ^ 2 +
+     (1 - p) ^ 2 * exp_mean ^ 2)
   return(exp_var)
 }
