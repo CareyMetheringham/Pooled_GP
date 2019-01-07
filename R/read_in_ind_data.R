@@ -24,10 +24,9 @@ read_fix_table <- function(wd){
 #' @export
 #'
 #' @examples
-#' read_gt_table("./extdata")
-read_gt_table <- function(wd){
-  gt_file <- paste(wd, "genotype.table", sep = "/")
-  gt <- read.table(gt_file, sep = "\t")
+#' read_gt_table("./extdata/test.gt")
+read_gt_table <- function(gt_file){
+  gt <- fread(gt_file, sep = "\t")
   colnames(gt) <- gsub(".sorted.bam", "", colnames(gt))
   return(gt)
 }
