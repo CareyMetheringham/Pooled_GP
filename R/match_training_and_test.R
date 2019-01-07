@@ -9,7 +9,7 @@
 #' @examples
 #' match_snps_in_ind(fread("./extdata/test.ees_table"), read_gt_table("./extdata/test.gt"))
 match_snps_in_ind <- function(ees_table, gt_ind){
-  use_snps <- subset(ees_table, ees_table$SNP %in% rownames(gt_ind))
+  use_snps <- subset(ees_table, ees_table$SNP %in% rownames(ind_gt))
   return(use_snps)
 }
 
@@ -21,6 +21,7 @@ match_snps_in_ind <- function(ees_table, gt_ind){
 #' @export
 #'
 #' @examples
+#' order_by_ees(fread("./extdata/test.ees_table")) - test that top > bottom
 order_by_ees <- function(ees_table){
   ordered_matches <-
     ees_table[order( (ees_table$EES.MIA) ^ 2, decreasing = TRUE), ]
@@ -60,7 +61,7 @@ correct_gt <- function(gt, match_snps){
   for (i in 1:nrow(gt)){
     my_row <- rownames(gt)[i]
     if (my_row %in% row.names(match_snps)){
-      if (match_snps[my_row, "MAJOR"] != match_snps[my_row, "REF"]){
+      if (match_snps[my_row, "MAJOR"] != match_snps[my_row, "REF"]){ #<- this line being odd - lots of NA
         # Mismatch - swap values
         swapped_gt[i, ] <- sub("0", "NO", gt[i, ])
         swapped_gt[i, ] <- sub("2", "0", gt[i, ])
