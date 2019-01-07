@@ -22,7 +22,7 @@ gppool_demo <- function(  n_pop = 10,
     " varient sites",
     sep = ""
   ))
-  fit_rrblup <- mixed_solve_both_af_diff(training_data) #need to use differences not raw?
+  fit_rrblup <- mixed_solve_both_af_diff(training_data)
   ees_table <- create_ees_table(fit_rrblup)
   print("Simulate test population")
   test_data <- sim_test_pop(training_data$es, training_data$af, h2, 200)
@@ -47,17 +47,17 @@ gppool_demo <- function(  n_pop = 10,
 #' @export
 #'
 #' @examples
-gppool_data_demo <- function(training_snps = 100, test_snps = 50){
-  gwas_hits <- "./extdata/example_100_hits.gwas"
-  pools_rc_file <- find_pools_rc("./extdata/Pools_RC")
-  pop_info <- fread("./extdata/example_pop_data.csv")
-  ind_info_file <- "./extdata/example_ind_info.csv"
+gppool_data_demo <- function(training_snps = 10, test_snps = 5){
+  gwas_hits <- "./extdata/test.gwas"
+  pools_rc_file <- ("./extdata/test.pool_rc")
+  pop_info <- fread("./extdata/test.pool_info")
+  ind_info_file <- "./extdata/test.ind_info"
   pool_data <- read_in_pools_rc(pools_rc_file, pop_info, gwas_hits, training_snps)
-  fit_rrblup <- mixed_solve_both_af_diff(pool_data)
+  fit_rrblup <- mixed_solve_both_af_diff_X(pool_data)
   ees_table <- create_ees_table(fit_rrblup)
-  ind_gt <- read_gt_table("./extdata") #need to change this portion
-  ind_fix <- read_fix_table("./extdata")
-  matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, test_snps)
+  ind_gt <- read_gt_table("./extdata/test.gt")
+  ind_fix <- read_fix_table("./extdata/test.fix")
+  matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, test_snps) #<- this line is where things go wrong
   ebv <- get_ebv(matched$ees, matched$gt)
   ind_info <- read_ind_info(ind_info_file)
   accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv))
