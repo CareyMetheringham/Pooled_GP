@@ -9,7 +9,7 @@
 #' @examples
 #' match_snps_in_ind(fread("./extdata/test.ees_table"), read_gt_table("./extdata/test.gt"))
 match_snps_in_ind <- function(ees_table, gt_ind){
-  use_snps <- subset(ees_table, ees_table$SNP %in% gt_ind$SNP)
+  use_snps <- subset(ees_table, ees_table$SNP %in% rownames(gt_ind))
   return(use_snps)
 }
 
@@ -27,7 +27,7 @@ order_by_ees <- function(ees_table){
   return(ordered_matches)
 }
 
-#' Find and Fix Major Allele Mismatches - NOT WORKING!!!
+#' Find and Fix Major Allele Mismatches
 #'
 #' @param ees_table
 #' @param gt_table
@@ -38,15 +38,16 @@ order_by_ees <- function(ees_table){
 #' @export
 #'
 #' @examples
+#' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
 fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
-  ees_and_maa <- data.frame(ees_table, pop_data$major)
+  ees_and_maa <- data.frame(ees_table, pop_data$major) #need to ensure order is correct
   colnames(ees_and_maa)[6] <- "MAJOR"
   match_by_snp <- merge(ees_and_maa, fix_table, by = "SNP")
   corrected_gt <- correct_gt(gt_table, match_by_snp)
   return(corrected_gt)
 }
 
-#' Correct Non Matching Alleles
+#' Correct Non Matching Alleles - NOT WORKING!!!
 #' @param gt
 #' @param match_snps
 #'
