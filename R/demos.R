@@ -57,7 +57,7 @@ gppool_data_demo <- function(training_snps = 10, test_snps = 5){
   ees_table <- create_ees_table(fit_rrblup)
   ind_gt <- read_gt_table("./extdata/test.gt")
   ind_fix <- read_fix_table("./extdata/test.fix")
-  matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, test_snps) #<- this line is where things go wrong
+  matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, test_snps) #<- this line is where things go wrong - gt table empty
   ebv <- get_ebv(matched$ees, matched$gt)
   ind_info <- read_ind_info(ind_info_file)
   accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv))
