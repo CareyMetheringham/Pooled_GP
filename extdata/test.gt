@@ -1,11 +1,11 @@
-SNP	Individual1.sorted.bam	Individual6.sorted.bam	Individual2.sorted.bam	Individual5.sorted.bam	Individual4.sorted.bam	Individual3.sorted.bam
-Contig1_1	1	0	0	1	1	1
-Contig1_2	1	0	0	1	1	1
-Contig1_3	1	0	0	1	1	1
-Contig1_4	1	0	0	1	1	1
-Contig1_5	1	0	0	1	1	1
-Contig2_1	1	0	0	1	1	1
-Contig2_2	1	0	0	1	1	1
-Contig2_3	1	0	0	1	1	1
-Contig2_4	1	0	0	1	1	1
-Contig3_1	1	0	0	1	1	1
+Individual1 Individual6 Individual2 Individual5 Individual4 Individual3
+Contig1_1 1 0 0 1 1 1
+Contig1_2 1 0 0 1 1 1
+Contig1_3 1 0 0 1 1 1
+Contig1_4 1 0 0 1 1 1
+Contig1_5 1 0 0 1 1 1
+Contig2_1 1 0 0 1 1 1
+Contig2_2 1 0 0 1 1 1
+Contig2_3 1 0 0 1 1 1
+Contig2_4 1 0 0 1 1 1
+Contig3_1 1 0 0 1 1 1
