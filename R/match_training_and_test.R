@@ -7,8 +7,9 @@
 #' @export
 #'
 #' @examples
+#' match_snps_in_ind(fread("./extdata/test.ees_table"), read_gt_table("./extdata/test.gt"))
 match_snps_in_ind <- function(ees_table, gt_ind){
-  use_snps <- subset(ees_table, ees_table$SNP %in% row.names(gt_ind))
+  use_snps <- subset(ees_table, ees_table$SNP %in% gt_ind$SNP)
   return(use_snps)
 }
 
@@ -26,7 +27,7 @@ order_by_ees <- function(ees_table){
   return(ordered_matches)
 }
 
-#' Find and Fix Major Allele Mismatches
+#' Find and Fix Major Allele Mismatches - NOT WORKING!!!
 #'
 #' @param ees_table
 #' @param gt_table
