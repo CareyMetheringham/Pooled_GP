@@ -68,3 +68,90 @@ get_exp_var <- function(p, effect, exp_mean){
      (1 - p) ^ 2 * exp_mean ^ 2)
   return(exp_var)
 }
+
+run_mcmc <- function(my_data, effect, chain = 10^3){
+  for (i in 1:chain){
+    params <- get_parameters(my_data, effect)
+    l <- sample(1:length(my_data$snp_id))
+  }
+
+}
+
+
+# run_mcmc <-
+#   function(chainLength,
+#            simData,
+#            effect,
+#            nInd,
+#            nPop,
+#            checkpoint) {
+#     checkpoints <- seq(from = 1,
+#                        to = chainLength,
+#                        length.out = checkpoint)
+#     rValues <- list()
+#     c <- 1
+#     for (i in 1:chainLength) {
+#       params <-
+#         get_parameters(simData, effect) #generate parameters for the starting vector of random effect sizes
+#       #select one locus at random
+#       l <-
+#         sample(1:simData$numVarSites, 1) #pick one locus at random from the varient loci
+#       #e <- -nLoci:nLoci / 2 #a vector of proposed effect sizes - THIS NEEDS CHANGING!!!!!
+#       e <-
+#         -100:100 / 200
+#
+#       f <- params$obsFreq[[l]] # observed frequency of the allele
+#       q <- 1 - f #observed frequency of the alternate allele
+#       m <-
+#         params$exclMean[[l]] #estimated average effect of all other alleles (why does this appear fixed?)
+#       Vg <-
+#         params$exclVar[[l]]  #genetic varience of all other alleles
+#
+#       Ve <- (Vg*(1-h2))/h2 #calculate Ve based on assumed h2
+#
+#       sdCombined <-
+#         sqrt(Vg + Ve) # need to add enviromental varience
+#
+#       #probability of the allele being in the upper pool
+#       pHi <-
+#         f * pnorm(m + 2 * e, 0.5, sdCombined) + q * pnorm(m + e, 0.5, sdCombined)
+#       pLo <- f * pnorm(m + 2 * e, cutoff , sdCombined) + q * pnorm(m + e, cutoff, sdCombined)
+#
+#       #pHi/pLo ??
+#
+#       #observed frequency of the allele in the upper pool
+#       obsHi <- simData$mHigh[[l]] / 2
+#       obsLo <- simData$mLow[[l]] / 2
+#
+#       n <-
+#         f * nPop * nInd * 4 #number of times the allele is observed
+#       y <-obsHi * nPop * nInd * 2
+#
+#       #y <- obsHi * nPop * nInd * 2 #number of times the allele is observed in the upper pool
+#
+#       #liklihood function
+#       liklihood <-
+#         dbinom(round(y), round(n), pHi) #does not take non int values
+#
+#       #prior ??? - needs work
+#       prior <- rbeta(length(pHi), 1, 1)
+#
+#       #posterior?
+#       post <- prior * liklihood
+#       #plot(post~e,pch="*")
+#
+#       x <- which.max(post)
+#       effect[l] <-
+#         e[x]
+#
+#       if (i %in% checkpoints) {
+#         r <- get_r_squared(simData, effect)
+#         rValues[[c]] <- r
+#         info <- paste("Checkpoint",c, "- Iteration", i, "- r2 =", r, sep = " ")
+#         print(info)
+#         c = c + 1
+#       }
+#     }
+#     return(list(estEffect = effect/nLoci,
+#                 rValues = rValues))
+#   }
