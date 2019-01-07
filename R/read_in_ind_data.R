@@ -6,9 +6,8 @@
 #' @export
 #'
 #' @examples
-#' read_fix_table("./extdata")
-read_fix_table <- function(wd){
-  fix <- paste(wd, "fix.table", sep = "/")
+#' read_fix_table("./extdata/test.fix")
+read_fix_table <- function(fix){
   fix_table <- fread(fix)
   snp_positions <- paste(fix_table$CHROM, fix_table$POS, sep = "_")
   fix_table2 <- data.frame(snp_positions, fix_table)
