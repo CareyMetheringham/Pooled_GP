@@ -79,7 +79,6 @@ correct_gt <- function(gt, match_snps){
 }
 
 #' Get a Subset of SNPs with Largest EES
-#'
 #' @param ees_table
 #' @param subset_size
 #'
@@ -87,6 +86,7 @@ correct_gt <- function(gt, match_snps){
 #' @export
 #'
 #' @examples
+#' get_ees_subset(fread("./extdata/test.ees_table"), 5)
 get_ees_subset <- function(ees_table, subset_size){
   ordered_by_ees <- order_by_ees(ees_table)
   ees_subset <- head(ordered_by_ees, subset_size)
@@ -119,6 +119,8 @@ get_gt_subset <- function(snp_list, gt){
 #' @export
 #'
 #' @examples
+#' ind_gt <- read_gt_table("./extdata/test.gt")
+#' match_and_subset(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data, 5)
 match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   corrected_mismatch <-
     fix_allele_mismatch(ees_table, gt, fix, pool_data)
