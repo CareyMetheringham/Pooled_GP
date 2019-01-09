@@ -48,7 +48,7 @@ fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   return(corrected_gt)
 }
 
-#' Correct Non Matching Alleles - NOT WORKING!!!
+#' Correct Non Matching Alleles - NOT WORKING!!!!!!
 #' @param gt
 #' @param match_snps
 #'
@@ -59,13 +59,18 @@ fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
 correct_gt <- function(gt, match_snps){
   swapped_gt <- gt
   for (i in 1:nrow(gt)){
-    my_row <- rownames(gt)[i]
+    #my_row <- rownames(gt)[i]
     if (my_row %in% row.names(match_snps)){
-      if (match_snps[my_row, "MAJOR"] != match_snps[my_row, "REF"]){ #<- this line being odd - lots of NA
-        # Mismatch - swap values
-        swapped_gt[i, ] <- sub("0", "NO", gt[i, ])
-        swapped_gt[i, ] <- sub("2", "0", gt[i, ])
-        swapped_gt[i, ] <- sub("NO", "2", gt[i, ])
+      if (match_snps$MAJOR[i] != match_snps$REF[i]){
+        for (j in 1:ncol(gt)){
+          if ( gt[i, j] == "0"){
+            swapped_gt[i, j] <- "2"
+          }
+          if ( gt[i, j] == "2"){
+            swapped_gt[i, j] <- "0"
+          }
+
+        }
       }
     }
   }
