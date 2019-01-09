@@ -12,3 +12,7 @@ get_gt_subset(snp_list, gt)
 \description{
 Subset GT Matrix by SNP list
 }
+\examples{
+ind_gt <- read_gt_table("./extdata/test.gt")
+get_gt_subset(get_ees_subset(fread("./extdata/test.ees_table"), 5)$SNP, ind_gt)
+}

@@ -12,3 +12,6 @@ order_by_ees(ees_table)
 \description{
 Sort EES Table by MIA^2
 }
+\examples{
+order_by_ees(fread("./extdata/test.ees_table")) - test that top > bottom
+}

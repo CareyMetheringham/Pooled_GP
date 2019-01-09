@@ -4,7 +4,7 @@
 \alias{read_fix_table}
 \title{Read in the fix table}
 \usage{
-read_fix_table(wd)
+read_fix_table(fix)
 }
 \arguments{
 \item{wd}{working directory containing fix.table}
@@ -17,5 +17,5 @@ SNP CROM POS ID REF ALT QUAL FILTER
 Read in the fix table
 }
 \examples{
-read_fix_table("./extdata")
+read_fix_table("./extdata/test.fix")
 }

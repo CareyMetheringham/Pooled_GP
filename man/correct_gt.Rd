@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_training_and_test.R
 \name{correct_gt}
 \alias{correct_gt}
-\title{Correct Non Matching Alleles}
+\title{Correct Non Matching Alleles - NOT WORKING!!!!!!}
 \usage{
 correct_gt(gt, match_snps)
 }
@@ -10,5 +10,9 @@ correct_gt(gt, match_snps)
 \item{match_snps}{}
 }
 \description{
-Correct Non Matching Alleles
+Correct Non Matching Alleles - NOT WORKING!!!!!!
+}
+\examples{
+ind_gt <- read_gt_table("./extdata/test.gt")
+correct_gt(ind_gt, fread("./extdata/test.ees_table"))
 }

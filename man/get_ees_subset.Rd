@@ -12,3 +12,6 @@ get_ees_subset(ees_table, subset_size)
 \description{
 Get a Subset of SNPs with Largest EES
 }
+\examples{
+get_ees_subset(fread("./extdata/test.ees_table"), 5)
+}

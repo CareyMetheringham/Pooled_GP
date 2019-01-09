@@ -12,3 +12,7 @@ match_and_subset(ees_table, gt, fix, pool_data, subset_size)
 \description{
 Match Test & Training, Correct & Subset
 }
+\examples{
+ind_gt <- read_gt_table("./extdata/test.gt")
+match_and_subset(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data, 5)
+}

@@ -4,7 +4,7 @@
 \alias{read_gt_table}
 \title{Read in the genotype table}
 \usage{
-read_gt_table(wd)
+read_gt_table(gt_file)
 }
 \arguments{
 \item{wd}{working directory containing genotype.table}
@@ -16,5 +16,5 @@ a data frame with named rows
 Read in the genotype table
 }
 \examples{
-read_gt_table("./extdata")
+read_gt_table("./extdata/test.gt")
 }

@@ -12,3 +12,6 @@ fix_allele_mismatch(ees_table, gt_table, fix_table, pop_data)
 \description{
 Find and Fix Major Allele Mismatches
 }
+\examples{
+fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
+}

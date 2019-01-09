@@ -12,3 +12,6 @@ match_snps_in_ind(ees_table, gt_ind)
 \description{
 Find SNPs Occuring in Training and Test
 }
+\examples{
+match_snps_in_ind(fread("./extdata/test.ees_table"), read_gt_table("./extdata/test.gt"))
+}
