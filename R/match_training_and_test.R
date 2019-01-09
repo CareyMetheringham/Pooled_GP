@@ -56,6 +56,8 @@ fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
 #' @export
 #'
 #' @examples
+#' ind_gt <- read_gt_table("./extdata/test.gt")
+#' correct_gt(ind_gt, fread("./extdata/test.ees_table"))
 correct_gt <- function(gt, match_snps){
   swapped_gt <- gt
   for (i in 1:nrow(gt)){
@@ -102,6 +104,8 @@ get_ees_subset <- function(ees_table, subset_size){
 #' @export
 #'
 #' @examples
+#' ind_gt <- read_gt_table("./extdata/test.gt")
+#' get_gt_subset(get_ees_subset(fread("./extdata/test.ees_table"), 5)$SNP, ind_gt)
 get_gt_subset <- function(snp_list, gt){
   gt_subset <- subset(gt, row.names(gt) %in% snp_list)
   return(gt_subset)
