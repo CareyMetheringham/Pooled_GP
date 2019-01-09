@@ -39,6 +39,9 @@ order_by_ees <- function(ees_table){
 #' @export
 #'
 #' @examples
+#' ind_fix <- read_fix_table("./extdata/test.fix")
+#' ind_gt <- read_gt_table("./extdata/test.gt")
+#' test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
 #' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
 fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   ees_and_maa <- data.frame(ees_table, pop_data$major) #need to ensure order is correct
@@ -56,25 +59,25 @@ fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
 #' @export
 #'
 #' @examples
-#' ind_gt <- read_gt_table("./extdata/test.gt")
-#' correct_gt(ind_gt, fread("./extdata/test.ees_table"))
 correct_gt <- function(gt, match_snps){
   swapped_gt <- gt
   for (i in 1:nrow(gt)){
-    #my_row <- rownames(gt)[i]
+    my_row <- rownames(gt)[i]
     if (my_row %in% row.names(match_snps)){
+      line <- gt[i, ]
       if (match_snps$MAJOR[i] != match_snps$REF[i]){
         for (j in 1:ncol(gt)){
           if ( gt[i, j] == "0"){
-            swapped_gt[i, j] <- "2"
+            line[j] <- "2"
           }
           if ( gt[i, j] == "2"){
-            swapped_gt[i, j] <- "0"
+            line[j] <- "0"
           }
-
         }
       }
+      swapped_gt[i, ] <- line
     }
+
   }
   swapped_gt[is.na(swapped_gt)] <- 0
   return(swapped_gt)
