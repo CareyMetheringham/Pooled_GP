@@ -1,11 +1,11 @@
 Individual1 Individual6 Individual2 Individual5 Individual4 Individual3
-Contig1_1 1 0 0 1 1 1
-Contig1_2 1 0 0 1 1 1
-Contig1_3 1 0 0 1 1 1
-Contig1_4 1 0 0 1 1 1
-Contig1_5 1 0 0 1 1 1
-Contig2_1 1 0 0 1 1 1
-Contig2_2 1 0 0 1 1 1
-Contig2_3 1 0 0 1 1 1
-Contig2_4 1 0 0 1 1 1
-Contig3_1 1 0 0 1 1 1
+Contig1_1 1 0 1 0 1 1
+Contig1_2 1 0 0 0 0 1
+Contig1_3 1 0 1 0 0 1
+Contig1_4 0 1 0 1 1 1
+Contig1_5 0 1 0 0 1 0
+Contig2_1 0 1 0 1 1 0
+Contig2_2 0 0 1 0 0 0
+Contig2_3 0 0 1 0 0 0
+Contig2_4 0 0 0 1 1 0
+Contig3_1 0 0 0 1 1 0
