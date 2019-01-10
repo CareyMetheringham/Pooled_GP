@@ -182,7 +182,7 @@ get_snp_id <- function(pool_rc){
 read_in_pools_rc <- function(pools_rc_file, info, gwas, hit_num){
   colnames(info) <- c("Sample", "Group", "Group2")
   top_gwas_hits <- get_hits_from_file(gwas, hit_num)
-  snps_to_use <- find_top_snps(fread(pools_rc_file), top_gwas_hits, info)
+  snps_to_use <- find_top_snps(fread(pools_rc_file, stringsAsFactors = FALSE), top_gwas_hits, info)
   snp_names <- get_snp_id(snps_to_use)
   maa_freq <- get_allele_freq(snps_to_use, info, "major")
   mia_freq <- get_allele_freq(snps_to_use, info, "minor")
