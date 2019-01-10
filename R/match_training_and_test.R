@@ -133,8 +133,10 @@ get_gt_subset <- function(snp_list, gt){
 match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   corrected_mismatch <-
     fix_allele_mismatch(ees_table, gt, fix, pool_data)
+  print(head(corrected_mismatch))
   match_snps <- match_snps_in_ind(ees_table, corrected_mismatch)
-  subset_snps <- get_ees_subset(match_snps, subset_size)
+  print(head(match_snps))
+  subset_snps <- get_ees_subset(match_snps, subset_size) #<- THIS GIVES ERROR: rows empty
   print(head(subset_snps))
   gt_subset <- get_gt_subset(subset_snps$SNP, corrected_mismatch)
   return(list(gt = gt_subset,
