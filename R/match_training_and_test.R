@@ -9,7 +9,7 @@
 #' @examples
 #' match_snps_in_ind(fread("./extdata/test.ees_table"), read_gt_table("./extdata/test.gt"))
 match_snps_in_ind <- function(ees_table, gt_ind){
-  use_snps <- subset(ees_table, ees_table$SNP %in% rownames(ind_gt))
+  use_snps <- subset(ees_table, ees_table$SNP %in% rownames(gt_ind))
   return(use_snps)
 }
 
