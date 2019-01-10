@@ -135,6 +135,7 @@ match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
     fix_allele_mismatch(ees_table, gt, fix, pool_data)
   match_snps <- match_snps_in_ind(ees_table, corrected_mismatch)
   subset_snps <- get_ees_subset(match_snps, subset_size)
+  print(head(subset_snps))
   gt_subset <- get_gt_subset(subset_snps$SNP, corrected_mismatch)
   return(list(gt = gt_subset,
               ees = subset_snps))
