@@ -110,7 +110,7 @@ get_ees_subset <- function(ees_table, subset_size){
 #' ind_gt <- read_gt_table("./extdata/test.gt")
 #' get_gt_subset(get_ees_subset(fread("./extdata/test.ees_table"), 5)$SNP, ind_gt)
 get_gt_subset <- function(snp_list, gt){
-  gt_subset <- subset(gt, row.names(gt) %in% snp_list)
+  gt_subset <- subset(gt, row.names(gt) %in% snp_list) #<- THIS GIVES ERROR: rows empty
   return(gt_subset)
 }
 
