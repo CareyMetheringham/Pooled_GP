@@ -57,7 +57,7 @@ read_vcf_file <- function(vcf_file){
 
   colnames(ind_fix) <-
     c("CROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER")
-  ind_fix <- rbind(paste(ind_fix$CHROM, ind_fix$POS, sep="_"), ind_fix)
+  ind_fix <- cbind(paste(ind_fix$CHROM, ind_fix$POS, sep="_"), ind_fix)
   colnames(ind_fix)[1] <- "SNP"
   write.table(ind_fix,"fix.table",sep="\t",quote = FALSE, row.names = FALSE)
   ind_gt <- extract.gt(ind_vcf, element = "GT", mask = FALSE, as.numeric = TRUE,
