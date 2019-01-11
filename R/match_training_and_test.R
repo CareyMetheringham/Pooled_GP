@@ -45,8 +45,11 @@ order_by_ees <- function(ees_table){
 #' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
 fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   ees_and_maa <- data.frame(ees_table, pop_data$major) #need to ensure order is correct
+  print(head(ees_and_maa))
   colnames(ees_and_maa)[6] <- "MAJOR"
+  print(head(ees_and_maa))
   match_by_snp <- merge(ees_and_maa, fix_table, by = "SNP")
+  print(head(match_by_snp))
   corrected_gt <- correct_gt(gt_table, match_by_snp)
   return(corrected_gt)
 }
@@ -133,11 +136,11 @@ get_gt_subset <- function(snp_list, gt){
 match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   corrected_mismatch <-
     fix_allele_mismatch(ees_table, gt, fix, pool_data)  #<- THIS GIVES ERROR: rows empty - tested function works
-  print(head(corrected_mismatch))
+  #print(head(corrected_mismatch))
   match_snps <- match_snps_in_ind(ees_table, corrected_mismatch)
-  print(head(match_snps))
+  #print(head(match_snps))
   subset_snps <- get_ees_subset(match_snps, subset_size)
-  print(head(subset_snps))
+  #print(head(subset_snps))
   gt_subset <- get_gt_subset(subset_snps$SNP, corrected_mismatch)
   return(list(gt = gt_subset,
               ees = subset_snps))
