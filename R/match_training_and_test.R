@@ -62,6 +62,8 @@ fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
 #' @examples
 correct_gt <- function(gt, match_snps){
   swapped_gt <- data.frame()
+  print(head(match_snps$MAJOR))
+  print(head(match_snps$REF))
   for (i in 1:nrow(gt)){
     my_row <- rownames(gt)[i]
     if (my_row %in% match_snps$SNP){
