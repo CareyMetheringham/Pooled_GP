@@ -134,7 +134,7 @@ match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   print(head(ees_table))
   print(head(gt))
   print(head(fix))
-  print(head(pool_data))
+  #print(head(pool_data)) <- has data
   corrected_mismatch <-
     fix_allele_mismatch(ees_table, gt, fix, pool_data)  #<- THIS GIVES ERROR: rows empty - tested function works
   print(head(corrected_mismatch))
