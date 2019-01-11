@@ -51,7 +51,7 @@ fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   return(corrected_gt)
 }
 
-#' Correct Non Matching Alleles <- THIS IS BACK TO GIVING ERROS AGAIN :(
+#' Correct Non Matching Alleles
 #' @param gt
 #' @param match_snps
 #'
@@ -131,12 +131,16 @@ get_gt_subset <- function(snp_list, gt){
 #' test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
 #' match_and_subset(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data, 5)
 match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
+  print(head(ees_table))
+  print(head(gt))
+  print(head(fix))
+  print(head(pool_data))
   corrected_mismatch <-
-    fix_allele_mismatch(ees_table, gt, fix, pool_data)  #<- THIS GIVES ERROR: rows empty
+    fix_allele_mismatch(ees_table, gt, fix, pool_data)  #<- THIS GIVES ERROR: rows empty - tested function works
   print(head(corrected_mismatch))
   match_snps <- match_snps_in_ind(ees_table, corrected_mismatch)
   print(head(match_snps))
-  subset_snps <- get_ees_subset(match_snps, subset_size) #<- THIS GIVES ERROR: rows empty
+  subset_snps <- get_ees_subset(match_snps, subset_size)
   print(head(subset_snps))
   gt_subset <- get_gt_subset(subset_snps$SNP, corrected_mismatch)
   return(list(gt = gt_subset,
