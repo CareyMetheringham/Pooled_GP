@@ -187,8 +187,6 @@ read_in_pools_rc <- function(pools_rc_file, info, gwas, hit_num){
   mia_freq <- get_allele_freq(snps_to_use, info, "minor")
   maa_freq_d <- fraction_to_decimal(maa_freq)
   mia_freq_d <- fraction_to_decimal(mia_freq)
-  # colnames(maa_freq_d) <- snp_names
-  # colnames(mia_freq_d) <- snp_names
   y <- info$Group
   prov <- info$Group2
   major <- get_allele(snps_to_use$allele_states, "major")
