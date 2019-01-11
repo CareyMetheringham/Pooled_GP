@@ -47,7 +47,7 @@ fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   ees_and_maa <- data.frame(ees_table, pop_data$major) #need to ensure order is correct
   colnames(ees_and_maa)[6] <- "MAJOR"
   print(head(ees_and_maa))
-  print(head(fix_table))
+  print(head(fix_table)) # <- is missing contig part of snp name
   match_by_snp <- merge(ees_and_maa, fix_table, by = "SNP") #<- this is the line that causes the error!!
   print(head(match_by_snp))
   corrected_gt <- correct_gt(gt_table, match_by_snp)

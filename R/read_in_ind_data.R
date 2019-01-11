@@ -56,7 +56,7 @@ read_vcf_file <- function(vcf_file){
   ind_fix <- as.data.frame(getFIX(ind_vcf))
 
   colnames(ind_fix) <-
-    c("CROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER")
+    c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER")
   ind_fix <- cbind(paste(ind_fix$CHROM, ind_fix$POS, sep="_"), ind_fix)
   colnames(ind_fix)[1] <- "SNP"
   write.table(ind_fix,"fix.table",sep="\t",quote = FALSE, row.names = FALSE)
