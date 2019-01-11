@@ -12,7 +12,7 @@ read_fix_table <- function(fix){
   snp_positions <- paste(fix_table$CHROM, fix_table$POS, sep = "_")
   fix_table2 <- data.frame(snp_positions, fix_table)
   colnames(fix_table2) <-
-    c("SNP", "CROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER")
+    c("SNP", "CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER")
   return(fix_table2)
 }
 

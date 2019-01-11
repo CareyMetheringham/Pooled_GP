@@ -46,10 +46,8 @@ order_by_ees <- function(ees_table){
 fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   ees_and_maa <- data.frame(ees_table, pop_data$major) #need to ensure order is correct
   colnames(ees_and_maa)[6] <- "MAJOR"
-  print(head(ees_and_maa))
   print(head(fix_table)) # <- is missing contig part of snp name
-  match_by_snp <- merge(ees_and_maa, fix_table, by = "SNP") #<- this is the line that causes the error!!
-  print(head(match_by_snp))
+  match_by_snp <- merge(ees_and_maa, fix_table, by = "SNP")
   corrected_gt <- correct_gt(gt_table, match_by_snp)
   return(corrected_gt)
 }
@@ -68,7 +66,7 @@ correct_gt <- function(gt, match_snps){
     my_row <- rownames(gt)[i]
     if (my_row %in% match_snps$SNP){
       line <- gt[i, ]
-      if (match_snps$MAJOR[i] != match_snps$REF[i]){
+      if (match_snps$MAJOR[i] != match_snps$REF[i]){ #<- this is the line that causes the error!!
         for (j in 1:ncol(gt)){
           if ( gt[i, j] == 0){
             line[j] <- 2
