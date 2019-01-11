@@ -45,10 +45,10 @@ order_by_ees <- function(ees_table){
 #' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
 fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   ees_and_maa <- data.frame(ees_table, pop_data$major) #need to ensure order is correct
-  print(head(ees_and_maa))
   colnames(ees_and_maa)[6] <- "MAJOR"
   print(head(ees_and_maa))
-  match_by_snp <- merge(ees_and_maa, fix_table, by = "SNP")
+  print(head(fix_table))
+  match_by_snp <- merge(ees_and_maa, fix_table, by = "SNP") #<- this is the line that causes the error!!
   print(head(match_by_snp))
   corrected_gt <- correct_gt(gt_table, match_by_snp)
   return(corrected_gt)
