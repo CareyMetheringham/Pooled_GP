@@ -67,7 +67,7 @@ correct_gt <- function(gt, match_snps){
     my_row <- rownames(gt)[i]
     if (my_row %in% match_snps$SNP){
       line <- gt[i, ]
-      if (match_snps$MAJOR[i] != match_snps$REF[i]){ #<- this is the line that causes the error!!
+      if (match_snps$MAJOR[i] != match_snps$REF[i]){ #<- this is the line that causes the error!! - both are factors
         for (j in 1:ncol(gt)){
           if ( gt[i, j] == 0){
             line[j] <- 2
