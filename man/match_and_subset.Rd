@@ -14,5 +14,7 @@ Match Test & Training, Correct & Subset
 }
 \examples{
 ind_gt <- read_gt_table("./extdata/test.gt")
+ind_fix <- read_fix_table("./extdata/test.fix")
+test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
 match_and_subset(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data, 5)
 }

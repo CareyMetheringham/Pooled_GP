@@ -4,10 +4,10 @@
 \alias{get_ebv}
 \title{Calculate EBV from GT and ES}
 \usage{
-get_ebv(ees_table, gt_matrix)
+get_ebv(ees, gt_matrix)
 }
 \arguments{
-\item{ees_table}{data table containing results of rrblup}
+\item{ees}{data table containing results of rrblup}
 
 \item{gt_matrix}{matrix of 0, 1, 2 and NA}
 }
