@@ -46,7 +46,7 @@ order_by_ees <- function(ees_table){
 fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
   ees_and_maa <- data.frame(ees_table, pop_data$major) #need to ensure order is correct
   colnames(ees_and_maa)[6] <- "MAJOR"
-  match_by_snp <- merge(ees_and_maa, fix_table, by = "SNP")
+  match_by_snp <- merge(ees_and_maa, fix_table, by = "SNP") # <- This table is mostly NA!!
   corrected_gt <- correct_gt(gt_table, match_by_snp)
   return(corrected_gt)
 }
@@ -61,13 +61,11 @@ fix_allele_mismatch <- function(ees_table, gt_table, fix_table, pop_data){
 #' @examples
 correct_gt <- function(gt, match_snps){
   swapped_gt <- data.frame()
-  print(class(match_snps$MAJOR))
-  print(class(match_snps$REF))
   for (i in 1:nrow(gt)){
     my_row <- rownames(gt)[i]
     if (my_row %in% match_snps$SNP){
       line <- gt[i, ]
-      if (match_snps$MAJOR[i] != match_snps$REF[i]){ #<- this is the line that causes the error!! - both are factors
+      if (match_snps$MAJOR[i] != match_snps$REF[i]){
         for (j in 1:ncol(gt)){
           if ( gt[i, j] == 0){
             line[j] <- 2
@@ -79,7 +77,7 @@ correct_gt <- function(gt, match_snps){
       }
       swapped_gt <- rbind(swapped_gt, line)
     }
-
+  else{next}
   }
   swapped_gt[is.na(swapped_gt)] <- 0
   return(swapped_gt)
