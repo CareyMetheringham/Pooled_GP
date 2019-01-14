@@ -64,8 +64,9 @@ correct_gt <- function(gt, match_snps){
   for (i in 1:nrow(gt)){
     my_row <- rownames(gt)[i]
     if (my_row %in% match_snps$SNP){
+      match_line <- match_snps[match_snps$SNP == my_row, ]
       line <- gt[i, ]
-      if (match_snps[my_row, "MAJOR"] != match_snps[my_row, "REF"]){
+      if (match_line$MAJOR != match_line$REF){
         for (j in 1:ncol(gt)){
           if ( gt[i, j] == 0){
             line[j] <- 2
