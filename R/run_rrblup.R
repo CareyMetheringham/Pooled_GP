@@ -8,7 +8,6 @@
 #'
 #' @examples
 #' get_af_diff(matrix(rnorm(50), 10), c(rep("A", 2), rep("B", 3)))
-#' need to check this as appears something odd going on
 get_af_diff <- function(gt_matrix, prov_list){
   prov <- rank(prov_list)
   unique_prov <- unique(prov)
