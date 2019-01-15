@@ -43,12 +43,9 @@ order_by_ees <- function(ees_table){
 #' ind_gt <- read_gt_table("./extdata/test.gt")
 #' test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
 #' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
-fix_allele_mismatch <- function(ees_table, gt, fix, pop_data){
-  ees_and_maa <- data.table(ees_table, pop_data$major) #need to ensure order is correct
-  colnames(ees_and_maa)[6] <- "MAJOR"
-  print(ees_and_maa)
-  match_snps <- merge(ees_and_maa, fix, by = "SNP") # <- This line pruduces duplicates
-  print(match_snps)
+fix_allele_mismatch <- function(ees_table, gt, fix, major_snp){
+  ees_and_maa <- merge(ees_table, major_snp, by = "SNP") #need to ensure order is correct
+  match_snps <- merge(ees_and_maa, fix, by = "SNP")
   corrected_gt <- correct_gt(gt, match_snps)
   return(corrected_gt)
 }
@@ -134,20 +131,13 @@ get_gt_subset <- function(snp_list, gt){
 #' test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
 #' match_and_subset(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data, 5)
 match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
-  #match_snps <- match_snps_in_ind(ees_table, corrected_mismatch)
+  major_and_snp <- data.table(pool_data$snp_id, pool_data$major)
+  colnames(major_and_snp) <- c("SNP", "MAJOR")
   match_snps <- match_snps_in_ind(ees_table, gt)
-  #subset_snps <- get_ees_subset(match_snps, subset_size)
   subset_ees <- get_ees_subset(match_snps, subset_size)
-  #gt_subset <- get_gt_subset(subset_snps$SNP, corrected_mismatch)
   gt_subset <- get_gt_subset(subset_ees$SNP, gt)
   corrected_mismatch <-
-    fix_allele_mismatch(subset_ees, gt_subset, fix, pool_data)
-
-  #corrected_mismatch <-
-    #fix_allele_mismatch(ees_table, gt, fix, pool_data)  #<- THIS GIVES ERROR: rows empty - tested function works
-
-
-  #print(head(subset_snps))
+    fix_allele_mismatch(subset_ees, gt_subset, fix, major_and_snp)
 
   return(list(gt = gt_subset,
               ees = subset_ees))
