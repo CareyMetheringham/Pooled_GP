@@ -15,8 +15,8 @@ get_ebv <- function(ees, gt_matrix){
   alt_matrix <- 2 - gt_matrix
   effect_mia <-  t(gt_matrix) %*% ees$EES.MIA
   effect_maa <-  t(alt_matrix) %*% ees$EES.MAA
-  ebv <- as.vector(ebv)
   ebv <- effect_mia + effect_maa
+  ebv <- as.vector(ebv)
   names(ebv) <- colnames(gt_matrix)
   return(ebv)
 }
