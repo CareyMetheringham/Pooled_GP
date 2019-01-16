@@ -67,7 +67,7 @@ correct_gt <- function(gt, match_snps){
       gt_line <- gt[i, ]
       if (fix_line$MAJOR[1] != fix_line$REF[1]){
        for (j in 1:ncol(gt)){
-         gt_line <- gsub(0, 2, gt[i, ])
+         #gt_line <- gsub(0, 2, gt[i, ])
          if ( gt[i, j] != 1 | 0 | 2 ){
            #this code should not be being run - but it is
            print(gt[i, j])
