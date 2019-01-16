@@ -69,6 +69,7 @@ correct_gt <- function(gt, match_snps){
        for (j in 1:ncol(gt)){
          if ( gt[i, j] != 1 | 0 | 2 ){
            print(gt[i, j])
+           print(class(gt[i, j]))
            next
          }
          if ( gt[i, j] == 1 | is.na(gt[i, j]) ){
