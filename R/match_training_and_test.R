@@ -50,7 +50,7 @@ fix_allele_mismatch <- function(ees_table, gt, fix, major_snp){
   return(corrected_gt)
 }
 
-#' Correct Non Matching Alleles
+#' Correct Non Matching Alleles - consider using gsub instead
 #' @param gt
 #' @param match_snps
 #'
@@ -66,14 +66,18 @@ correct_gt <- function(gt, match_snps){
       fix_line <- match_snps[match_snps$SNP == my_row, ]
       gt_line <- gt[i, ]
       if (fix_line$MAJOR[1] != fix_line$REF[1]){
-        for (j in 1:ncol(gt)){
-          if ( gt[i, j] == 0){
-            gt_line[j] <- 2
-          }
-          if ( gt[i, j] == 2){
-            gt_line[j] <- 0
-          }
-        }
+       for (j in 1:ncol(gt)){
+         if ( gt[i, j] == 0){
+           gt_line[j] <- 2
+         }
+         else if ( gt[i, j] == 2){
+           gt_line[j] <- 0
+         }
+         else if ( gt[i,j] == 1 | is.na(gt[i, j])){
+           next
+         }
+         else{ stop("Incorrect values in gt matrix: should be 0, 1, 2 or NA")}
+       }
       }
       swapped_gt <- rbind(swapped_gt, gt_line)
     }
@@ -139,6 +143,6 @@ match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   corrected_mismatch <-
     fix_allele_mismatch(subset_ees, gt_subset, fix, major_and_snp)
 
-  return(list(gt = gt_subset,
+  return(list(gt = corrected_mismatch,
               ees = subset_ees))
 }
