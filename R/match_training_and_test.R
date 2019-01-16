@@ -67,10 +67,13 @@ correct_gt <- function(gt, match_snps){
       gt_line <- gt[i, ]
       if (fix_line$MAJOR[1] != fix_line$REF[1]){
        for (j in 1:ncol(gt)){
-         if ( gt[i, j] == 1 | is.na(gt[i, j])){
+         if ( gt[i, j] != 1 | 0 | 2 ){
+           print(gt[i, j])
            next
          }
-         print(gt[i, j])
+         if ( gt[i, j] == 1 | is.na(gt[i, j]) ){
+           next
+         }
          else if ( gt[i, j] == 0){ #this line occasionally throws error:missing value where TRUE/FALSE needed
            gt_line[j] <- 2
          }
