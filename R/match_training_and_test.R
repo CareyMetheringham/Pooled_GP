@@ -42,7 +42,7 @@ order_by_ees <- function(ees_table){
 #' ind_fix <- read_fix_table("./extdata/test.fix")
 #' ind_gt <- read_gt_table("./extdata/test.gt")
 #' test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
-#' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
+#' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data) <--- need to update to take major_and_snp
 fix_allele_mismatch <- function(ees_table, gt, fix, major_snp){
   ees_and_maa <- merge(ees_table, major_snp, by = "SNP") #need to ensure order is correct
   match_snps <- merge(ees_and_maa, fix, by = "SNP")
@@ -67,9 +67,10 @@ correct_gt <- function(gt, match_snps){
       gt_line <- gt[i, ]
       if (fix_line$MAJOR[1] != fix_line$REF[1]){
        for (j in 1:ncol(gt)){
-         if ( gt[i,j] == 1 | is.na(gt[i, j])){
+         if ( gt[i, j] == 1 | is.na(gt[i, j])){
            next
          }
+         print(gt[i, j])
          else if ( gt[i, j] == 0){ #this line occasionally throws error:missing value where TRUE/FALSE needed
            gt_line[j] <- 2
          }
