@@ -68,12 +68,12 @@ correct_gt <- function(gt, match_snps){
       if (fix_line$MAJOR[1] != fix_line$REF[1]){
        for (j in 1:ncol(gt)){
          if ( gt[i, j] != 2 & gt[i, j] != 0) {
-           if ( gt[i, j] == 1 | is.na(gt[i, j]) ){ #this should instead use the identical function
-             next
-           }
            #this code should not be being run - but it is
            print(gt[i, j])
            print(class(gt[i, j]))
+           next
+         }
+         if ( gt[i, j] == 1 | is.na(gt[i, j]) ){ #this should instead use the identical function
            next
          }
          else if ( gt[i, j] == 0){ #this line occasionally throws error:missing value where TRUE/FALSE needed
