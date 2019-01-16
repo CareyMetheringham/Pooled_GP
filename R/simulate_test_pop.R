@@ -34,9 +34,9 @@ sim_test_pop <- function(es, af, h2 = 0.3, test_ind = 100){
 #' sim_test_gt(100, generate_allelic_freqency(100))
 sim_test_gt <- function(num_ind, af){
   num_sites <- length(af)
-  test_pop_gt <- t(generate_population(test_ind, num_sites, af))
+  test_pop_gt <- t(generate_population(num_ind, num_sites, af))
   sim_snp_id <- paste("snp", 1:num_sites, sep = "_")
-  sim_ind_id <- paste("ind", 1:test_ind, sep = "_")
+  sim_ind_id <- paste("ind", 1:num_ind, sep = "_")
   rownames(test_pop_gt) <- sim_snp_id
   colnames(test_pop_gt) <- sim_ind_id
   return(test_pop_gt)
