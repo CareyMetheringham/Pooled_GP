@@ -66,25 +66,30 @@ correct_gt <- function(gt, match_snps){
       fix_line <- match_snps[match_snps$SNP == my_row, ]
       gt_line <- gt[i, ]
       if (fix_line$MAJOR[1] != fix_line$REF[1]){
-       for (j in 1:ncol(gt)){
-         if ( gt[i, j] == 1 | is.na(gt[i, j]) ){ #this should instead use the identical function
-           next
-         }
-         else if ( gt[i, j] != 2 & gt[i, j] != 0) {
-           #this code should not be being run - but it is
-           print(gt[i, j])
-           print(class(gt[i, j]))
-           next
-         }
-         else if ( gt[i, j] == 0){ #this line occasionally throws error:missing value where TRUE/FALSE needed
-           gt_line[j] <- 2
-         }
-         else if ( gt[i, j] == 2){
-           gt_line[j] <- 0
-         }
+        gt_line[gt_line == 2] <- "X"
+        gt_line[gt_line == 0] <- 2
+        gt_line[gt_line == "X"] <- 0
+       # for (j in 1:ncol(gt)){
+       #
+       #   if ( gt[i, j] == 1 | is.na(gt[i, j]) ){ #this should instead use the identical function
+       #     next
+       #   }
 
-         else{ stop("Incorrect values in gt matrix: should be 0, 1, 2 or NA")}
-       }
+         # else if ( gt[i, j] != 2 & gt[i, j] != 0) {
+         #   #this code should not be being run - but it is
+         #   print(gt[i, j])
+         #   print(class(gt[i, j]))
+         #   next
+         # }
+         # else if ( gt[i, j] == 0){ #this line occasionally throws error:missing value where TRUE/FALSE needed
+         #   gt_line[j] <- 2
+         # }
+         # else if ( gt[i, j] == 2){
+         #   gt_line[j] <- 0
+         # }
+         #
+       #   # else{ stop("Incorrect values in gt matrix: should be 0, 1, 2 or NA")}
+       # }
       }
       swapped_gt <- rbind(swapped_gt, gt_line)
     }
