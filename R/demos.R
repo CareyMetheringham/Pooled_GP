@@ -36,7 +36,6 @@ gppool_demo <- function(  n_pop = 10,
   print("Correlation of EBV and observed phenotype in test population")
   print(cor(ebv, as.vector(test_data$ph)))
   plot(as.vector(test_data$ph), ebv, xlab = "Phenotypic Value", ylab = "Estimated Breeding Value")
-  #why is the scale so minute?? - scale input breeding values between -1 and 1
 }
 
 #' Demo using example dataset
