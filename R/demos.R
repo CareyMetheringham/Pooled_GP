@@ -32,10 +32,10 @@ gppool_demo <- function(  n_pop = 10,
   ebv <- get_ebv(matched_ees, matched_gt)
   print("Correlation of EBV and true BV in test population")
   print(cor(ebv, as.vector(test_data$bv)))
-  plot(ebv ~ as.vector(test_data$bv))
+  plot(as.vector(test_data$bv), ebv, xlab = "Input Breeding Value", ylab = "Estimated Breeding Value")
   print("Correlation of EBV and observed phenotype in test population")
   print(cor(ebv, as.vector(test_data$ph)))
-  plot(ebv ~ as.vector(test_data$ph))
+  plot(as.vector(test_data$ph), ebv, xlab = "Phenotypic Value", ylab = "Estimated Breeding Value")
 }
 
 #' Demo using example dataset
