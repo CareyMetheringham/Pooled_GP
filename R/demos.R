@@ -22,7 +22,7 @@ gppool_demo <- function(  n_pop = 10,
     " varient sites",
     sep = ""
   ))
-  fit_rrblup <- mixed_solve_both_af_diff(training_data)
+  fit_rrblup <- rrblup_loop(training_data)
   ees_table <- create_ees_table(fit_rrblup)
   print("Simulate test population")
   test_data <- sim_test_pop(training_data$es, training_data$af, h2, 200)
@@ -53,7 +53,7 @@ gppool_data_demo <- function(training_snps = 10, test_snps = 5){
   pop_info <- fread("./extdata/test.pool_info")
   ind_info_file <- "./extdata/test.ind_info"
   pool_data <- read_in_pools_rc(pools_rc_file, pop_info, gwas_hits, training_snps)
-  fit_rrblup <- mixed_solve_both_af_diff_X(pool_data)
+  fit_rrblup <- rrblup_loop(pool_data)
   ees_table <- create_ees_table(fit_rrblup)
   ind_gt <- read_gt_table("./extdata/test.gt")
   ind_fix <- read_fix_table("./extdata/test.fix")

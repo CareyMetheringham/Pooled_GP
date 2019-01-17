@@ -154,9 +154,9 @@ rrblup_loop <- function(data, X = TRUE, Diff = TRUE, both = TRUE, rep = 10){
     mia_fit <- mixed.solve(data$y, X = rank(data$prov), t(freq_diff_mia), SE = TRUE)
     maa_fit <- mixed.solve(data$y, X = rank(data$prov), t(freq_diff_maa), SE = TRUE)
     mia_u_df <- rbind(mia_u_df, mia_fit$u)
-    maa_u_df <- rbind(mia_u_df, mia_fit$u)
+    maa_u_df <- rbind(maa_u_df, maa_fit$u)
     mia_u_SE_df <- rbind(mia_u_SE_df, mia_fit$u.SE)
-    maa_u_SE_df <- rbind(mia_u_SE_df, mia_fit$u.SE)
+    maa_u_SE_df <- rbind(maa_u_SE_df, maa_fit$u.SE)
   }
   #get the averages
   mean_mia_u <- colMeans(mia_u_df)
