@@ -142,6 +142,16 @@ mixed_solve_both_with_X <- function(data){
               snps = data$snp_id))
 }
 
+rrblup_loop <- function(data, X = TRUE, Diff = TRUE, rep = 10){
+  #sort input
+  #set up tables
+  for (i in 1:rep){
+
+  }
+  #get the averages
+  #return mean
+}
+
 #' Write EES Results to File
 #'
 #' @param wd working directory
