@@ -68,7 +68,6 @@ correct_gt <- function(gt, match_snps){
       if (fix_line$MAJOR[1] != fix_line$REF[1]){
         gt_line[gt[i,] == 2] <- 0
         gt_line[gt[i,] == 0] <- 2
-        print(paste(gt[i,], gt_line, sep = "->"))
       }
       swapped_gt <- rbind(swapped_gt, gt_line)
     }
