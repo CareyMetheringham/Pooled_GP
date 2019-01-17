@@ -142,14 +142,32 @@ mixed_solve_both_with_X <- function(data){
               snps = data$snp_id))
 }
 
-rrblup_loop <- function(data, X = TRUE, Diff = TRUE, rep = 10){
-  #sort input
-  #set up tables
+rrblup_loop <- function(data, X = TRUE, Diff = TRUE, both = TRUE, rep = 10){
+  #need to add other outputs to the data structure?
+  mia_u_df <- data.frame()
+  maa_u_df <- data.frame()
+  mia_u_SE_df <- data.frame()
+  maa_u_SE_df <- data.frame()
   for (i in 1:rep){
-
+    freq_diff_mia <- get_af_diff(data$mia, data$prov)
+    freq_diff_maa <- get_af_diff(data$maa, data$prov)
+    mia_fit <- mixed.solve(data$y, X = rank(data$prov), t(freq_diff_mia), SE = TRUE)
+    maa_fit <- mixed.solve(data$y, X = rank(data$prov), t(freq_diff_maa), SE = TRUE)
+    mia_u_df <- rbind(mia_u_df, mia_fit$u)
+    maa_u_df <- rbind(mia_u_df, mia_fit$u)
+    mia_u_SE_df <- rbind(mia_u_SE_df, mia_fit$u.SE)
+    maa_u_SE_df <- rbind(mia_u_SE_df, mia_fit$u.SE)
   }
   #get the averages
+  mean_mia_u <- colMeans(mia_u_df)
+  mean_maa_u <- colMeans(maa_u_df)
+  mean_mia_u_SE <- colMeans(mia_u_SE_df)
+  mean_maa_u_SE <- colMeans(maa_u_SE_df)
   #return mean
+  return(list(mia = list(u = mean_mia_u, u.SE = mean_mia_u_SE),
+              maa = list(u = mean_maa_u, u.SE = mean_maa_u_SE),
+              snps = data$snp_id
+              ))
 }
 
 #' Write EES Results to File
