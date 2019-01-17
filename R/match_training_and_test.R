@@ -66,9 +66,8 @@ correct_gt <- function(gt, match_snps){
       fix_line <- match_snps[match_snps$SNP == my_row, ]
       gt_line <- gt[i, ]
       if (fix_line$MAJOR[1] != fix_line$REF[1]){
-        gt_line[gt_line == 2] <- "X"
-        gt_line[gt_line == 0] <- 2
-        gt_line[gt_line == "X"] <- 0
+        gt_line[gt[i,] == 2] <- 0
+        gt_line[gt[i,] == 0] <- 2
        # for (j in 1:ncol(gt)){
        #
        #   if ( gt[i, j] == 1 | is.na(gt[i, j]) ){ #this should instead use the identical function
