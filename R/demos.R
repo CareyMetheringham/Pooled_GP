@@ -64,7 +64,7 @@ gppool_data_demo <- function(training_snps = 10, test_snps = 6){
   print(paste("Accuracy:", accuracy))
   correlation <- calculate_correlation(create_ebv_table(ind_info, ebv))
   print(paste("Correlation:", correlation))
-  boxplot(ebv ~ ind_info$Group)
+  #need to fix boxplot printing function
 }
 
 gppool_rerun_demo <- function(subset_size = 10){ #BROKEN!
