@@ -60,7 +60,7 @@ gppool_data_demo <- function(training_snps = 10, test_snps = 6){
   matched <- match_and_subset(ees_table, ind_gt, ind_fix, pool_data, test_snps)
   ebv <- get_ebv(matched$ees, matched$gt)
   ind_info <- read_ind_info(ind_info_file)
-  accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv)) #<- not a real number??
+  accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv))
   print(paste("Accuracy:", accuracy))
   correlation <- calculate_correlation(create_ebv_table(ind_info, ebv))
   print(paste("Correlation:", correlation))
