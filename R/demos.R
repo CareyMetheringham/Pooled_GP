@@ -47,7 +47,7 @@ gppool_demo <- function(  n_pop = 10,
 #' @export
 #'
 #' @examples
-gppool_data_demo <- function(training_snps = 10, test_snps = 5){
+gppool_data_demo <- function(training_snps = 10, test_snps = 6){
   gwas_hits <- "./extdata/test.gwas"
   pools_rc_file <- ("./extdata/test.pool_rc")
   pop_info <- fread("./extdata/test.pool_info")

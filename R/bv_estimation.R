@@ -10,7 +10,7 @@
 #'
 #' @examples
 get_ebv <- function(ees, gt_matrix){
-  gt_matrix <- gt_matrix[order(rownames(gt_matrix)),]
+  gt_matrix <- gt_matrix[order(rownames(gt_matrix)), ]
   ees <- ees[order(ees$SNP), ]
   alt_matrix <- 2 - gt_matrix
   effect_mia <-  t(gt_matrix) %*% ees$EES.MIA
