@@ -17,8 +17,8 @@ calculate_accuracy <- function(ebv_table, percentage = 1, G1val = 1, G2val = 2){
   G2 <- tail(ebv_sort, group_size)
   G1count <- count(G1$Group)
   G2count <- count(G2$Group)
-  G1correct <- G1count$freq[G1val]
-  G2correct <- G2count$freq[G2val]
+  G1correct <- G1count$freq[G1count$x == G1val]
+  G2correct <- G2count$freq[G2count$x == G2val]
   accuracy <- (G1correct + G2correct) / (group_size * 2)
   return(accuracy)
 }
