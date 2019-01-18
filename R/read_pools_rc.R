@@ -80,7 +80,7 @@ get_hits_from_file <- function(p_val_file, num_hits){
   hits <- fread(file = p_val_file)
   colnames(hits) <- c("contig", "pos", "snp", "P")
   hits$pos <- as.character(hits$pos)
-  hits <- hits[order(hits$P), ]
+  hits <- hits[order(as.numeric(paste(hits$P))), ]
   top_hits <- head(hits, num_hits)
   return(top_hits)
 }
