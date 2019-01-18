@@ -18,5 +18,8 @@ get_ebv <- function(ees, gt_matrix){
   ebv <- effect_mia + effect_maa
   ebv <- as.vector(ebv)
   names(ebv) <- colnames(gt_matrix)
+  print(head(ebv))
   return(ebv)
 }
+
+#ebv does not have ID attached
