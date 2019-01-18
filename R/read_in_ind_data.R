@@ -41,6 +41,7 @@ read_gt_table <- function(gt_file){
 #'
 #' @examples
 #' read_ind_info("./extdata/example_ind_info.csv")
+#' read_ind_info("./extdata/test.ind_info")
 read_ind_info <- function(ind_info_file){
   info <- fread(ind_info_file)
   colnames(info) <- c("ID", "Group")
