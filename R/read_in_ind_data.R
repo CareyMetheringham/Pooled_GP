@@ -51,7 +51,7 @@ read_ind_info <- function(ind_info_file){
 
 #read in vcf data
 
-read_vcf_file <- function(vcf_file){
+read_vcf_file <- function(vcf_file, suffix = "MEMq20.sorted.bam"){
   ind_vcf <- read.vcfR(file=vcf_file, limit = 1e+07, cols = NULL,
                        convertNA = TRUE, checkFile = TRUE, check_keys = TRUE, verbose = TRUE)
   ind_fix <- as.data.table(getFIX(ind_vcf))
@@ -70,6 +70,8 @@ read_vcf_file <- function(vcf_file){
 
   #replace 0 with NA where relivant
   ind_gt[get_na=="./."] <- NA
+  #remove extra stuff from names
+  colnames(ind_gt) <- gsub(suffix, "", colnames(ind_gt))
   write.table(ind_gt,"genotype.table",sep="\t",quote = FALSE)
   return(list(gt = ind_gt, fix = ind_fix))
 }
