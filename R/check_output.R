@@ -24,12 +24,8 @@ calculate_accuracy <- function(ebv_table, percentage = 1, G1val = 1, G2val = 2){
 }
 
 create_ebv_table <- function(ind_info, ebv){
-  print(head(ebv))
-  print(head(ind_info))
   ebv_df <- data.frame(ID = names(ebv), EBV = as.numeric(ebv))
-  print(head(ebv_df))
   ebv_table <- merge(ind_info, ebv_df)
-  print(head(ebv_table))
   return(ebv_table)
 }
 

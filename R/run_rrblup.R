@@ -196,7 +196,6 @@ create_ees_table <- function(fit){
   colnames(ees_table) <-
     c("SNP", "EES.MIA", "EES.MIA.SE", "EES.MAA", "EES.MAA.SE")
   rownames(ees_table) <- fit$snps
-  print(head(ees_table))
   return(ees_table)
 }
 
