@@ -74,6 +74,8 @@ correct_gt <- function(gt, match_snps){
   else{next}
   }
   swapped_gt[is.na(swapped_gt)] <- 0
+  rownames(swapped_gt) <- rownames(gt)
+  colnames(swapped_gt) <- colnames(gt)
   return(swapped_gt)
 }
 
