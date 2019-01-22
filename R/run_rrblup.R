@@ -170,6 +170,8 @@ rrblup_loop <- function(data, X = FALSE, Diff = TRUE, both = TRUE, rep = 10){
   mean_maa_u <- colMeans(maa_u_df)
   mean_mia_u_SE <- colMeans(mia_u_SE_df)
   mean_maa_u_SE <- colMeans(maa_u_SE_df)
+  names(mean_mia_u) <- data$snp_id
+  names(mean_maa_u) <- data$snp_id
   #return mean
   return(list(mia = list(u = mean_mia_u, u.SE = mean_mia_u_SE),
               maa = list(u = mean_maa_u, u.SE = mean_maa_u_SE),

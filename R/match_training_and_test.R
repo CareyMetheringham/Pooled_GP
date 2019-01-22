@@ -136,3 +136,5 @@ match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   return(list(gt = corrected_mismatch,
               ees = subset_ees))
 }
+
+#need to find where name lables are lost!!
