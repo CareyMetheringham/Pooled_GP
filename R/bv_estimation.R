@@ -10,8 +10,10 @@
 #'
 #' @examples
 get_ebv <- function(ees, gt_matrix){
+  print(rownames(gt_matrix))
+  print(colnames(gt_matrix))
   gt_matrix <- gt_matrix[order(rownames(gt_matrix)), ]
-  print(head(gt_matrix))
+  print(head(gt_matrix)) #does not have names attached
   ees <- ees[order(ees$SNP), ]
   print(head(ees))
   alt_matrix <- 2 - gt_matrix
