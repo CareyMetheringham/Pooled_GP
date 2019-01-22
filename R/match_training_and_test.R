@@ -132,9 +132,10 @@ match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   gt_subset <- get_gt_subset(subset_ees$SNP, gt)
   corrected_mismatch <-
     fix_allele_mismatch(subset_ees, gt_subset, fix, major_and_snp)
+  print(head(corrected_mismatch))
 
   return(list(gt = corrected_mismatch,
               ees = subset_ees))
 }
 
-#need to find where name lables are lost!!
+#need to find where name lables on gt are lost!!
