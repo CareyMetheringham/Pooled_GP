@@ -17,16 +17,16 @@ read_fix_table <- function(fix){
 }
 
 #' Read in the genotype table
-#' @param wd working directory containing genotype.table
-#'
+#' @param gt file working directory containing genotype.table
+#'#Need to be able to vary suffix
 #' @return a data frame with named rows
 #' @export
 #'
 #' @examples
 #' read_gt_table("./extdata/test.gt")
-read_gt_table <- function(gt_file){
+read_gt_table <- function(gt_file, suffix = "Mq20.sorted.bam"){
   gt <- read.table(gt_file, sep = " ")
-  colnames(gt) <- gsub(".sorted.bam", "", colnames(gt))
+  colnames(gt) <- gsub(suffix, "", colnames(gt))
   return(gt)
 }
 
