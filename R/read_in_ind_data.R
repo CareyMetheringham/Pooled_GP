@@ -24,7 +24,7 @@ read_fix_table <- function(fix){
 #'
 #' @examples
 #' read_gt_table("./extdata/test.gt")
-read_gt_table <- function(gt_file, suffix = "Mq20.sorted.bam"){
+read_gt_table <- function(gt_file, suffix = "MEMq20.sorted.bam"){
   gt <- read.table(gt_file, sep = " ")
   colnames(gt) <- gsub(suffix, "", colnames(gt))
   return(gt)
