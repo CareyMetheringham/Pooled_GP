@@ -4,7 +4,7 @@
 \alias{fix_allele_mismatch}
 \title{Find and Fix Major Allele Mismatches}
 \usage{
-fix_allele_mismatch(ees_table, gt_table, fix_table, pop_data)
+fix_allele_mismatch(ees_table, gt, fix, major_snp)
 }
 \arguments{
 \item{pop_data}{}
@@ -16,5 +16,5 @@ Find and Fix Major Allele Mismatches
 ind_fix <- read_fix_table("./extdata/test.fix")
 ind_gt <- read_gt_table("./extdata/test.gt")
 test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
-fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
+fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data) <--- need to update to take major_and_snp
 }

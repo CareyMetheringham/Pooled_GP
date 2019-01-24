@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_training_and_test.R
 \name{correct_gt}
 \alias{correct_gt}
-\title{Correct Non Matching Alleles}
+\title{Correct Non Matching Alleles - consider using gsub instead}
 \usage{
 correct_gt(gt, match_snps)
 }
@@ -10,5 +10,5 @@ correct_gt(gt, match_snps)
 \item{match_snps}{}
 }
 \description{
-Correct Non Matching Alleles
+Correct Non Matching Alleles - consider using gsub instead
 }

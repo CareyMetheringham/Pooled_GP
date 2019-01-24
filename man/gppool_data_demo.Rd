@@ -4,7 +4,7 @@
 \alias{gppool_data_demo}
 \title{Demo using example dataset}
 \usage{
-gppool_data_demo(training_snps = 10, test_snps = 5)
+gppool_data_demo(training_snps = 10, test_snps = 6)
 }
 \arguments{
 \item{test_snps}{}

@@ -4,10 +4,11 @@
 \alias{read_gt_table}
 \title{Read in the genotype table}
 \usage{
-read_gt_table(gt_file)
+read_gt_table(gt_file, suffix = "MEMq20.sorted.bam")
 }
 \arguments{
-\item{wd}{working directory containing genotype.table}
+\item{gt}{file working directory containing genotype.table
+#Need to be able to vary suffix}
 }
 \value{
 a data frame with named rows

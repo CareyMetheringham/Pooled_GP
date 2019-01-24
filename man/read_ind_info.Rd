@@ -17,4 +17,5 @@ Read in Individual Infomation
 }
 \examples{
 read_ind_info("./extdata/example_ind_info.csv")
+read_ind_info("./extdata/test.ind_info")
 }
