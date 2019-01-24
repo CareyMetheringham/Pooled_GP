@@ -207,19 +207,19 @@ read_in_pools_rc <- function(pools_rc_file, info, gwas, hit_num){
 #' #can only exclude one at a time
 #need to include tests for equal length
 #'
-#' @param info
-#' @param pool_data
-#' @param group_name
+#' @param info data table with 3 columns
+#' @param pool_data data output by read_in_pools_rc
+#' @param group_name a group in column 3 (Group2) of the info table
 #'
-#' @return
+#' @return pool_data excluding the named group
 #' @export
 #'
 #' @examples
 exclude_group2 <- function(info, pool_data, group_name){
-  new_y = pool_data$y[info$Group2 != group_name]
-  new_prov = pool_data$prov[info$Group2 != group_name]
-  new_maa = pool_data$maa[, info$Group2 != group_name]
-  new_mia = pool_data$mia[, info$Group2 != group_name]
+  new_y = pool_data$y[info[, 3] != group_name]
+  new_prov = pool_data$prov[info[, 3] != group_name]
+  new_maa = pool_data$maa[, info[, 3] != group_name]
+  new_mia = pool_data$mia[, info[, 3] != group_name]
   return(list(
     y = new_y,
     prov = new_prov,
