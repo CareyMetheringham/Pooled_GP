@@ -8,7 +8,14 @@
 exclude_group2(info, pool_data, group_name)
 }
 \arguments{
-\item{group_name}{}
+\item{info}{data table with 3 columns}
+
+\item{pool_data}{data output by read_in_pools_rc}
+
+\item{group_name}{a group in column 3 (Group2) of the info table}
+}
+\value{
+pool_data excluding the named group
 }
 \description{
 Exclude one named Group2 grouping
