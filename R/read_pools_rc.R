@@ -196,8 +196,37 @@ read_in_pools_rc <- function(pools_rc_file, info, gwas, hit_num){
     prov = prov,
     maa = maa_freq_d,
     mia = mia_freq_d,
-    snp_id = snp_names,
+    snp_id = snp_names, # use as rownames
     major = major,
     minor = minor
+  ))
+}
+
+
+#' Exclude one named Group2 grouping
+#' #can only exclude one at a time
+#need to include tests for equal length
+#'
+#' @param info
+#' @param pool_data
+#' @param group_name
+#'
+#' @return
+#' @export
+#'
+#' @examples
+exclude_group2 <- function(info, pool_data, group_name){
+  new_y = pool_data$y[info$Group2 != group_name]
+  new_prov = pool_data$prov[info$Group2 != group_name]
+  new_maa = pool_data$maa[, info$Group2 != group_name]
+  new_mia = pool_data$mia[, info$Group2 != group_name]
+  return(list(
+    y = new_y,
+    prov = new_prov,
+    maa = new_maa,
+    mia = new_mia,
+    snp_id = pool_data$snp_id,
+    major = pool_data$major,
+    minor = pool_data$minor
   ))
 }
