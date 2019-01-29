@@ -47,3 +47,8 @@ calculate_correlation <- function(ebv_table){
     cor(ebv_table$Group, ebv_table$EBV, method = "pearson")
   return(correlation)
 }
+
+plot_ebv_boxplot <- function(ebv_table){
+  plot <- ggplot(ebv_table, aes(x = Group, y =EBV)) + geom_boxplot()
+  return(plot)
+}
