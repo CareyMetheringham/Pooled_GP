@@ -64,23 +64,5 @@ gppool_data_demo <- function(training_snps = 10, test_snps = 6){
   print(paste("Accuracy:", accuracy))
   correlation <- calculate_correlation(create_ebv_table(ind_info, ebv))
   print(paste("Correlation:", correlation))
-  #need to fix boxplot printing function
-}
-
-gppool_rerun_demo <- function(subset_size = 10){ #BROKEN!
-  pop_info_file <- "./extdata/example_pop_data.csv"
-  ind_info_file <- "./extdata/example_ind_info.csv"
-  prior_ess <- fread("./extdata/example_ees.table")
-  snps_to_use <- "./extdata/example_snps_for_rerun"
-  rerun_data <- make_rerun_object(snps_to_use, pop_info_file, prior_ess, subset_size)
-  fit_rrblup <- mixed_solve_both(rerun_data)
-  ees_table <- create_ees_table(fit_rrblup)
-  ind_gt <- read_gt_table("./extdata")
-  ind_fix <- read_fix_table("./extdata")
-  matched <- match_and_subset(ees_table, ind_gt, ind_fix, rerun_data, 20)
-  ebv <- get_ebv(matched$ees, matched$gt)
-  ind_info <- read_ind_info(ind_info_file)
-  accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv))
-  plot(ebv)
-  return(accuracy)
+  ggplot(create_ebv_table(ind_info, ebv), aes(x = group, group = Group, y =EBV)) + geom_boxplot()
 }
