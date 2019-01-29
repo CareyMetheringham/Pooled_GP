@@ -28,9 +28,9 @@ get_af_diff <- function(gt_matrix, prov_list){
 
 #' Mixed Solve Without Prov Effects Major and Minor Alleles
 #'
-#' @param data
+#' @param data object containing data from training population
 #'
-#' @return
+#' @return list containing vectors with estimated effect sizes and snp_id
 #' @export
 #'
 #' @examples
@@ -48,9 +48,9 @@ mixed_solve_both_af_diff_X <- function(data){
 
 #' Mixed Solve Without Prov Effects Major and Minor Alleles
 #'
-#' @param data
+#' @param data object containing data from training population
 #'
-#' @return
+#' @return list containing vectors with estimated effect sizes and snp_id
 #' @export
 #'
 #' @examples
@@ -65,50 +65,11 @@ mixed_solve_both_af_diff <- function(data){
               snps = data$snp_id))
 }
 
-#' Mixed Solve Without Prov Effects Major and Minor Alleles
-#'
-#' @param data
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' mixed_solve_both_af_diff(produce_sim_data(10, 100, 1000))
-ml_both_af_diff <- function(data){
-  freq_diff_mia <- get_af_diff(data$mia, data$prov)
-  freq_diff_maa <- get_af_diff(data$maa, data$prov)
-  mia_fit <- mixed.solve(data$y, t(freq_diff_mia), SE = TRUE, method = "ML")
-  maa_fit <- mixed.solve(data$y, t(freq_diff_maa), SE = TRUE, method = "ML")
-  return(list(mia = mia_fit,
-              maa = maa_fit,
-              snps = data$snp_id))
-}
-
-#' Mixed Solve Without Prov Effects Major and Minor Alleles
-#'
-#' @param data
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' mixed_solve_both_af_diff(produce_sim_data(10, 100, 1000))
-ml_both_af_diff_X <- function(data){
-  freq_diff_mia <- get_af_diff(data$mia, data$prov)
-  freq_diff_maa <- get_af_diff(data$maa, data$prov)
-  mia_fit <- mixed.solve(data$y, t(freq_diff_mia), X = rank(data$prov), SE = TRUE, method = "ML")
-  maa_fit <- mixed.solve(data$y, t(freq_diff_maa), X = rank(data$prov), SE = TRUE, method = "ML")
-  return(list(mia = mia_fit,
-              maa = maa_fit,
-              snps = data$snp_id))
-}
-
-
 #' Mixed Solve For Major and Minor Alleles
 #'
-#' @param data
+#' @param data object containing data from training population
 #'
-#' @return
+#' @return list containing vectors with estimated effect sizes and snp_id
 #' @export
 #'
 #' @examples
@@ -125,9 +86,9 @@ mixed_solve_both <- function(data){
 
 #' Mixed Solve For Major and Minor Alleles
 #'
-#' @param data
+#' @param data object containing data from training population
 #'
-#' @return
+#' @return list containing vectors with estimated effect sizes and snp_id
 #' @export
 #'
 #' @examples
@@ -142,6 +103,18 @@ mixed_solve_both_with_X <- function(data){
               snps = data$snp_id))
 }
 
+#' Run rrBLUP as loop
+#'
+#' @param data object containing data from training population
+#' @param X Boolean - should attempt be made to fit X - default FALSE
+#' @param Diff Should the difference from Group2 mean be used in place of raw values - default = TRUE
+#' @param both Should both minor and msjor alleles be used - default = TRUE
+#' @param rep How many times should model fitting be repeated
+#'
+#' @return list containing vectors with estimated effect sizes and snp_id
+#' @export
+#'
+#' @examples
 rrblup_loop <- function(data, X = FALSE, Diff = TRUE, both = TRUE, rep = 10){
   #need to add other outputs to the data structure?
   mia_u_df <- data.frame()
