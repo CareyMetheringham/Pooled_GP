@@ -7,7 +7,10 @@
 mixed_solve_both_af_diff_X(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{object containing data from training population}
+}
+\value{
+list containing vectors with estimated effect sizes and snp_id
 }
 \description{
 Mixed Solve Without Prov Effects Major and Minor Alleles

@@ -7,7 +7,10 @@
 mixed_solve_both(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{object containing data from training population}
+}
+\value{
+list containing vectors with estimated effect sizes and snp_id
 }
 \description{
 Mixed Solve For Major and Minor Alleles
