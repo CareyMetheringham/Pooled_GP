@@ -30,7 +30,7 @@ calculate_accuracy <- function(ebv_table, percentage = 1, G1val = 1, G2val = 2){
 #' @examples
 create_ebv_table <- function(ind_info, ebv){
   ebv_df <- data.frame(ID = names(ebv), EBV = as.numeric(ebv))
-  ebv_table <- cbind(ind_info, ebv_df)
+  ebv_table <- merge(ind_info, ebv_df, by = "ID")
   return(ebv_table)
 }
 
