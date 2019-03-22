@@ -230,3 +230,54 @@ exclude_group2 <- function(info, pool_data, group_name){
     minor = pool_data$minor
   ))
 }
+
+#' Get random subset pools_rc
+#'
+#' @param dir
+#' @param info
+#' @param gwas
+#' @param hit_num
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), 10)
+read_pools_rc_random <- function(pools_rc_file, info, hit_num){
+  colnames(info) <- c("Sample", "Group", "Group2")
+  random_hits <- get_random(fread(pools_rc_file, stringsAsFactors = FALSE), hit_num)
+  snps_to_use <- find_top_snps(fread(pools_rc_file, stringsAsFactors = FALSE), random_hits[, 1:2], info) #ERROR HERE!!
+  snp_names <- get_snp_id(snps_to_use)
+  maa_freq <- get_allele_freq(snps_to_use, info, "major")
+  mia_freq <- get_allele_freq(snps_to_use, info, "minor")
+  maa_freq_d <- fraction_to_decimal(maa_freq)
+  mia_freq_d <- fraction_to_decimal(mia_freq)
+  y <- info$Group
+  prov <- info$Group2
+  major <- get_allele(snps_to_use$allele_states, "major")
+  minor <- get_allele(snps_to_use$allele_states, "minor")
+  return(list(
+    y = y,
+    prov = prov,
+    maa = maa_freq_d,
+    mia = mia_freq_d,
+    snp_id = snp_names, # use as rownames
+    major = major,
+    minor = minor
+  ))
+}
+
+#' Get SNPs of Interest from GWAS Results
+#'
+#' @param pools_rc data frame
+#' @param num_hits number of snps needed
+#'
+#' @return random subset of rows from pools_rc
+#' @export
+#'
+#' @examples
+#' get_random(fread("./extdata/test.pool_rc"), 10)
+get_random <- function(pools_rc, num_hits){
+  my_sample <- pools_rc[sample(nrow(pools_rc), num_hits),]
+  return(my_sample)
+}
