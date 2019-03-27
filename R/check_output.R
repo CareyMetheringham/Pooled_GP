@@ -19,11 +19,11 @@ calculate_accuracy <- function(ebv_table, percentage = 1, G1val = 1, G2val = 2){
   return(accuracy)
 }
 
-#' Calculate Accuracy of Predictions
+#' Calculate Accuracy for single tail of predictions
 #'
 #' @param ebv_table
 #'
-#' @return
+#' @return accuracy value
 #' @export
 #'
 #' @examples
@@ -37,12 +37,12 @@ calculate_accuracy_1 <- function(ebv_table, percentage = 1, G1val = 1, G2val = 2
   return(accuracy)
 }
 
-#' Title
+#' Create EBV Table
 #'
 #' @param ind_info
 #' @param ebv
 #'
-#' @return
+#' @return ebv as a table
 #' @export
 #'
 #' @examples
