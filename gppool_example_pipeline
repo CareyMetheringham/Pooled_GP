@@ -7,12 +7,11 @@ library(vcfR)
 library(ggplot2)
 
 # Read in parameters from command line
-# Arguments must be submitted in the correct order
+# Arguments must be submitted in the correct order!
 # working_dir, gwas_results, pool_rc_file, pool_info_file, ind_info_file, ind_vcf
 args <- commandArgs(trailingOnly = TRUE)
 
-#################################
-#load the gppool package
+#load the gppool package - SPECIFY LOCATION
 devtools::load_all("$PATH/gppool")
 
 # Arguments must be submitted in the correct order
@@ -30,7 +29,9 @@ ind_info_file <- args[5]
 # file containing ind vcf
 vcf_file <- args[6]
 
-# Read in the VCF file - be careful with size
+###############################################
+
+# 1.  Read in the VCF file - be careful with size
 ind_data <- read_vcf_file(vcf_file)
 
 # create table for output
@@ -40,37 +41,37 @@ output_table <- data.table(TrainingSet = numeric(), TestSet = numeric(), Accurac
 for (n in c(100, 200, 500)){
   print(paste("Fit model with ", n, " SNPs", sep = ""))
 
-  #1. get pool data object from the pools
+  # 2. get pool data object from the pools
   pool_data <- read_in_pools_rc(pools_rc_files, info, top_gwas, n)
 
-  #2. estimate effect sizes
+  # 3. estimate effect sizes
   fit_rrblup <- rrblup_loop(pool_data)
 
-  # 3. print ees table to file
+  # 4. print ees table to file
   ees_table <- create_ees_table(fit_rrblup)
   #Optional, save ees table to an output file
   # write.table(ees_table, file = paste(wd, "/ees.table_", n, sep = ""), row.names = FALSE, quote = FALSE)
 
-  # 4. match snps used in pools and ind
+  # 5. match snps used in pools and ind
   # Test prediction for different subset sizes
   for (i in c(10, 25, 50, 100, 200, 250, 500)){
     if (i <= n){
       matched <- match_and_subset(ees_table, ind_data$gt, ind_data$fix, pool_data, i)
 
-      # 5. estimate breeding values
+      # 6. estimate breeding values
       ebv <- get_ebv(matched$ees, matched$gt)
 
-      # 6. Read in info on ind trees
+      # 7. Read in info on ind trees
       ind_info <- read_ind_info(ind_info_file)
 
-      # 7. Test accuracy and correlation
+      # 8. Test accuracy and correlation
       accuracy <- calculate_accuracy(create_ebv_table(ind_info, ebv))
       # Calculate accuracy of predictions for the top 10% of individuals
       accuracy_top_10_p <- calculate_accuracy_1(create_ebv_table(ind_info, ebv), percentage = 0.1)
       correlation <- calculate_correlation(create_ebv_table(ind_info, ebv))
       print( paste(n, i, accuracy_top_10_p, correlation,  sep = "\t"))
 
-      # 8. save output to table
+      # 9. save output to table
       row <- data.table(TrainingSet = n, TestSet = i, Accuracy = accuracy, Top_Accuracy = accuracy_top_10_p, Correlation = correlation)
       output_table <- rbind(output_table, row)
     }
