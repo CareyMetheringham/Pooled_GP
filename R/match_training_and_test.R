@@ -3,7 +3,7 @@
 #' @param ees_table
 #' @param gt_ind
 #'
-#' @return
+#' @return list of snps which occur in training and test
 #' @export
 #'
 #' @examples
@@ -17,7 +17,7 @@ match_snps_in_ind <- function(ees_table, gt_ind){
 #'
 #' @param ees_table
 #'
-#' @return
+#' @return snps ordered by estimated effect size
 #' @export
 #'
 #' @examples
@@ -35,14 +35,14 @@ order_by_ees <- function(ees_table){
 #' @param fix_table
 #' @param pop_data
 #'
-#' @return
+#' @return gt table corrected for any mismatched minor and major alleles
 #' @export
 #'
 #' @examples
 #' ind_fix <- read_fix_table("./extdata/test.fix")
 #' ind_gt <- read_gt_table("./extdata/test.gt")
 #' test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
-#' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data) <--- need to update to take major_and_snp
+#' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
 fix_allele_mismatch <- function(ees_table, gt, fix, major_snp){
   ees_and_maa <- merge(ees_table, major_snp, by = "SNP") #need to ensure order is correct
   match_snps <- merge(ees_and_maa, fix, by = "SNP")
@@ -54,7 +54,7 @@ fix_allele_mismatch <- function(ees_table, gt, fix, major_snp){
 #' @param gt
 #' @param match_snps
 #'
-#' @return
+#' @return swapped gt
 #' @export
 #'
 #' @examples
@@ -83,7 +83,7 @@ correct_gt <- function(gt, match_snps){
 #' @param ees_table
 #' @param subset_size
 #'
-#' @return
+#' @return subset of snps selected by ees
 #' @export
 #'
 #' @examples
@@ -99,26 +99,25 @@ get_ees_subset <- function(ees_table, subset_size){
 #' @param snp_list
 #' @param gt
 #'
-#' @return
+#' @return subset of gt table
 #' @export
 #'
 #' @examples
 #' ind_gt <- read_gt_table("./extdata/test.gt")
 #' get_gt_subset(get_ees_subset(fread("./extdata/test.ees_table"), 5)$SNP, ind_gt)
 get_gt_subset <- function(snp_list, gt){
-  gt_subset <- subset(gt, row.names(gt) %in% snp_list) #<- THIS GIVES ERROR: rows empty
+  gt_subset <- subset(gt, row.names(gt) %in% snp_list)
   return(gt_subset)
 }
 
 #' Match Test & Training, Correct & Subset
-#'
 #' @param ees_table
 #' @param gt
 #' @param fix
 #' @param pool_data
 #' @param subset_size
 #'
-#' @return
+#' @return list containing subsets of the ees and gt tables
 #' @export
 #'
 #' @examples
@@ -138,5 +137,3 @@ match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   return(list(gt = corrected_mismatch,
               ees = subset_ees))
 }
-
-#need to find where name lables on gt are lost!!

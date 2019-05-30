@@ -9,6 +9,9 @@ match_snps_in_ind(ees_table, gt_ind)
 \arguments{
 \item{gt_ind}{}
 }
+\value{
+list of snps which occur in training and test
+}
 \description{
 Find SNPs Occuring in Training and Test
 }

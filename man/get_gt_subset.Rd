@@ -9,6 +9,9 @@ get_gt_subset(snp_list, gt)
 \arguments{
 \item{gt}{}
 }
+\value{
+subset of gt table
+}
 \description{
 Subset GT Matrix by SNP list
 }

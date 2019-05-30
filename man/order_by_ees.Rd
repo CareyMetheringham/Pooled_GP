@@ -9,6 +9,9 @@ order_by_ees(ees_table)
 \arguments{
 \item{ees_table}{}
 }
+\value{
+snps ordered by estimated effect size
+}
 \description{
 Sort EES Table by MIA^2
 }

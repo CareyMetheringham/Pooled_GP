@@ -9,6 +9,9 @@ get_ees_subset(ees_table, subset_size)
 \arguments{
 \item{subset_size}{}
 }
+\value{
+subset of snps selected by ees
+}
 \description{
 Get a Subset of SNPs with Largest EES
 }

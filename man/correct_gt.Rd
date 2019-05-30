@@ -9,6 +9,9 @@ correct_gt(gt, match_snps)
 \arguments{
 \item{match_snps}{}
 }
+\value{
+swapped gt
+}
 \description{
 Correct Non Matching Alleles - consider using gsub instead
 }

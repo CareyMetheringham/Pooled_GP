@@ -9,6 +9,9 @@ match_and_subset(ees_table, gt, fix, pool_data, subset_size)
 \arguments{
 \item{subset_size}{}
 }
+\value{
+list containing subsets of the ees and gt tables
+}
 \description{
 Match Test & Training, Correct & Subset
 }

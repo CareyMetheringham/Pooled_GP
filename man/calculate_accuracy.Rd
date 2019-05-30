@@ -9,6 +9,9 @@ calculate_accuracy(ebv_table, percentage = 1, G1val = 1, G2val = 2)
 \arguments{
 \item{ebv_table}{}
 }
+\value{
+accuracy for both tails
+}
 \description{
 Calculate Accuracy of Predictions
 }
