@@ -4,6 +4,8 @@ Gppool is an R based pipeline for performing genomic prediction on pool-seq data
 
 The pipeline was a designed and tested on data on ash dieback susceptibility in Fraxinus excelsior.
 
+The pipeline takes the pools_rc file produced by Popoolation2 as input for the pooled training population, and a vcf file of SNPs as input for the test individuals. 
+
 Included are functions fortesting the performance of the gppool pipeline on a simulated dataset.
 
 This is a beta version of the pipeline
