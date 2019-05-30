@@ -1,6 +1,6 @@
 # Gppool
 
-Gppool is an R based pipeline for performing genomic prediction on pool-seq data, using rrBLUP.
+Gppool is an R based pipeline for performing genomic prediction on pool-seq data, using rrBLUP, as a follow up to a genome wide association study (GWAS).
 
 The pipeline was a designed and tested on data on ash dieback susceptibility in Fraxinus excelsior.
 
