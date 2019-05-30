@@ -7,7 +7,12 @@
 remove_prov_effects(dec, prov)
 }
 \arguments{
-\item{prov}{}
+\item{dec}{table containing proportion of chosen allele in each pool}
+
+\item{prov}{list of provenences}
+}
+\value{
+difference of allele frequency from provenance mean
 }
 \description{
 Find Difference from Provenance Mean Frequency

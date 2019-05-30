@@ -130,7 +130,7 @@ get_allele_freq <- function(pool_rc, pool_info, which){
 }
 
 #' Transform allele frequencies from fraction to decimal
-#' @param frac_data# a data frame containing only the fractions
+#' @param frac_data a data frame containing only the fractions
 #'
 #' @return frequency of allele
 #' @export
@@ -168,12 +168,12 @@ get_snp_id <- function(pool_rc){
 
 #' Get Data Structure from pools_rc
 #'
-#' @param dir
-#' @param info
-#' @param gwas
-#' @param hit_num
+#' @param pools_rc_file input file pools_rc
+#' @param info table containing data on the grouping of pools <- needs to be read in
+#' @param gwas file containing snps and p-values from gwas
+#' @param hit_num number of snps to be used to calculate ees
 #'
-#' @return
+#' @return list data read in from pools_rc
 #' @export
 #'
 #' @examples
@@ -233,12 +233,12 @@ exclude_group2 <- function(info, pool_data, group_name){
 
 #' Get random subset pools_rc
 #'
-#' @param dir
-#' @param info
-#' @param gwas
-#' @param hit_num
+#' @param pools_rc_file input file pools_rc
+#' @param info table containing data on the grouping of pools <- needs to be read in
+#' @param gwas file containing snps and p-values from gwas
+#' @param hit_num number of snps to be used to calculate ees
 #'
-#' @return
+#' @return list of a random subset of data read in from pools_rc
 #' @export
 #'
 #' @examples

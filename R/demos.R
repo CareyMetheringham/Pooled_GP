@@ -1,4 +1,17 @@
-#demo pipeline: simulation
+#' Demo of Pipeline using Simulated Data
+#'
+#' @param n_pop number of populations to simulate
+#' @param n_ind number of individuals per population
+#' @param n_site number of sites in simulated genome
+#' @param h2 heritability of simulated trait
+#' @param MAF minor allele theshold
+#' @param threshold threshold for including simulated individuals in the high or low pools
+#'
+#' @return no return - prints output to console
+#' @export
+#'
+#' @examples
+#' gppool_demo(20, 100)
 gppool_demo <- function(  n_pop = 10,
                           n_ind = 1000,
                           n_site = 1000,
@@ -38,15 +51,18 @@ gppool_demo <- function(  n_pop = 10,
   plot(as.vector(test_data$ph), ebv, xlab = "Phenotypic Value", ylab = "Estimated Breeding Value")
 }
 
-#' Demo using example dataset
+
+#' Demo of Pipeline using Toy Dataset in directory gppool/extdata
 #'
-#' @param training_snps
-#' @param test_snps
+#' @param training_snps number of snps used to calculate ees
+#' @param test_snps number of snps used to test predictions
 #'
-#' @return print output to terminal and create boxplot
+#' @return no return - prints output to console
 #' @export
 #'
 #' @examples
+#' gppool_data_demo(10,5)
+#' returns accuracy of 1 and correlation of 0.968
 gppool_data_demo <- function(training_snps = 10, test_snps = 6){
   gwas_hits <- "./extdata/test.gwas"
   pools_rc_file <- ("./extdata/test.pool_rc")

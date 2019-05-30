@@ -7,7 +7,9 @@
 match_snps_in_ind(ees_table, gt_ind)
 }
 \arguments{
-\item{gt_ind}{}
+\item{ees_table}{data.table of ees of snps}
+
+\item{gt_ind}{data.table of genotypes from test population}
 }
 \value{
 list of snps which occur in training and test

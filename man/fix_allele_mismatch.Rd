@@ -7,7 +7,13 @@
 fix_allele_mismatch(ees_table, gt, fix, major_snp)
 }
 \arguments{
-\item{pop_data}{}
+\item{ees_table}{table of estimated effect sizes of snps}
+
+\item{gt}{table of genotypes for indivduals 0/1/2}
+
+\item{fix}{table of major/minor allele info for individuals}
+
+\item{major_snp}{major snps in training population}
 }
 \value{
 gt table corrected for any mismatched minor and major alleles
@@ -16,8 +22,8 @@ gt table corrected for any mismatched minor and major alleles
 Find and Fix Major Allele Mismatches
 }
 \examples{
-ind_fix <- read_fix_table("./extdata/test.fix")
-ind_gt <- read_gt_table("./extdata/test.gt")
+fix <- read_fix_table("./extdata/test.fix")
+gt <- read_gt_table("./extdata/test.gt")
 test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
-fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
+fix_allele_mismatch(fread("./extdata/test.ees_table"), gt, fix, test_data)
 }

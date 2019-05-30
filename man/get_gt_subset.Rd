@@ -7,7 +7,9 @@
 get_gt_subset(snp_list, gt)
 }
 \arguments{
-\item{gt}{}
+\item{snp_list}{vector of snps}
+
+\item{gt}{table of genotypes with snp id as row.names}
 }
 \value{
 subset of gt table

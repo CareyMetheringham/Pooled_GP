@@ -1,6 +1,6 @@
 #' Calculate Accuracy of Predictions
 #'
-#' @param ebv_table
+#' @param ebv_table table of estimated breeding values and assigned groups for test individuals
 #'
 #' @return accuracy for both tails
 #' @export
@@ -21,7 +21,7 @@ calculate_accuracy <- function(ebv_table, percentage = 1, G1val = 1, G2val = 2){
 
 #' Calculate Accuracy for single tail of predictions
 #'
-#' @param ebv_table
+#' @param ebv_table table of estimated breeding values and assigned groups for test individuals
 #'
 #' @return accuracy for single tail
 #' @export
@@ -39,10 +39,10 @@ calculate_accuracy_1 <- function(ebv_table, percentage = 1, G1val = 1, G2val = 2
 
 #' Create EBV Table
 #'
-#' @param ind_info
-#' @param ebv
+#' @param ind_info phenotypic assignment of test individuals
+#' @param ebv estimated breeding value
 #'
-#' @return ebv as a table
+#' @return table of estimated breeding values and assigned groups for test individuals
 #' @export
 #'
 #' @examples
@@ -54,7 +54,7 @@ create_ebv_table <- function(ind_info, ebv){
 
 #' Calculate Correlation of EBV and Group
 #'
-#' @param ebv_table
+#' @param ebv_table table of estimated breeding values and assigned groups for test individuals
 #'
 #' @return correlation
 #' @export
@@ -68,9 +68,9 @@ calculate_correlation <- function(ebv_table){
 
 #' Plot Boxplot of EBV (ggplot)
 #'
-#' @param ebv_table
+#' @param ebv_table table of estimated breeding values and assigned groups for test individuals
 #'
-#' @return plot
+#' @return boxlot
 #' @export
 #'
 #' @examples

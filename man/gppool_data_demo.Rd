@@ -2,16 +2,22 @@
 % Please edit documentation in R/demos.R
 \name{gppool_data_demo}
 \alias{gppool_data_demo}
-\title{Demo using example dataset}
+\title{Demo of Pipeline using Toy Dataset in directory gppool/extdata}
 \usage{
 gppool_data_demo(training_snps = 10, test_snps = 6)
 }
 \arguments{
-\item{test_snps}{}
+\item{training_snps}{number of snps used to calculate ees}
+
+\item{test_snps}{number of snps used to test predictions}
 }
 \value{
-print output to terminal and create boxplot
+no return - prints output to console
 }
 \description{
-Demo using example dataset
+Demo of Pipeline using Toy Dataset in directory gppool/extdata
+}
+\examples{
+gppool_data_demo(10,5)
+returns accuracy of 1 and correlation of 0.968
 }

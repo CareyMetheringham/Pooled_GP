@@ -83,14 +83,14 @@ get_pools <- function(sim, MAF = 0.01, threshold = 0.5){
               lo = low_pool_matrix))
 }
 
-#' Produce a Simulation data object
+#' Produce simulated training populations
 #'
-#' @param num_pop
-#' @param num_ind
-#' @param num_sites
-#' @param h2
+#' @param num_pop number of populations
+#' @param num_ind number of individuals per population
+#' @param num_sites number of sites to simulate in genome
+#' @param h2 heritability of simulated trait
 #' @param MAF minor allele frequency cutoff
-#' @param threshold
+#' @param threshold phenotype threshold for selecting individuals for high and low pools
 #'
 #' @return a list containing:
 #' y:

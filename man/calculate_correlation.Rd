@@ -7,7 +7,7 @@
 calculate_correlation(ebv_table)
 }
 \arguments{
-\item{ebv_table}{}
+\item{ebv_table}{table of estimated breeding values and assigned groups for test individuals}
 }
 \value{
 correlation

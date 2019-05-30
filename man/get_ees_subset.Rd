@@ -7,7 +7,9 @@
 get_ees_subset(ees_table, subset_size)
 }
 \arguments{
-\item{subset_size}{}
+\item{ees_table}{table of estimated effect sizes of snps}
+
+\item{subset_size}{size of subset to be taken from ees table}
 }
 \value{
 subset of snps selected by ees

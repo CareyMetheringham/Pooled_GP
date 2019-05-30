@@ -7,7 +7,16 @@
 read_pools_rc_random(pools_rc_file, info, hit_num)
 }
 \arguments{
-\item{hit_num}{}
+\item{pools_rc_file}{input file pools_rc}
+
+\item{info}{table containing data on the grouping of pools <- needs to be read in}
+
+\item{hit_num}{number of snps to be used to calculate ees}
+
+\item{gwas}{file containing snps and p-values from gwas}
+}
+\value{
+list of a random subset of data read in from pools_rc
 }
 \description{
 Get random subset pools_rc

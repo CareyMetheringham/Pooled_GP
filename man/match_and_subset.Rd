@@ -7,7 +7,15 @@
 match_and_subset(ees_table, gt, fix, pool_data, subset_size)
 }
 \arguments{
-\item{subset_size}{}
+\item{ees_table}{table of estimated effect sizes of snps}
+
+\item{gt}{table of genotypes for indivduals 0/1/2}
+
+\item{fix}{table of major/minor allele info for individuals}
+
+\item{pool_data}{data on training pools}
+
+\item{subset_size}{size of subset of snps from test population to be used to calculate ebv}
 }
 \value{
 list containing subsets of the ees and gt tables
@@ -16,8 +24,8 @@ list containing subsets of the ees and gt tables
 Match Test & Training, Correct & Subset
 }
 \examples{
-ind_gt <- read_gt_table("./extdata/test.gt")
-ind_fix <- read_fix_table("./extdata/test.fix")
+gt <- read_gt_table("./extdata/test.gt")
+fix <- read_fix_table("./extdata/test.fix")
 test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
-match_and_subset(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data, 5)
+match_and_subset(fread("./extdata/test.ees_table"), gt, fix, test_data, 5)
 }

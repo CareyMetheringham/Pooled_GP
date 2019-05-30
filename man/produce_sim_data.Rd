@@ -2,15 +2,23 @@
 % Please edit documentation in R/pool_training_pop.R
 \name{produce_sim_data}
 \alias{produce_sim_data}
-\title{Produce a Simulation data object}
+\title{Produce simulated training populations}
 \usage{
 produce_sim_data(num_pop, num_ind, num_sites, h2 = 0.3, MAF = 0.01,
   threshold = 0.5)
 }
 \arguments{
+\item{num_pop}{number of populations}
+
+\item{num_ind}{number of individuals per population}
+
+\item{num_sites}{number of sites to simulate in genome}
+
+\item{h2}{heritability of simulated trait}
+
 \item{MAF}{minor allele frequency cutoff}
 
-\item{threshold}{}
+\item{threshold}{phenotype threshold for selecting individuals for high and low pools}
 }
 \value{
 a list containing:
@@ -23,7 +31,7 @@ es:
 af:
 }
 \description{
-Produce a Simulation data object
+Produce simulated training populations
 }
 \examples{
 produce_sim_data(10, 100, 1000)

@@ -7,7 +7,7 @@
 order_by_ees(ees_table)
 }
 \arguments{
-\item{ees_table}{}
+\item{ees_table}{table of estimated effect sizes of snps}
 }
 \value{
 snps ordered by estimated effect size

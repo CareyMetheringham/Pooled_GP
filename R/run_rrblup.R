@@ -173,10 +173,10 @@ create_ees_table <- function(fit){
 }
 
 #' Find Difference from Provenance Mean Frequency
-#' @param maa_dec
-#' @param prov
+#' @param dec table containing proportion of chosen allele in each pool
+#' @param prov list of provenences
 #'
-#' @return
+#' @return difference of allele frequency from provenance mean
 #' @export
 #'
 #' @examples

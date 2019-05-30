@@ -7,10 +7,12 @@
 create_ebv_table(ind_info, ebv)
 }
 \arguments{
-\item{ebv}{}
+\item{ind_info}{phenotypic assignment of test individuals}
+
+\item{ebv}{estimated breeding value}
 }
 \value{
-ebv as a table
+table of estimated breeding values and assigned groups for test individuals
 }
 \description{
 Create EBV Table

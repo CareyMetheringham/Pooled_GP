@@ -1,7 +1,7 @@
 #' Find SNPs Occuring in Training and Test
 #'
-#' @param ees_table
-#' @param gt_ind
+#' @param ees_table data.table of ees of snps
+#' @param gt_ind data.table of genotypes from test population
 #'
 #' @return list of snps which occur in training and test
 #' @export
@@ -15,7 +15,7 @@ match_snps_in_ind <- function(ees_table, gt_ind){
 
 #' Sort EES Table by MIA^2
 #'
-#' @param ees_table
+#' @param ees_table table of estimated effect sizes of snps
 #'
 #' @return snps ordered by estimated effect size
 #' @export
@@ -30,29 +30,29 @@ order_by_ees <- function(ees_table){
 
 #' Find and Fix Major Allele Mismatches
 #'
-#' @param ees_table
-#' @param gt_table
-#' @param fix_table
-#' @param pop_data
+#' @param ees_table table of estimated effect sizes of snps
+#' @param gt table of genotypes for indivduals 0/1/2
+#' @param fix table of major/minor allele info for individuals
+#' @param major_snp major snps in training population
 #'
 #' @return gt table corrected for any mismatched minor and major alleles
 #' @export
 #'
 #' @examples
-#' ind_fix <- read_fix_table("./extdata/test.fix")
-#' ind_gt <- read_gt_table("./extdata/test.gt")
+#' fix <- read_fix_table("./extdata/test.fix")
+#' gt <- read_gt_table("./extdata/test.gt")
 #' test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
-#' fix_allele_mismatch(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data)
+#' fix_allele_mismatch(fread("./extdata/test.ees_table"), gt, fix, test_data)
 fix_allele_mismatch <- function(ees_table, gt, fix, major_snp){
-  ees_and_maa <- merge(ees_table, major_snp, by = "SNP") #need to ensure order is correct
+  ees_and_maa <- merge(ees_table, major_snp, by = "SNP")
   match_snps <- merge(ees_and_maa, fix, by = "SNP")
   corrected_gt <- correct_gt(gt, match_snps)
   return(corrected_gt)
 }
 
-#' Correct Non Matching Alleles - consider using gsub instead
-#' @param gt
-#' @param match_snps
+#' Correct Non Matching Alleles
+#' @param gt table of genotypes for indivduals 0/1/2
+#' @param match_snps table of matched snps between test and training
 #'
 #' @return swapped gt
 #' @export
@@ -80,8 +80,8 @@ correct_gt <- function(gt, match_snps){
 }
 
 #' Get a Subset of SNPs with Largest EES
-#' @param ees_table
-#' @param subset_size
+#' @param ees_table table of estimated effect sizes of snps
+#' @param subset_size size of subset to be taken from ees table
 #'
 #' @return subset of snps selected by ees
 #' @export
@@ -96,8 +96,8 @@ get_ees_subset <- function(ees_table, subset_size){
 
 #' Subset GT Matrix by SNP list
 #'
-#' @param snp_list
-#' @param gt
+#' @param snp_list vector of snps
+#' @param gt table of genotypes with snp id as row.names
 #'
 #' @return subset of gt table
 #' @export
@@ -111,20 +111,20 @@ get_gt_subset <- function(snp_list, gt){
 }
 
 #' Match Test & Training, Correct & Subset
-#' @param ees_table
-#' @param gt
-#' @param fix
-#' @param pool_data
-#' @param subset_size
+#' @param ees_table table of estimated effect sizes of snps
+#' @param gt table of genotypes for indivduals 0/1/2
+#' @param fix table of major/minor allele info for individuals
+#' @param pool_data data on training pools
+#' @param subset_size size of subset of snps from test population to be used to calculate ebv
 #'
 #' @return list containing subsets of the ees and gt tables
 #' @export
 #'
 #' @examples
-#' ind_gt <- read_gt_table("./extdata/test.gt")
-#' ind_fix <- read_fix_table("./extdata/test.fix")
+#' gt <- read_gt_table("./extdata/test.gt")
+#' fix <- read_fix_table("./extdata/test.fix")
 #' test_data <- read_in_pools_rc("./extdata/test.pool_rc", fread("./extdata/test.pool_info"), "./extdata/test.gwas", 10)
-#' match_and_subset(fread("./extdata/test.ees_table"), ind_gt, ind_fix, test_data, 5)
+#' match_and_subset(fread("./extdata/test.ees_table"), gt, fix, test_data, 5)
 match_and_subset <- function(ees_table, gt, fix, pool_data, subset_size){
   major_and_snp <- data.table(pool_data$snp_id, pool_data$major)
   colnames(major_and_snp) <- c("SNP", "MAJOR")

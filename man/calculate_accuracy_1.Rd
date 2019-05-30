@@ -7,7 +7,7 @@
 calculate_accuracy_1(ebv_table, percentage = 1, G1val = 1, G2val = 2)
 }
 \arguments{
-\item{ebv_table}{}
+\item{ebv_table}{table of estimated breeding values and assigned groups for test individuals}
 }
 \value{
 accuracy for single tail

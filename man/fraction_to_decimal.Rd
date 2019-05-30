@@ -7,7 +7,7 @@
 fraction_to_decimal(frac_data)
 }
 \arguments{
-\item{frac_data#}{a data frame containing only the fractions}
+\item{frac_data}{a data frame containing only the fractions}
 }
 \value{
 frequency of allele

@@ -7,7 +7,16 @@
 read_in_pools_rc(pools_rc_file, info, gwas, hit_num)
 }
 \arguments{
-\item{hit_num}{}
+\item{pools_rc_file}{input file pools_rc}
+
+\item{info}{table containing data on the grouping of pools <- needs to be read in}
+
+\item{gwas}{file containing snps and p-values from gwas}
+
+\item{hit_num}{number of snps to be used to calculate ees}
+}
+\value{
+list data read in from pools_rc
 }
 \description{
 Get Data Structure from pools_rc

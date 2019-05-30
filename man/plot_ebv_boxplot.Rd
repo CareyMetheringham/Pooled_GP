@@ -7,10 +7,10 @@
 plot_ebv_boxplot(ebv_table)
 }
 \arguments{
-\item{ebv_table}{}
+\item{ebv_table}{table of estimated breeding values and assigned groups for test individuals}
 }
 \value{
-plot
+boxlot
 }
 \description{
 Plot Boxplot of EBV (ggplot)

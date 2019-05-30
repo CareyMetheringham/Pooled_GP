@@ -2,16 +2,18 @@
 % Please edit documentation in R/match_training_and_test.R
 \name{correct_gt}
 \alias{correct_gt}
-\title{Correct Non Matching Alleles - consider using gsub instead}
+\title{Correct Non Matching Alleles}
 \usage{
 correct_gt(gt, match_snps)
 }
 \arguments{
-\item{match_snps}{}
+\item{gt}{table of genotypes for indivduals 0/1/2}
+
+\item{match_snps}{table of matched snps between test and training}
 }
 \value{
 swapped gt
 }
 \description{
-Correct Non Matching Alleles - consider using gsub instead
+Correct Non Matching Alleles
 }
