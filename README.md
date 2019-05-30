@@ -53,7 +53,5 @@ Test the Correction of Major and Ref Mismatches
 
 Test Scripts using the Test Dataset
 
-Test MCMC Functions
-
 ## License 
 
