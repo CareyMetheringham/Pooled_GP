@@ -2,7 +2,7 @@
 #'
 #' @param ebv_table
 #'
-#' @return
+#' @return accuracy for both tails
 #' @export
 #'
 #' @examples
@@ -23,7 +23,7 @@ calculate_accuracy <- function(ebv_table, percentage = 1, G1val = 1, G2val = 2){
 #'
 #' @param ebv_table
 #'
-#' @return accuracy value
+#' @return accuracy for single tail
 #' @export
 #'
 #' @examples
@@ -52,11 +52,11 @@ create_ebv_table <- function(ind_info, ebv){
   return(ebv_table)
 }
 
-#' Title
+#' Calculate Correlation of EBV and Group
 #'
 #' @param ebv_table
 #'
-#' @return
+#' @return correlation
 #' @export
 #'
 #' @examples
@@ -66,6 +66,14 @@ calculate_correlation <- function(ebv_table){
   return(correlation)
 }
 
+#' Plot Boxplot of EBV (ggplot)
+#'
+#' @param ebv_table
+#'
+#' @return plot
+#' @export
+#'
+#' @examples
 plot_ebv_boxplot <- function(ebv_table){
   plot <- ggplot(ebv_table, aes(x = Group, y =EBV)) + geom_boxplot()
   return(plot)
