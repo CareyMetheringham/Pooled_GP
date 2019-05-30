@@ -1,6 +1,10 @@
 # Gppool
 
-Gppool is an R based pipeline for performing genomic prediction on pool-seq data, using rrBLUP
+Gppool is an R based pipeline for performing genomic prediction on pool-seq data, using rrBLUP.
+
+The pipeline was a designed and tested on data on ash dieback susceptibility in Fraxinus excelsior.
+
+This is a beta version of the pipeline
 
 ## Getting Started
 
@@ -8,18 +12,16 @@ Gppool is an R based pipeline for performing genomic prediction on pool-seq data
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+The gppool pipeline requires the following R packages to be installed:
 
-```
-Give examples
-```
-
-example goes here 
+rrBLUP
+vcfR
+data.table
+plyr
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Test functions can be run in R using the devtools::test() command
 
-### Break down into end to end tests
+## License 
 
-Explain what these tests test and why
