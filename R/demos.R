@@ -64,5 +64,5 @@ gppool_data_demo <- function(training_snps = 10, test_snps = 6){
   print(paste("Accuracy:", accuracy))
   correlation <- calculate_correlation(create_ebv_table(ind_info, ebv))
   print(paste("Correlation:", correlation))
-  ggplot(create_ebv_table(ind_info, ebv), aes(x = group, group = Group, y =EBV)) + geom_boxplot()
+  ggplot(create_ebv_table(ind_info, ebv), aes(x = Group, group = Group, y =EBV)) + geom_boxplot()
 }
