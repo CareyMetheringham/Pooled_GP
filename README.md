@@ -12,7 +12,11 @@ This is a beta version of the pipeline
 
 ## Getting Started
 
-..
+#Run Full Analysis
+
+#Estimate Breeding Values from existing set of Effect Sizes
+
+Once the model has been trained for a dataset, the table of effect sizes can be used to retest the effect size estimates on addditional datasets
 
 ### Prerequisites
 
