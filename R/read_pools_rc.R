@@ -1,5 +1,5 @@
 #' Create Lists of Colnames for pools_rc
-#' @param pool_info_file file containing a table - need to make more flexible
+#' @param pool_info_file file containing a table
 #'
 #' @return list of colnames for pools_rc file
 #' @export

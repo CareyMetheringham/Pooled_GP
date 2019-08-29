@@ -128,7 +128,7 @@ produce_sim_data <-
     maa = t(maa_hilo),
     prov = prov_vector,
     snp_id = sim_snp_id[variant == TRUE],
-    es = sim$es,
-    af = sim$af
+    es = sim$es[variant == TRUE],
+    af = sim$af[variant == TRUE]
   ))
 }
