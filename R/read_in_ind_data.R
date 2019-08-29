@@ -51,7 +51,7 @@ read_ind_info <- function(ind_info_file){
 
 #read in vcf data
 
-read_vcf_file <- function(vcf_file, suffix = "MEMq20.sorted.bam"){
+read_vcf_file <- function(vcf_file, suffix = "MEMq20.sorted.bam"){ #THIS NEEDS TO BE CHANGABLE!!!!!!!!!!!!!!!!! <----------------------------------------
   ind_vcf <- read.vcfR(file=vcf_file, limit = 1e+07, cols = NULL,
                        convertNA = TRUE, checkFile = TRUE, check_keys = TRUE, verbose = TRUE)
   ind_fix <- as.data.table(getFIX(ind_vcf))
