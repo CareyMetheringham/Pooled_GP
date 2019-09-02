@@ -75,3 +75,5 @@ read_vcf_file <- function(vcf_file, suffix = ".sorted.bam"){
   write.table(ind_gt,"genotype.table",sep="\t",quote = FALSE)
   return(list(gt = ind_gt, fix = ind_fix))
 }
+
+#IN PROGRESS
