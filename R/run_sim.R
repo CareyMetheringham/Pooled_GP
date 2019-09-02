@@ -632,13 +632,21 @@ is_sig_diff <- function(a, b){
   }
 }
 
+print_sim_info <- function(nPop, nInd, nLoci, numVarSites, h2){
+  print(paste("Simulated",nPop, "populations with", nInd, "individuals each", sep = " "))
+  print(paste("Total loci = ", nLoci, sep = " "))
+  print(paste("Number of varient loci:", numVarSites, sep = " "))
+  print(paste("Captured heritability: h2 = ", h2, sep = " "))
+  #IS NOT PRINTING
+}
+
 #' Title
 #'
 #' @return
 #' @export
 #'
 #' @examples
-pooling_simulation <- function(h, t, reps) {
+pooling_simulation <- function(h2 = 0.3, cutoff = 0.5, reps = 10, nLoci = 100, nPop = 10, nInd = 1000, MAF = 0.01) {
   result_tab <-
     data.frame(
       loci = integer(),
@@ -653,54 +661,41 @@ pooling_simulation <- function(h, t, reps) {
   line <- 1
   
   for (rep in 1:reps){
-    #result_tab[line,] <- rep(0,7)
+  #   paramList <- list(
+  #     nLoci = 100,
+  #     h2 = h,
+  #     cutoff = t,
+  #     nPop = 10,
+  #     nInd = 100,
+  #     MAF = 0.01
+  #   )
     
-    #need to phase out these references - proper contained functionalisation
-    chainLength <- 10 ^ 3
-    checkpoint <- 10
-    
-    paramList <- list(
-      nLoci = 100,
-      h2 = h,
-      cutoff = t,
-      nPop = 10,
-      nInd = 100,
-      MAF = 0.01,
-      chainLength = 10 ^ 3,
-      checkpoint = 10
-    )
-    
-    check_input_values(paramList)
-    
-    print("SIMULATION")
-    simParams <- get_sim_params(nLoci = paramList$nLoci)
+    #check_input_values(paramList)
+    simParams <- get_sim_params(nLoci)
     
     #generate the simulated data
     simData <-
       simulate_training_pools(
         simParams,
-        nLoci = paramList$nLoci,
-        nPop = paramList$nPop,
-        nInd = paramList$nInd,
-        h2 = paramList$h2,
-        cutoff = paramList$cutoff,
-        MAF = paramList$MAF
+        nLoci,
+        nPop,
+        nInd,
+        h2,
+        cutoff,
+        MAF
       )
-    print(paste("Simulated", paramList$nPop, "populations with", paramList$nInd, "individuals each", sep = " "))
-    print(paste("Total loci = ", paramList$nLoci, sep = " "))
-    print(paste("Number of varient loci:", simData$numVarSites, sep = " "))
-    print(paste("Captured heritability: h2 = ", paramList$h2, sep = " "))
-    
+  
+    print_sim_info <- function(nPop, nInd, nLoci, numVarSites = simData$numVarSites, h2)    
     #simulate a test population of individuals
     testPop <-
-      simulate_test_pop(simParams, paramList$nLoci, nInd = 150, paramList$h2, simData$fixedSites, paramList$cutoff)
+      simulate_test_pop(simParams, nLoci, nInd = 150, h2, simData$fixedSites, cutoff)
     
     ######################################
     print("INDIVIDUAL PREDICTION")
     start <- Sys.time()
     totalInd <- paramList$nPop * paramList$nInd
     print(paste(totalInd * paramList$cutoff * 2, "Individuals used out of", totalInd, sep = " "))
-    rrBLUPind <- get_rrBLUP_ind(simData, paramList)
+    rrBLUPind <- get_rrBLUP_ind(simData, paramList) #<- error occurs here
     indR <- get_r_squared(simData, rrBLUPind)
     
     testResultsInd <- test_prediction(testPop, rrBLUPind, paramList$cutoff)
@@ -724,83 +719,13 @@ pooling_simulation <- function(h, t, reps) {
   
 }
 
-##################RUN################
+loop_pool_sim_test <- function(){
+  h_list<- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+  t_list<- c(0.1, 0.2, 0.3, 0.4, 0.5)
+    for (t in t_list){
+      for (rep in 1:10){
+        #rbind the tables
+}}
+}
 
-result_tab<- data.frame(loci=integer(), h2=numeric(), threshold=numeric(), var_sites=integer(),ind_cor=numeric(),pool_cor=numeric(),ttest_bv=numeric(),ttest_es=numeric())
-line <- 1
-h_list<- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
-t_list<- c(0.1, 0.2, 0.3, 0.4, 0.5)
-
-for (h in h_list){
-  for (t in t_list){
-    for (rep in 1:10){
-      #result_tab[line,] <- rep(0,7)
-      
-      #need to phase out these references - proper contained functionalisation
-      chainLength <- 10 ^ 3
-      checkpoint <- 10
-      
-      paramList <- list(
-        nLoci = 100,
-        h2 = h,
-        cutoff = t,
-        nPop = 10,
-        nInd = 100,
-        MAF = 0.01,
-        chainLength = 10 ^ 3,
-        checkpoint = 10
-      )
-      
-      check_input_values(paramList)
-      
-      print("SIMULATION")
-      simParams <- get_sim_params(nLoci = paramList$nLoci)
-      
-      #generate the simulated data
-      simData <-
-        simulate_training_pools(
-          simParams,
-          nLoci = paramList$nLoci,
-          nPop = paramList$nPop,
-          nInd = paramList$nInd,
-          h2 = paramList$h2,
-          cutoff = paramList$cutoff,
-          MAF = paramList$MAF
-        )
-      print(paste("Simulated", paramList$nPop, "populations with", paramList$nInd, "individuals each", sep = " "))
-      print(paste("Total loci = ", paramList$nLoci, sep = " "))
-      print(paste("Number of varient loci:", simData$numVarSites, sep = " "))
-      print(paste("Captured heritability: h2 = ", paramList$h2, sep = " "))
-      
-      #simulate a test population of individuals
-      testPop <-
-        simulate_test_pop(simParams, paramList$nLoci, nInd = 150, paramList$h2, simData$fixedSites, paramList$cutoff)
-      
-      ######################################
-      print("INDIVIDUAL PREDICTION")
-      start <- Sys.time()
-      totalInd <- paramList$nPop * paramList$nInd
-      print(paste(totalInd * paramList$cutoff * 2, "Individuals used out of", totalInd, sep = " "))
-      rrBLUPind <- get_rrBLUP_ind(simData, paramList)
-      indR <- get_r_squared(simData, rrBLUPind)
-      
-      testResultsInd <- test_prediction(testPop, rrBLUPind, paramList$cutoff)
-      print( paste("Predictive r2 in test population (rrBLUP):", testResultsInd$R2, sep = " "))
-      
-      ########################################
-      print("POOL PREDICTION")
-      print(paste("Total of", paramList$nPop * 2, "pools containing", paramList$cutoff * paramList$nInd, "individuals each", sep = " " ))
-      
-      effectStart <- run_rrBLUP(simData, paramList$nPop)
-      testResults1 <- test_prediction(testPop, effectStart, paramList$cutoff)
-      print( paste("Predictive r2 in test population (rrBLUP):", testResults1$R2, sep = " "))
-      
-      ttest_bv <- t.test(testResultsInd$testData$bv, testResults1$testData$bv, paired = TRUE)
-      ttest_es <- t.test(rrBLUPind, effectStart, paired = TRUE)
-      
-      result_tab[line,]<- data.frame(paramList$nLoci, paramList$h2, paramList$cutoff, simData$numVarSites, testResultsInd$R2, testResults1$R2, ttest_bv$p.value, ttest_es$p.value)
-      
-      line<-line+1
-    }}}
-
-write.table(result_tab, file="sim_loop_results.table", row.names = FALSE, quote = FALSE)
+# write.table(result_tab, file="sim_loop_results.table", row.names = FALSE, quote = FALSE)
