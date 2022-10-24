@@ -7,7 +7,7 @@ rule read_input:
     output:
         RData = "data/pools.RData"
     params:
-        snp_num = 100
+        snp_num = config["snp_num"]
     conda:
         "env_configs/R.yaml"
     shell:

@@ -27,6 +27,8 @@ get_pool_colnames <- function(pool_info){
   pool_col_names <-
     c("contig",
       "pos",
+      "snp",
+      "P",
       "rc",
       "allele_count",
       "allele_states",
@@ -174,8 +176,14 @@ print(head(info))
 #Read in top hits from the snps file
 top_gwas_hits <- get_hits_from_file(xargs$snps, xargs$snp_num)
 print(head(top_gwas_hits))
+
+#Read in pool_rc
+pool_rc <- fread(xargs$pool_rc, stringsAsFactors = FALSE)
+head(pool_rc)
+#Check that cols match those listed in get_pool_colnames and edit if not
+
 #Pull snps from file 
-snps_to_use <- find_top_snps(fread(xargs$pools_rc, stringsAsFactors = FALSE), top_gwas_hits, info)
+snps_to_use <- find_top_snps(pool_rc, top_gwas_hits, info)
 #name snps
 snp_names <- get_snp_id(snps_to_use)
 maa_freq <- get_allele_freq(snps_to_use, info, "major")

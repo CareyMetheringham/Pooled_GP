@@ -1,6 +1,3 @@
-# Use simulated data?
-simulation: yes
-
 #Working directory
 wd:
 #How many cores to use for the workflow
@@ -17,6 +14,8 @@ sim_threshold: 0.2
 ######### DATA PARAMS ########
 # List of SNPs to use
 snp_list: "extdata/example_100_hits.gwas"
+#Number of those SNPs to include in model
+snp_num: 100
 # Pool_rc file
 pool_rc: "extdata/example_pool_rc"
 # File containing info on pools
