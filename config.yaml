@@ -25,3 +25,6 @@ ind_info: "extdata/example_ind_info.csv"
 # GT matrix for test samples - obtain from vcf
 gt: "extdata/example_genotype.table"
 fix: "extdata/example_fix.table"
+
+#Number or rrBLUP replicates to run
+rrblup_reps: 10

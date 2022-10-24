@@ -13,12 +13,16 @@ Paths to the input files are listed in config.yaml. Currently paths are set to e
 ## Input Files
 
 #pool_rc
+Ouput file from Popoolation2
 
 #pool info file
+File containing info on the pool conditions
 
 #list of snps to use
+A list of snps on which to run GP - i.e. a list of gwas hits
 
 #individual info file
+File containing info on test individuals
 
 #individual genotype matrix
 
@@ -26,11 +30,11 @@ Paths to the input files are listed in config.yaml. Currently paths are set to e
 
 ### Prerequisites
 
-Conda
-
-Snakemake 
+Snakemake: https://snakemake.readthedocs.io/en/stable/
 
 The pipeline installs the following R packages:
+
+argparse
 
 rrBLUP
 
@@ -45,9 +49,11 @@ Set up conda enviroment with snakemake (see above)
 conda activate snakemake
 snakemake --use-conda
 
+effect size tables are currently written out to data/output/effect_sizes.txt
+
 ## Simulations
 
-Scripts for simulation under construction
+Scripts for simulation are being updated
 
 ## License 
 

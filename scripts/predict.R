@@ -9,6 +9,7 @@ library("rrBLUP")
 parser <-
   ArgumentParser(description = 'This simulates population for GP')
 parser$add_argument('--data', '-d', help = 'RData object')
+parser$add_argument('--reps', '-r', help = 'rrBLUP repeats')
 parser$add_argument('--out', '-o', help = 'Output')
 xargs <- parser$parse_args()
 
@@ -22,11 +23,7 @@ xargs <- parser$parse_args()
 #' @param rep How many times should model fitting be repeated
 #' @return list containing vectors with estimated effect sizes and snp_id
 rrblup_loop <-
-  function(data,
-           X = FALSE,
-           Diff = TRUE,
-           both = TRUE,
-           rep = 10) {
+  function(data, rep = 10) {
     #need to add other outputs to the data structure?
     mia_u_df <- data.frame()
     maa_u_df <- data.frame()
@@ -37,12 +34,10 @@ rrblup_loop <-
       freq_diff_maa <- get_af_diff(data$maa, data$prov)
       mia_fit <- mixed.solve(data$y, t(freq_diff_mia), SE = TRUE)
       maa_fit <- mixed.solve(data$y, t(freq_diff_maa), SE = TRUE)
-    }
-    
-    mia_u_df <- rbind(mia_u_df, mia_fit$u)
-    maa_u_df <- rbind(maa_u_df, maa_fit$u)
-    mia_u_SE_df <- rbind(mia_u_SE_df, mia_fit$u.SE)
-    maa_u_SE_df <- rbind(maa_u_SE_df, maa_fit$u.SE)
+      mia_u_df <- rbind(mia_u_df, mia_fit$u)
+      maa_u_df <- rbind(maa_u_df, maa_fit$u)
+      mia_u_SE_df <- rbind(mia_u_SE_df, mia_fit$u.SE)
+      maa_u_SE_df <- rbind(maa_u_SE_df, maa_fit$u.SE)
   }
 #get the averages
 mean_mia_u <- colMeans(mia_u_df)
@@ -94,10 +89,13 @@ create_ees_table <- function(fit){
 }
 
 ######## RUN ###########
+#load in the pool data object
+load(xargs$data)
 
-training_data <- load(xargs$data)
+print(head(poolData))
 
-fit_rrblup <- rrblup_loop(training_data)
+fit_rrblup <- rrblup_loop(poolData, rep = xargs$reps)
 ees_table <- create_ees_table(fit_rrblup)
 
+#Write output as csv table
 write.csv(ees_table, file = xargs$out)
