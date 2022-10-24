@@ -7,7 +7,7 @@ library("rrBLUP")
 ######## INPUT ARGS ###########
 #Define input arguments and parse
 parser <-
-  ArgumentParser(description = 'This simulates population for GP')
+  ArgumentParser(description = 'This predicts effect size')
 parser$add_argument('--data', '-d', help = 'RData object')
 parser$add_argument('--reps', '-r', help = 'rrBLUP repeats')
 parser$add_argument('--out', '-o', help = 'Output')
