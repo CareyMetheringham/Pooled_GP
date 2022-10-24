@@ -1,6 +1,4 @@
-#lising of experimental settings in tab separated file
-
-#Use simulated data?
+# Use simulated data?
 simulation: yes
 
 #Working directory
@@ -18,12 +16,13 @@ sim_threshold: 0.2
 
 ######### DATA PARAMS ########
 # List of SNPs to use
-snp_list: "extdata/"
+snp_list: "extdata/example_100_hits.gwas"
 # Pool_rc file
-pool_rc: "example_pool_rc"
+pool_rc: "extdata/example_pool_rc"
 # File containing info on pools
-pool_info: "example_pop_data.csv"
+pool_info: "extdata/example_pop_data.csv"
 # File containing info on test individuals
-ind_info: "example_ind_info.csv"
-# VCF file for test samples
-vcf:
+ind_info: "extdata/example_ind_info.csv"
+# GT matrix for test samples - obtain from vcf
+gt: "extdata/example_genotype.table"
+fix: "extdata/example_fix.table"

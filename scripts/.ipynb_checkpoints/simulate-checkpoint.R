@@ -2,193 +2,286 @@
 
 #Libraries
 library("argparse")
+#Source additional functions
+source("/cluster/ggs_lab/cmetheringham001/GP/R/simulate_test_pop.R")
+source("/cluster/ggs_lab/cmetheringham001/GP/R/simulate_training_pop.R")
 
 ######## INPUT ARGS ###########
 #Define input arguments and parse
-parser <- ArgumentParser(description= 'This simulates population for GP')
-parser$add_argument('--n_pop', '-p', help= 'Number of populations')
-parser$add_argument('--n_ind', '-i', help= 'Number of individuals')
-parser$add_argument('--n_site', '-s', help= 'Number of sites')
-parser$add_argument('--h2', '-h', help= 'Heritability')
-parser$add_argument('--maf', '-m', help= 'MAF')
-parser$add_argument('--threshold', '-t', help= 'Threshold')
-parser$add_argument('--output1', '-o1', help= 'Simulated training data')
-parser$add_argument('--output2', '-o2', help= 'simulated test data')
-xargs<- parser$parse_args()
+parser <-
+  ArgumentParser(description = 'This simulates population for GP')
+parser$add_argument('--n_pop', '-p', help = 'Number of populations')
+parser$add_argument('--n_ind', '-i', help = 'Number of individuals')
+parser$add_argument('--n_site', '-s', help = 'Number of sites')
+parser$add_argument('--h2', '-h2', help = 'Heritability')
+parser$add_argument('--maf', '-m', help = 'MAF')
+parser$add_argument('--threshold', '-t', help = 'Threshold')
+parser$add_argument('--out1', '-o1', help = 'Simulated training data')
+parser$add_argument('--out2', '-o2', help = 'simulated test data')
+xargs <- parser$parse_args()
 
 ######## FUNCTIONS ###########
 
-#' Generate Distribution of Effect Sizes
+#' Generate the distribution of effect sizes and allelic frequency
 #' To be used for training pools and test population
-#' @param num_sites total number of num_sites in simulation
-#' @return effect size of each locus
-generate_effect_size <- function(num_sites) {
+#' @param nLoci total number of sites in simulation 
+#' @return a list containing effectSizes and allelicF - both vectors of length nLoci
+#' @examples
+#' get_sim_params(nLoci=100)
+get_sim_params <- function(nLoci) {
   #the effect size of haplotypes at these loci follow a normal distribution
-  true_es <- rnorm(num_sites, 0, .1) #why 0.1 too small
-  return(true_es)
-}
-
-#' Generate Distribution of Allelic Frequencies for Minor Allele
-#' @param num_sites total number of num_sites in simulation
-#' @return frequency of minor allele at each locus
-generate_allelic_freqency <- function(num_sites) {
+  es <- rnorm(nLoci, 0, .1)
   #the frequency of alleles varies between loci and follows a beta distribution
-  allelic_freq <- rbeta(num_sites, .1, .1) #gives ~40% variable num_sites
-  return(allelic_freq)
+  allelicF <- rbeta(nLoci, .1, .1) #gives ~40% variable sites
+  return(list(effectSizes = es,
+              allelicF = allelicF))
 }
 
-#' Create Loci from Binomial Distribution
-#' @param num_sites number od num_sites being simulated
-#' @param allelic_freq frequency of minor allele at each locus
-#' @return state of each locus
-create_loci <- function(num_sites, allelic_freq){
-  loci <- rbinom(num_sites, 2, allelic_freq)
+
+#' Create Loci from Binomial Distribution 
+#' create_loci(100,rbeta(100, .1, .1))
+create_loci <- function(nLoci, allelicF){
+  loci <- rbinom(nLoci, 2, allelicF)
   return(loci)
 }
 
-#' Simulate num_sites for a Population
-#' @param ind number of individuals in the population
-#' @param num_sites number od num_sites being simulated
-#' @param allelic_freq frequency of minor allele at each locus
-#' @return matrix containg loci states in a single population
-#' @examples generate_population(10,100, generate_allelic_freqency(100))
-generate_population <- function(ind, num_sites, allelic_freq){
-  loci_of_pop <- matrix(nrow = ind, ncol = num_sites)
-    for (i in 1:ind){
-      loci_of_pop[i, ] <- create_loci(num_sites, allelic_freq)
-    }
-  return(loci_of_pop)
-}
-
-#' Calculate Enviromental Variance of BV from h2
-#' @param bv vector containg breeding values
-#' @param h2 estimate of hertibility
-#' @return estimate of varience
-calculate_varience <- function(bv, h2){
-  est_var <- sd(bv) * sqrt( (1 - h2) / h2)
-  return(est_var)
-}
-
-#' Get Phenotypic Value
-#' @param bv vector containg breeding values
-#' @param est_var estimate of varience
-#' @return vector containing phenotypes
-#' @examples get_phenotype(bv = rnorm(100), calculate_varience(bv = rnorm(100), h2=0.5))
-get_phenotype <- function(bv, est_var){
-  env_var <- rnorm(length(bv), 0, est_var)
-  pheno <- bv + env_var
-  return(pheno)
-}
-
-#' Simulate Genotype for a Group of Populations
-#' @param num_pop number of populations
-#' @param num_ind number of individuals in each population
-#' @param num_sites number of sites under examination
-#' @param allelic_freq frequency of minor allele at each site
-#' @return a list of genotype matrices
-#' @examples
-#' generate_genotypes(num_pop = 10, num_ind = 10, num_sites = 100, generate_allelic_freqency(100))
-generate_genotypes <- function(num_pop, num_ind, num_sites, allelic_freq){
-  snp_list <- list()
-  for (i in 1:num_pop){
-    snp_list[[i]] <- generate_population(num_ind, num_sites, allelic_freq)
+#' Create the Genotype and Phenotype of a Single Population
+#' create_pop(es=rnorm(100),nInd=10,nLoci=100,allelicF=rbeta(nLoci, .1, .1),h2=0.5)
+create_pop <- function(es, nInd, nLoci, allelicF, h2) {
+  print(nInd)
+  print(nLoci)
+  lociP <- matrix(nrow = nInd, ncol = nLoci)
+  for (j in 1:nInd) {
+    #each loci can take one of three values (0-2)
+    lociP[j, ] <- create_loci(nLoci, allelicF)
   }
-  return(snp_list)
-}
-
-#' Calculate Breeding Values for a group of Populations
-#' @param snp_list list of genotype matrices - one per population
-#' @param effect_sizes a vector of effect sizes for each site
-#' @return list containing vectors of breeding values for each population
-get_breeding_values <- function(snp_list, effect_sizes){
-  bv_list <- list()
-  for (i in 1:length(snp_list)){
-    bv_list[[i]] <- snp_list[[i]] %*% effect_sizes
-  }
-  return(bv_list)
-}
-
-#' Simulate the Training Populations
-#' @param num_pop number of populations
-#' @param num_ind number of individuals in each population
-#' @param num_sites number of sites under examination
-#' @return a list containing effect size of each site, its allelic frequency, the genotype matrix and a list with
-#' vectors of breeding values and phenotypes(continuous)
-sim_training_pops <- function(num_pop, num_ind, num_sites, h2 = 0.3){
-  effect_sizes <- generate_effect_size(num_sites)
-  allelic_freq <- generate_allelic_freqency(num_sites)
-  genotypes <- generate_genotypes(num_pop, num_ind, num_sites, allelic_freq)
-  genotype_matrix <- make_gt_matrix(genotypes)
-  bv <- get_breeding_values(genotypes, effect_sizes)
-  phenotypes <- list()
-  for ( i in 1:num_pop){
-    phenotypes[[i]] <- get_phenotype(bv[[i]], calculate_varience(bv[[i]], h2))
-  }
-  return(list(es = effect_sizes,
-              af = allelic_freq,
-              gt_list = genotypes,
-              gt_matrix = genotype_matrix,
-              bv = bv,
-              pt = phenotypes))
+  #calculate breeding values
+  bv <- (lociP %*% es)
+  #normalise breeding values
+  bv <- scale(bv)
+  #heritability factor used to calculate varience
+  var <- calculate_varience( bv = bv, h2 = h2 ) 
+  envVar <- rnorm( length(bv), 0, var)
+  #Store values in lists
+  return(list(
+    geno = lociP,
+    bv = bv,
+    pheno = (bv + envVar),
+    var = var
+  ))
 }
 
 #' Create a gentype matrix from the geno_list
-#' Could potentially be simplified - needs test function
-#' @param geno_list a list of genotype matrices
-#' @return one matrix containing all genotypes
-#' @examples
-#' make_gt_matrix(sim_training_pops(5, 10, 10, 0.5)$gt_list)
-make_gt_matrix <- function(geno_list){
-  pop <- length(geno_list)
-  ind <- nrow(geno_list[[1]])
-  sites <- ncol(geno_list[[1]])
-  geno_matrix <- matrix(nrow = pop * ind, ncol = sites)
+#' create_geno_matrix(geno_list=list(rep(1,10)),nPop=1,nInd=1,nLoci=10)
+create_geno_matrix <- function(geno_list, nPop, nInd, nLoci){
+  genotypes <- matrix(nrow = nPop * nInd, ncol = nLoci)
   k <- 1
-  for (i in 1:pop) {
-    geno_matrix[ k:(ind + k - 1), ] <- geno_list[[i]]
-    k <- k + ind
+  for (i in 1:nPop) {
+    geno <- geno_list[[i]]
+    genotypes[ k:(nInd + k - 1), ] <- geno
+    k <- k + nInd
   }
-  return(geno_matrix)
+  return(genotypes)
 }
 
-#' Simulate the test population
-#' @param es vector containing estimated effect sizes - eg from training pop
-#' @param af vector containing allelic frequency - eg from training pop
-#' @param h2 heritability
-#' @param test_ind number of individuals in test population
-sim_test_pop <- function(es, af, h2 = 0.3, test_ind = 100){
-  gt <- sim_test_gt(test_ind, af)
-  bv <- es %*% gt
-  est_var <- calculate_varience(bv, h2)
-  ph <- get_phenotype(bv, est_var)
-  return(list(gt = gt,
-              bv = bv,
-              ph = ph
-         ))
+#' Indentify Variant and Invaraiant Sites 
+#' find_varient_sites(genotypes=(matrix(rbinom(10 * 5, 1, 0.5), ncol = 5, nrow = 10)), 2, 5, 5)
+find_varient_sites <- function(genotypes, nPop, nInd, nLoci, MAF) {
+  sums <- colSums(genotypes)
+  #minumum nInd of times allele can occur
+  min_count <- (nPop * nInd * MAF)
+  max_count <- (nPop * nInd * (2 - (MAF)))
+  fixed <- (sums <= min_count | sums >= max_count)
+  
+  return(list(
+    fixed = (sums <= min_count | sums >= max_count),
+    vLoci = nLoci - sum(fixed)
+  ))
 }
 
-#' Simulate gt matrix for test population
-#' @param num_ind number of individuals
-#' @param af vector of allelic frequency
-#' @return matrix of genotypes: 0, 1, 2
-sim_test_gt <- function(num_ind, af){
-  num_sites <- length(af)
-  test_pop_gt <- t(generate_population(num_ind, num_sites, af))
-  sim_snp_id <- paste("snp", 1:num_sites, sep = "_")
-  sim_ind_id <- paste("ind", 1:num_ind, sep = "_")
-  rownames(test_pop_gt) <- sim_snp_id
-  colnames(test_pop_gt) <- sim_ind_id
-  return(test_pop_gt)
+#' Select the Individuals of Extreme Phenotype from each Population
+get_extreme_pheno <- function(pheno_list,i,cutoff){
+  topInd <-
+    pheno_list[[i]] > quantile(pheno_list[[i]], (1 - cutoff))
+  lowInd <- pheno_list[[i]] < quantile(pheno_list[[i]], cutoff)
+  return(list(topInd=topInd, lowInd=lowInd))
+}
+
+#' Get Frequency of Alleles in the Pools
+pool_freq <- function(geno_list, i, sample, fixed){
+  freq <- colMeans((geno_list[[i]]) [sample, ])
+  var_freq <- freq[fixed == FALSE]
+  return(var_freq)
+}
+
+#' Create a Matrix containing High and Low Individuals
+create_hilo_matrix <-
+  function(nPop,
+           variant,
+           pheno_list,
+           geno_list,
+           cutoff) {
+    
+    #find the difference in allelicF between the extremes
+    hi <- (matrix(nrow = nPop, ncol = variant$vLoci))
+    lo <- (matrix(nrow = nPop, ncol = variant$vLoci))
+    
+    for (i in 1:nPop) {
+      #get the high and low individuals 
+      samp <- get_extreme_pheno(pheno_list, i, cutoff)
+      
+      #find the pooled frequency of the variant sites 
+      hi[i, ] <- pool_freq(geno_list, i, samp$topInd, variant$fixed)
+      lo[i, ] <- pool_freq(geno_list, i, samp$lowInd, variant$fixed)
+    }
+    return(list(hi=hi,
+                lo=lo))
+  }
+
+#' Create a Matrix containing High and Low Individuals
+create_hilo_ind_matrix <-  function(nPop,
+                                    nInd,
+                                    variant,
+                                    pheno_list,
+                                    geno_list,
+                                    cutoff) {
+  
+  #create matrix of high and low individuals
+  hiInd <- matrix(nrow = nPop * nInd * cutoff, ncol = variant$vLoci)
+  loInd <- matrix(nrow = nPop * nInd * cutoff, ncol = variant$vLoci)
+  #set counter 
+  k <- 1
+  for (i in 1:nPop) {
+    #get the high and low individuals 
+    samp <- get_extreme_pheno(pheno_list, i, cutoff)
+    
+    #store high and low individuals in the matrices
+    hiInd[k:(nInd*cutoff + k - 1), ] <- (geno_list[[i]])[samp$topInd, variant$fixed==FALSE]
+    loInd[k:(nInd*cutoff + k - 1), ] <- (geno_list[[i]])[samp$lowInd, variant$fixed==FALSE]
+    k <- k + nInd*cutoff
+  }
+  return(list(hiInd=hiInd,
+              loInd=loInd))
+}
+
+#' Generate Simulated Data for pools from multiple populations
+#' using parameters generated in get_sim_params
+#' @param nLoci number of sites in each genome under examination
+#' @param nPop number of populations
+#' @param nInd number of individuals in each population
+#' @param h2 heritability factor of the trait
+#' @param cutoff pecentage of the population in each extreme - i.e. cutoff=0.5 divides the population at the midpoint
+#' @param MAF  minimum allele frequency allowed - eg 0.01 = 1%
+simulate_training_pools <-
+  function(simParams,
+           nLoci = 1000,
+           nPop = 10,
+           nInd = 1000,
+           h2 = 0.5,
+           cutoff = 0.5,
+           MAF = 0.05) {
+    
+    #set up lists to fill with values
+    geno_list <- list()
+    bv_list <- list()
+    pheno_list <- list()
+    varience_list <- list()
+    
+    for (i in 1:nPop) {
+      population <- create_pop(es=simParams$effectSizes, nInd=nInd, nLoci=nLoci, allelicF=simParams$allelicF, h2=h2)
+      geno_list[[i]] <- population$geno
+      bv_list[[i]] <-population$bv
+      pheno_list[[i]] <- population$pheno
+      varience_list[[i]] <- population$var
+    }
+    
+    #create matrix for genotypes
+    genotypes <- create_geno_matrix(geno_list, nPop, nInd, nLoci)
+    
+    #look only at varient sites
+    variant <- find_varient_sites(genotypes, nPop, nInd, nLoci,MAF)
+    
+    #find the difference in allele frequency between the extremes
+    HiLo <- create_hilo_matrix(nPop, variant,pheno_list, geno_list, cutoff)
+    HiLoInd <- create_hilo_ind_matrix(nPop, nInd, variant, pheno_list, geno_list,cutoff)
+    
+    mean_high <- colMeans(HiLo$hi)
+    mean_low <- colMeans(HiLo$lo)
+    
+    obsFreq <- colSums(genotypes) / (nInd * nPop) / 2
+    
+    return(
+      list(
+        nPop = nPop,
+        effectSize = simParams$effectSize[variant$fixed == FALSE],
+        mHigh = mean_high,
+        mLow = mean_low,
+        High = HiLo$hi,
+        Low = HiLo$lo,
+        obsFreq = obsFreq[variant$fixed == FALSE],
+        numVarSites = variant$vLoci,
+        fixedSites = variant$fixed,
+        Varience = varience_list,
+        Genotype = geno_list,
+        Phenotype = pheno_list,
+        BV =bv_list,
+        HiInd = HiLoInd$hiInd,
+        LoInd = HiLoInd$loInd
+      )
+    )
+  }
+
+#' Simulate Test Population 
+simulate_test_pop <- function(simParams, nLoci, nInd, h2, fixed, cutoff) {
+  lociP <- matrix(nrow = nInd, ncol = nLoci)
+  for (j in 1:nInd) {
+    #each loci can take one of three values (0-2)
+    lociP[j, ] <- create_loci(nLoci, simParams$allelicF)
+  }
+  #calculate breeding values
+  popBV <- (lociP %*% simParams$effectSizes)
+  #heritability factor used to calculate enviormental varience
+  env <-
+    rnorm(length(popBV), 0, calculate_varience(popBV, h2))
+  
+  phenotype <- popBV + env
+  
+  topInd <- phenotype > quantile(phenotype, (1 - cutoff))
+  lowInd <- phenotype < quantile(phenotype, cutoff)
+  
+  #calculate the difference in alleles between the two pools
+  High <- lociP[topInd, ]
+  Low <- lociP[lowInd, ]
+  
+  return(
+    list(
+      genotype = lociP[, fixed == FALSE ],
+      phenotype = phenotype,
+      breedingValue = popBV,
+      highInd = High,
+      lowInd = Low
+    )
+  )
 }
 
 ######### CREATE SIMULATAIONS ##########
 
-# Create training data object
-training_data <- produce_sim_data(n_pop, n_ind, n_site, h2, MAF, threshold)
-# Save training data object
-save(training_data, file = xargs$output1)
+#Calculate effect size and allelic frequency 
+simParams <- get_sim_params(xargs$n_site)
 
-# Create test data object
-test_data <- sim_test_pop(training_data$es, training_data$af, h2, 200)
+#Create a training data set
+simData <- simulate_training_pools(simParams,
+           nLoci = as.numeric(xargs$n_site),
+           nPop = as.numeric(xargs$n_pop),
+           nInd = as.numeric(xargs$n_ind),
+           h2 = as.numeric(xargs$h2),
+           cutoff = as.numeric(xargs$threshold),
+           MAF = as.numeric(xargs$maf)) 
+# Save training data object
+save(simData, file = xargs$out1)
+   
+#simulate a test population of individuals
+testPop <-
+      simulate_test_pop(simParams, nLoci = xargs$n_site, nInd = 150, h2 = xargs$h2, simData$fixedSites, cutoff = xargs$threshold)
 # Save test data object
-save(test_data, file = xargs$output2)
+save(testPop, file = xargs$out2)

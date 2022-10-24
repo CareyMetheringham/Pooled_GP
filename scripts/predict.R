@@ -8,8 +8,8 @@ library("rrBLUP")
 #Define input arguments and parse
 parser <-
   ArgumentParser(description = 'This simulates population for GP')
-parser$add_argument('--sim_training', '-tr', help = 'Simulated training data object')
-parser$add_argument('--sim_test', '-te', help = 'Simulated test data object')
+parser$add_argument('--data', '-d', help = 'RData object')
+parser$add_argument('--out', '-o', help = 'Output')
 xargs <- parser$parse_args()
 
 ######## FUNCTIONS ###########
@@ -81,29 +81,23 @@ get_af_diff <- function(gt_matrix, prov_list) {
   return(diff_matrix)
 }
 
+#' Write EES Results to Fileless 
+#' @param wd working directory
+#' @param fit model fit output to use
+create_ees_table <- function(fit){
+  ees_table <-
+    data.frame(fit$snps, fit$mia$u, fit$mia$u.SE, fit$maa$u, fit$maa$u.SE)
+  colnames(ees_table) <-
+    c("SNP", "EES.MIA", "EES.MIA.SE", "EES.MAA", "EES.MAA.SE")
+  rownames(ees_table) <- fit$snps
+  return(ees_table)
+}
+
 ######## RUN ###########
 
-training_data <- load(xargs$)
-test_data <- load(xargs$)
+training_data <- load(xargs$data)
 
 fit_rrblup <- rrblup_loop(training_data)
 ees_table <- create_ees_table(fit_rrblup)
 
-
-matched_ees <- match_snps_in_ind(ees_table, test_data$gt)
-matched_gt <- get_gt_subset(matched_ees$SNP, test_data$gt)
-print("Estimate breeding values")
-ebv <- get_ebv(matched_ees, matched_gt)
-print("Correlation of EBV and true BV in test population")
-print(cor(ebv, as.vector(test_data$bv)))
-plot(as.vector(test_data$bv),
-     ebv,
-     xlab = "Input Breeding Value",
-     ylab = "Estimated Breeding Value")
-print("Correlation of EBV and observed phenotype in test population")
-print(cor(ebv, as.vector(test_data$ph)))
-plot(as.vector(test_data$ph),
-     ebv,
-     xlab = "Phenotypic Value",
-     ylab = "Estimated Breeding Value")
-}
+write.csv(ees_table, file = xargs$out)

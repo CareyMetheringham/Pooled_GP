@@ -2,6 +2,7 @@
 
 #Libraries
 library("argparse")
+library("data.table")
 
 ######## INPUT ARGS ###########
 #Define input arguments and parse
@@ -10,9 +11,11 @@ parser <-
 parser$add_argument('--pool_rc', '-p', help = 'pool_rc file')
 parser$add_argument('--info', '-i', help = 'pool info')
 parser$add_argument('--snps', '-s', help = 'list of snps')
+parser$add_argument('--snp_num', '-n', help = 'number of snps')
 parser$add_argument('--out', '-o', help = 'Output')
 
 xargs <- parser$parse_args()
+print("args read")
 
 ######## FUNCTIONS ###########
 
@@ -109,21 +112,13 @@ get_snp_id <- function(pool_rc){
   return(snp_names)
 }
 
-
-
-
 #' Exclude one named Group2 grouping
 #' #can only exclude one at a time
 #need to include tests for equal length
-#'
 #' @param info data table with 3 columns
 #' @param pool_data data output by read_in_pools_rc
 #' @param group_name a group in column 3 (Group2) of the info table
-#'
 #' @return pool_data excluding the named group
-#' @export
-#'
-#' @examples
 exclude_group2 <- function(info, pool_data, group_name){
   new_y = pool_data$y[info[, 3] != group_name]
   new_prov = pool_data$prov[info[, 3] != group_name]
@@ -171,18 +166,17 @@ get_random <- function(pools_rc, num_hits){
   return(my_sample)
 }
 
-######### CREATE SIMULATAIONS ##########
-
-parser$add_argument('--pool_rc', '-p', help = 'pool_rc file')
-parser$add_argument('--info', '-i', help = 'pool info')
-parser$add_argument('--snps', '-s', help = 'list of snps')
-parser$add_argument('--out', '-o', help = 'Output')
-
-info = read.csv(xargs$info)
-
+######### READ IN POOL DATA ##########
+info <- fread(xargs$info)
 colnames(info) <- c("Sample", "Group", "Group2")
-top_gwas_hits <- get_hits_from_file(gwas, hit_num)
+print(head(info))
+
+#Read in top hits from the snps file
+top_gwas_hits <- get_hits_from_file(xargs$snps, xargs$snp_num)
+print(head(top_gwas_hits))
+#Pull snps from file 
 snps_to_use <- find_top_snps(fread(pools_rc_file, stringsAsFactors = FALSE), top_gwas_hits, info)
+#name snps
 snp_names <- get_snp_id(snps_to_use)
 maa_freq <- get_allele_freq(snps_to_use, info, "major")
 mia_freq <- get_allele_freq(snps_to_use, info, "minor")
