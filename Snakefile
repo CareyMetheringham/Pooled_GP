@@ -4,7 +4,7 @@ include: 'rules/simulation.snakefile',
 include: 'rules/read_data.snakefile'
 include: 'rules/run_gp.snakefile'
 
-if config["simulation"] == "yes":
+if config["simulation"] = "yes":
    rule sim_object:
     input:
         sim_training_obj = "data/training_sim.RData" 

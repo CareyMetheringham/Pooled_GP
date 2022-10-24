@@ -175,7 +175,7 @@ print(head(info))
 top_gwas_hits <- get_hits_from_file(xargs$snps, xargs$snp_num)
 print(head(top_gwas_hits))
 #Pull snps from file 
-snps_to_use <- find_top_snps(fread(pools_rc_file, stringsAsFactors = FALSE), top_gwas_hits, info)
+snps_to_use <- find_top_snps(fread(xargs$pools_rc, stringsAsFactors = FALSE), top_gwas_hits, info)
 #name snps
 snp_names <- get_snp_id(snps_to_use)
 maa_freq <- get_allele_freq(snps_to_use, info, "major")
