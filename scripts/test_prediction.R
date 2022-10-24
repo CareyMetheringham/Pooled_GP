@@ -51,13 +51,10 @@ get_gt_subset <- function(snp_list, gt){
 #' @param ees data table containing results of rrblup
 #' @param gt_matrix matrix of 0, 1, 2 and NA
 get_ebv <- function(ees, gt_matrix){
-  gt_matrix <- gt_matrix[order(rownames(gt_matrix)), ]
+  gt_matrix <- as.numeric(gt_matrix[order(rownames(gt_matrix)), ])
   ees <- ees[order(ees$SNP), ]
-  alt_matrix <- 2 - gt_matrix
-  effect_mia <-  t(gt_matrix) %*% ees$EES.MIA
-  effect_maa <-  t(alt_matrix) %*% ees$EES.MAA
-  ebv <- effect_mia + effect_maa
-  ebv <- as.vector(ebv)
+  effect_mia <-  t(gt_matrix) %*% as.numeric(ees$EES.MIA)
+  ebv <- as.vector(effect_mia*2)
   names(ebv) <- colnames(gt_matrix)
   return(ebv)
 }

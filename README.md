@@ -25,8 +25,12 @@ A list of snps on which to run GP - i.e. a list of gwas hits
 File containing info on test individuals
 
 #individual genotype matrix
+A matrix containing the genotypes of test individuals
 
-#individual fix file
+## Output Files
+
+effect size tables written out to data/output/effect_sizes.txt
+gebv tables written to data/output/gebv.txt
 
 ### Prerequisites
 
@@ -48,8 +52,6 @@ Set up conda enviroment with snakemake (see above)
 
 conda activate snakemake
 snakemake --use-conda
-
-effect size tables are currently written out to data/output/effect_sizes.txt
 
 ## Simulations
 
