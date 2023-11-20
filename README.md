@@ -17,6 +17,7 @@ Ouput file from Popoolation2
 
 #pool info file
 File containing info on the pool conditions
+The numbers included must corespond to the output of Popoolation2
 
 #list of snps to use
 A list of snps on which to run GP - i.e. a list of gwas hits
